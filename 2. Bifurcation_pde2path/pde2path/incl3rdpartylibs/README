@@ -1,0 +1,24 @@
+For convenience, here we include some 3rd party libraries used in pde2path. 
+These are free software (GPL2.0 or higher, or MIT), and, like all of 
+pde2path, come WITHOUT WARRANTY OF ANY KIND. See the subdirectories for further 
+licensing details, and the URLs given below. 
+Some of the included libraries are strongly reduced versions of the originals, 
+and in any case we refer to the respective URLs for further information and updates. 
+
+ameshcoars: a strongly reduced version of the original library 
+    available at github.com/aschmidtuulm/ameshcoars
+distmesh: a verbatim copy of persson.berkeley.edu/distmesh/
+    In particular includes readily mexed functions (linux, mac and win), 
+    of which we mainly use trisurfupd for remeshing surfaces. 
+gptoolp2p: a strongly reduced version of github.com/alecjacobson/gptoolbox, 
+    which is very comprehensive. Here we only use a small part of it, 
+    in connection with geometric bifurcation problems. 
+FSELIB: Subset of functions described in C.Pozrikidis 'Finite and spectral elements', 
+    Taylor and Francis 2014, and there licensed under GPLv3. 
+pqzschur: periodic QZ Schur decomposition by Daniel Kressner with some small mods, 
+    used to compute Floquet multipliers. 
+trullekrul: see github.com/KristianE86/trullekrul
+
+
+
+    

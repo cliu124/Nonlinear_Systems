@@ -1,0 +1,31 @@
+Demos for Allen-Cahn (AC) type equations. 
+
+ac1D_simple: 1D with Neumann BCs (NBCs). Minimal example demo.  
+
+ac1D: extension of ac1D_simple. Slightly advanced feature such as Dirichlet BCs, 
+mesh-adaption, fold- and branch point continuation, and restarts and deflation 
+for imperfect bifurcations. 
+
+ac1Dnlbc: 1D with nonlinear BCs
+ac1Dxa(b): 1D variants with x-dependent coefficients, in two implementations, 
+ (a) in divergence form and (b) in non-divergence form. 
+
+ac2D: similar to ac1D, but 2D.
+ac3D: similar to ac1D, ac2D, but in 3D. 
+ 
+ac2Dwspot: BCs that correspond to a (wandering, upon variation of some parameter) 
+spot on the boundary. Mainly used as tutorial example for trullekrul. 
+ac3Dwspot: similar to ac2Dwspot, but in 3D. 
+
+ac2Dsq: square domain, hence discrete symmetry group D_4 and bifurcation points 
+are generically double. 
+actriangle: AC on an equilateral triangle, hence symmetry group D_3.  
+acsec: on a sector.
+acdisk: disk domain with homogeneous Neumann BCs. Symmetry group O(2), and hence 
+many branches need phase conditions for their computation. 
+
+acgc: AC augmented by a global coupling; the efficient implementation 
+relies on Sherman-Morrison formulas for linear system solvers. 
+
+acql: a quasilinear AC version; here we treat the 1D,2D and 3D case jointly 
+in one directory; somewhat advanced. 

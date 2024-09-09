@@ -1,0 +1,9 @@
+Demos for Allen-Cahn type equations with **periodic BCs** (pBC). 
+
+ac1Dpbc, ac2Dpbc, and ac3Dpbc: AC equation with pBCs in 1D,2D and 3D, but 
+WITHOUT TRANSLATIONAL INVARIANCE, which is broken by some x-dependent terms. 
+
+ac1Dpbc-b and ac2Dpbc-b: with translational invariance, hence requiring a phase 
+condition (pBC). 
+
+acqlpbc: a quasilinear version (2D) with pBCs 

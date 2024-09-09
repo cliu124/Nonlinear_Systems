@@ -1,0 +1,113 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>linalg index</title><meta name="generator" content="MATLAB 9.13"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2024-04-29"><meta name="DC.source" content="linalg_index.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; }
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+span.typesection { color:#A0522D }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><h1>linalg index</h1><div><ul><li><a href="matlab:doc('bel')">bel</a>:  bordered elimination, called by lssbel</li><li><a href="matlab:doc('beliluon')">beliluon</a>:  convenience SCRIPT to switch on bel (and lssAMG) in problem p</li><li><a href="matlab:doc('belon')">belon</a>:  switch on bel (bordered elimination) in p</li><li><a href="matlab:doc('belpi')">belpi</a>:  bordered elimination with post iterations</li><li><a href="matlab:doc('blss')">blss</a>:  BorderedLinearSystemSolver</li><li><a href="matlab:doc('blssbel')">blssbel</a>:  Increases p.bel.bw and calls lssbel.</li><li><a href="matlab:doc('blsslu')">blsslu</a>:  check for LU in p.LU, and use that if up to date, otherwise update</li><li><a href="matlab:doc('bss')">bss</a>:  bordered system solution after govaerts</li><li><a href="matlab:doc('gcafun')">gcafun</a>:  solver to be called in eigs; calls SM solver gclsseigs</li><li><a href="matlab:doc('gcafunilu')">gcafunilu</a>:  solver to be called in eigs; calls ilueigs</li><li><a href="matlab:doc('gcblss')">gcblss</a>:  customized blss for GC</li><li><a href="matlab:doc('gclss')">gclss</a>:  customized LinearSystemSolver for global coupling.</li><li><a href="matlab:doc('gclssdefl')">gclssdefl</a>:  customized LinearSystemSolver for global coupling.</li><li><a href="matlab:doc('gclsseigs')">gclsseigs</a>:  customized LinearSystemSolver for GC, eigs-version</li><li><a href="matlab:doc('getker')">getker</a>:  get kernel of G_u, used in q(c)swibra, or as prep for gentau</li><li><a href="matlab:doc('getspec')">getspec</a>:  get (and plot) spectrum of lin around p.u</li><li><a href="matlab:doc('ilueigs')">ilueigs</a>:  AMGsolver for eigs-version</li><li><a href="matlab:doc('ilupparam')">ilupparam</a>:  checks entries in p.ilup and resets amgopt in lssAMG</li><li><a href="matlab:doc('initeig')">initeig</a>:  init eigref=guesses for imag parts of evals</li><li><a href="matlab:doc('initwn')">initwn</a>:  set b vectors to prepare initeig (winding nr comp)</li><li><a href="matlab:doc('lss')">lss</a>:  default LinearSystemSolver, i.e. \</li><li><a href="matlab:doc('lssAMG')">lssAMG</a>:  interface to use ilupack for solving Ax=b. (AMG or ILU version)</li><li><a href="matlab:doc('lssAMGb')">lssAMGb</a>:  Uses ilupack (www.icm.tu-bs.de/~bolle/ilupack/) for solving Ax=b.</li><li><a href="matlab:doc('lssILUb')">lssILUb</a>:  Uses ilupack4m (https</li><li><a href="matlab:doc('lssbel')">lssbel</a>:  bordered elimination lss after govaerts with post iterations and</li><li><a href="matlab:doc('lssdefl')">lssdefl</a>:  customized LinearSystemSolver for deflation</li><li><a href="matlab:doc('lsslu')">lsslu</a>:  check for LU in p.LU, and use that if up to date</li><li><a href="matlab:doc('lsslueigs')">lsslueigs</a>:  check for LU in p.LU, and use that if up to date</li><li><a href="matlab:doc('mbel')">mbel</a>:  m-border (in p.nc.mbw) border elimination LSS</li><li><a href="matlab:doc('mbellu')">mbellu</a>:  m-border (in p.nc.mbw) elimination LSS, using lu-fact.</li><li><a href="matlab:doc('myeigs')">myeigs</a>:  interface for eigs, controlled by p.sw.eigssol</li><li><a href="matlab:doc('setbel')">setbel</a>:  convenience function for switching on bel (bordered elimination)</li><li><a href="matlab:doc('setbelilup')">setbelilup</a>: convenience function for switching on bel with AMGsolver</li><li><a href="matlab:doc('setilup')">setilup</a>: convenience function for setting AMGsolver (ilupack) parameters</li><li><a href="matlab:doc('spcalc')">spcalc</a>:  compute p.nc.neig(j) EVals of Gu near p.nc.eigref(j), j=varargin</li><li><a href="matlab:doc('stanqM')">stanqM</a>:  standard extension (by zero borders) of M for q (constraints)</li><li><a href="matlab:doc('vspcalc')">vspcalc</a>:  loop over shifts and call spcalc</li></ul></div><p class="footer"><br><a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2022b</a><br></p></div><!--
+##### SOURCE BEGIN #####
+%% linalg index
+%
+% * <matlab:doc('bel') bel>:  bordered elimination, called by lssbel  
+% * <matlab:doc('beliluon') beliluon>:  convenience SCRIPT to switch on bel (and lssAMG) in problem p 
+% * <matlab:doc('belon') belon>:  switch on bel (bordered elimination) in p  
+% * <matlab:doc('belpi') belpi>:  bordered elimination with post iterations 
+% * <matlab:doc('blss') blss>:  BorderedLinearSystemSolver 
+% * <matlab:doc('blssbel') blssbel>:  Increases p.bel.bw and calls lssbel. 
+% * <matlab:doc('blsslu') blsslu>:  check for LU in p.LU, and use that if up to date, otherwise update  
+% * <matlab:doc('bss') bss>:  bordered system solution after govaerts 
+% * <matlab:doc('gcafun') gcafun>:  solver to be called in eigs; calls SM solver gclsseigs 
+% * <matlab:doc('gcafunilu') gcafunilu>:  solver to be called in eigs; calls ilueigs  
+% * <matlab:doc('gcblss') gcblss>:  customized blss for GC   
+% * <matlab:doc('gclss') gclss>:  customized LinearSystemSolver for global coupling.  
+% * <matlab:doc('gclssdefl') gclssdefl>:  customized LinearSystemSolver for global coupling.  
+% * <matlab:doc('gclsseigs') gclsseigs>:  customized LinearSystemSolver for GC, eigs-version   
+% * <matlab:doc('getker') getker>:  get kernel of G_u, used in q(c)swibra, or as prep for gentau  
+% * <matlab:doc('getspec') getspec>:  get (and plot) spectrum of lin around p.u 
+% * <matlab:doc('ilueigs') ilueigs>:  AMGsolver for eigs-version   
+% * <matlab:doc('ilupparam') ilupparam>:  checks entries in p.ilup and resets amgopt in lssAMG  
+% * <matlab:doc('initeig') initeig>:  init eigref=guesses for imag parts of evals  
+% * <matlab:doc('initwn') initwn>:  set b vectors to prepare initeig (winding nr comp) 
+% * <matlab:doc('lss') lss>:  default LinearSystemSolver, i.e. \  
+% * <matlab:doc('lssAMG') lssAMG>:  interface to use ilupack for solving Ax=b. (AMG or ILU version)  
+% * <matlab:doc('lssAMGb') lssAMGb>:  Uses ilupack (www.icm.tu-bs.de/~bolle/ilupack/) for solving Ax=b.  
+% * <matlab:doc('lssILUb') lssILUb>:  Uses ilupack4m (https 
+% * <matlab:doc('lssbel') lssbel>:  bordered elimination lss after govaerts with post iterations and 
+% * <matlab:doc('lssdefl') lssdefl>:  customized LinearSystemSolver for deflation  
+% * <matlab:doc('lsslu') lsslu>:  check for LU in p.LU, and use that if up to date 
+% * <matlab:doc('lsslueigs') lsslueigs>:  check for LU in p.LU, and use that if up to date 
+% * <matlab:doc('mbel') mbel>:  m-border (in p.nc.mbw) border elimination LSS  
+% * <matlab:doc('mbellu') mbellu>:  m-border (in p.nc.mbw) elimination LSS, using lu-fact.  
+% * <matlab:doc('myeigs') myeigs>:  interface for eigs, controlled by p.sw.eigssol  
+% * <matlab:doc('setbel') setbel>:  convenience function for switching on bel (bordered elimination)  
+% * <matlab:doc('setbelilup') setbelilup>: convenience function for switching on bel with AMGsolver  
+% * <matlab:doc('setilup') setilup>: convenience function for setting AMGsolver (ilupack) parameters  
+% * <matlab:doc('spcalc') spcalc>:  compute p.nc.neig(j) EVals of Gu near p.nc.eigref(j), j=varargin  
+% * <matlab:doc('stanqM') stanqM>:  standard extension (by zero borders) of M for q (constraints)  
+% * <matlab:doc('vspcalc') vspcalc>:  loop over shifts and call spcalc  
+
+##### SOURCE END #####
+--></body></html>

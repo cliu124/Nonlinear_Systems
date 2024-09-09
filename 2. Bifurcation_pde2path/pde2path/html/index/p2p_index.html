@@ -1,0 +1,160 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>p2p index</title><meta name="generator" content="MATLAB 9.13"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2024-04-29"><meta name="DC.source" content="p2p_index.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; }
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+span.typesection { color:#A0522D }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><h1>p2p index</h1><div><ul><li><a href="matlab:doc('au2u')">au2u</a>:  transform active u to u with active and inactive parts</li><li><a href="matlab:doc('bifdetec')">bifdetec</a>:  Called from cont to detect bifurcation</li><li><a href="matlab:doc('bradat')">bradat</a>:  set default non-user-defined branch data</li><li><a href="matlab:doc('cfail')">cfail</a>:  convergence failure handling (beta version)</li><li><a href="matlab:doc('cont')">cont</a>:  main continuation routine</li><li><a href="matlab:doc('doubledrop')">doubledrop</a>:  double the size of p.mat.drop and p.mat.fill, e.g. for BP continuation</li><li><a href="matlab:doc('ej')">ej</a>:  generate jth canonical basis vector of length n</li><li><a href="matlab:doc('extbra')">extbra</a>:  append b2 to b1</li><li><a href="matlab:doc('fig')">fig</a>:  shorthand for figure</li><li><a href="matlab:doc('filltrafo')">filltrafo</a>:  transform matrix via p.mat.fill to change from Neumann BC to pBCs</li><li><a href="matlab:doc('findbif')">findbif</a>:  find bifpoint p1 starting at p such that abs(p1.ineg-p.sol.ineg)=1;</li><li><a href="matlab:doc('folddetec')">folddetec</a>:  called from cont to check for change of sign(det(Gu)), the Jacobian of G.</li><li><a href="matlab:doc('fsol')">fsol</a>:  replaces nloopext for using fsol.</li><li><a href="matlab:doc('fsolext')">fsolext</a>:  replaces nloopext for using fsol.</li><li><a href="matlab:doc('fsolextf')">fsolextf</a>:  rhs for fsolve</li><li><a href="matlab:doc('fsolvef')">fsolvef</a>:  rhs for fsolve</li><li><a href="matlab:doc('genamat')">genamat</a>:  generate extended matrix for arclength system.</li><li><a href="matlab:doc('getGlam')">getGlam</a>:  get the finite difference approximation of derivative of G</li><li><a href="matlab:doc('getGlampde')">getGlampde</a>:  get the finite difference approximation of derivative of G</li><li><a href="matlab:doc('getGu')">getGu</a>:  compute jacobian of G, pde-part and auxiliary part separated.</li><li><a href="matlab:doc('getGupde')">getGupde</a>:  get jacobian for pde part used in full jacobian of getGu.</li><li><a href="matlab:doc('getKuvd')">getKuvd</a>:  compute \pa_u (div(c(u)\grad v) via numjac; useful for quasilin problems</li><li><a href="matlab:doc('getaux')">getaux</a>:  return auxiliary variable (typically parameters) from p.u.</li><li><a href="matlab:doc('getder')">getder</a>:  return jacobian Gu and derivative Glam depending on p.sw.jac</li><li><a href="matlab:doc('getdeta')">getdeta</a>:  get determinant of extended system jacobian</li><li><a href="matlab:doc('getinitau')">getinitau</a>:  compute initial tangent via inistep</li><li><a href="matlab:doc('getlam')">getlam</a>:  return value of current primary parameter.</li><li><a href="matlab:doc('inistep')">inistep</a>:  return p-structure and ok flag for (attempt of) initial continuation step</li><li><a href="matlab:doc('isoc')">isoc</a>:  c-tensor for the isotropic case</li><li><a href="matlab:doc('loadp')">loadp</a>:  load point from dir/fname.mat</li><li><a href="matlab:doc('loadp2')">loadp2</a>:  load p.u, and other data (e.g., mesh) from different files,</li><li><a href="matlab:doc('loadp3')">loadp3</a>:  overwrite p.u from different file</li><li><a href="matlab:doc('loadpp')">loadpp</a>:  load point from dir/fname.mat, for plotting, setfemops NOT called</li><li><a href="matlab:doc('nleq1f')">nleq1f</a>:  wrapper for resi and Jac for NLEQ1 Newton loops</li><li><a href="matlab:doc('nleq1getGu')">nleq1getGu</a>:  wrapper for getGU</li><li><a href="matlab:doc('nleq1init')">nleq1init</a>:  set options for NLEQ1</li><li><a href="matlab:doc('nleq1link')">nleq1link</a>:  wrapper for resi and Jac for NLEQ1 Newton loops</li><li><a href="matlab:doc('nleq1resi')">nleq1resi</a>:  resi wrapper for NLEQ1</li><li><a href="matlab:doc('nloop')">nloop</a>:  Newton loop with damping according to settings,</li><li><a href="matlab:doc('nloopext')">nloopext</a>:  Newton loop for arclength extended system.</li><li><a href="matlab:doc('nloopnleq1')">nloopnleq1</a>:  Newton loop by calling NLEQ1</li><li><a href="matlab:doc('numjacinfo')">numjacinfo</a>:  give info on what numjac did</li><li><a href="matlab:doc('p2pversion')">p2pversion</a>:  print pde2path version/date</li><li><a href="matlab:doc('pderesi')">pderesi</a>:  return pde-part of residual</li><li><a href="matlab:doc('pmcont')">pmcont</a>:  parallel multi continuation version of cont</li><li><a href="matlab:doc('pmcontb1')">pmcontb1</a>:  parallel multi continuation version of cont</li><li><a href="matlab:doc('pmnewtonloop')">pmnewtonloop</a>:  parallel newtonloops called from pmcont</li><li><a href="matlab:doc('quuphi')">quuphi</a>:  derivative of qu*phii, usually zero (for constraint q linear in u)</li><li><a href="matlab:doc('quuphii')">quuphii</a>:  derivative of qu*phii, usually zero (for constraint q linear in u)</li><li><a href="matlab:doc('quuphir')">quuphir</a>:  derivative of qu*phir, usually zero</li><li><a href="matlab:doc('quupsi')">quupsi</a>:  derivative of qu*psi, usually zero (for constraint q linear in u)</li><li><a href="matlab:doc('resetc')">resetc</a>:  reset counters in p and clear p.branch</li><li><a href="matlab:doc('resi')">resi</a>:  residual for PDE and auxiliary equations</li><li><a href="matlab:doc('resinj')">resinj</a>:  interface for numjac for pderesi</li><li><a href="matlab:doc('sG')">sG</a>:  dummy sG, set in stanparam</li><li><a href="matlab:doc('sGjac')">sGjac</a>:  dummy sGjac, set in stanparam;</li><li><a href="matlab:doc('setaux')">setaux</a>:  set auxiliary variable in p.u</li><li><a href="matlab:doc('setfn')">setfn</a>:  set problem directory name, check for label overwriting or create dir</li><li><a href="matlab:doc('setlam')">setlam</a>:  set value of primary continuation parameter (see p.nc.ilam)</li><li><a href="matlab:doc('sgndetA')">sgndetA</a>:  compute sign(detA), A extended arclength cont. matrix, from data in p</li><li><a href="matlab:doc('solfixpar')">solfixpar</a>:  run Newtonloop to solve at fixed pars</li><li><a href="matlab:doc('spcontini')">spcontini</a>:  initialization for "spectral cont"</li><li><a href="matlab:doc('specGu')">specGu</a>:  computes and plots neig eigenvalues nearest to origin in figure p.plot.ifig</li><li><a href="matlab:doc('spnj')">spnj</a>:  interface routine to compute pa_u(G_u\phi) via numjac</li><li><a href="matlab:doc('spreduce')">spreduce</a>:  reduce to original system in case of fold continuation</li><li><a href="matlab:doc('sscontrol')">sscontrol</a>:  continuation stepsize control called from cont.</li><li><a href="matlab:doc('stanbra')">stanbra</a>:  standard function for output beyond bradat(p) to p.branch.</li><li><a href="matlab:doc('stanheadfu')">stanheadfu</a>:  standard "header function" for runtime output called at start of cont/pmcont</li><li><a href="matlab:doc('stanmesh')">stanmesh</a>:  generate mesh, pdetoolbox setting</li><li><a href="matlab:doc('stanparam')">stanparam</a>:  settings of p-structure to 'standard' values.</li><li><a href="matlab:doc('stansavefu')">stansavefu</a>:  standard-save-function of p-struct to file</li><li><a href="matlab:doc('stanspqjac')">stanspqjac</a>:  2nd derivative of aux. eqns, usually zero, i.e., linear q-eqn!</li><li><a href="matlab:doc('stanufu')">stanufu</a>:  standard "user function" called after each cont.step</li><li><a href="matlab:doc('swibra')">swibra</a>:  branch switching (at simple BP)</li><li><a href="matlab:doc('swipar')">swipar</a>:  switch parameter in p-struct</li><li><a href="matlab:doc('swiparf')">swiparf</a>:  switch parameter, solution from file</li><li><a href="matlab:doc('tint')">tint</a>:  time integration, semi-implicit (Euler)steps, full FEM assembling</li><li><a href="matlab:doc('tints')">tints</a>:  time integration with LU-decomp. of M+dt*K, M,K pre-assembled</li><li><a href="matlab:doc('tintx')">tintx</a>:  time integration with time series output, full G assembly</li><li><a href="matlab:doc('tintxs')">tintxs</a>:  time integration with time-series output, LU-decomp. of M+dt*K,</li><li><a href="matlab:doc('tripledrop')">tripledrop</a>:  triple the size of p.mat.drop and p.mat.fill</li><li><a href="matlab:doc('u2au')">u2au</a>:  select only the active auxiliary variables and append to upde</li><li><a href="matlab:doc('ulamcheck')">ulamcheck</a>:  test if an entry in p.usrlam or lammin or lammax has been passed;</li><li><a href="matlab:doc('xinorm')">xinorm</a>:  compute the weighted arclength-continuation xi-norm of z</li></ul></div><p class="footer"><br><a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2022b</a><br></p></div><!--
+##### SOURCE BEGIN #####
+%% p2p index
+%
+% * <matlab:doc('au2u') au2u>:  transform active u to u with active and inactive parts 
+% * <matlab:doc('bifdetec') bifdetec>:  Called from cont to detect bifurcation  
+% * <matlab:doc('bradat') bradat>:  set default non-user-defined branch data  
+% * <matlab:doc('cfail') cfail>:  convergence failure handling (beta version) 
+% * <matlab:doc('cont') cont>:  main continuation routine  
+% * <matlab:doc('doubledrop') doubledrop>:  double the size of p.mat.drop and p.mat.fill, e.g. for BP continuation  
+% * <matlab:doc('ej') ej>:  generate jth canonical basis vector of length n 
+% * <matlab:doc('extbra') extbra>:  append b2 to b1   
+% * <matlab:doc('fig') fig>:  shorthand for figure 
+% * <matlab:doc('filltrafo') filltrafo>:  transform matrix via p.mat.fill to change from Neumann BC to pBCs  
+% * <matlab:doc('findbif') findbif>:  find bifpoint p1 starting at p such that abs(p1.ineg-p.sol.ineg)=1;  
+% * <matlab:doc('folddetec') folddetec>:  called from cont to check for change of sign(det(Gu)), the Jacobian of G. 
+% * <matlab:doc('fsol') fsol>:  replaces nloopext for using fsol. 
+% * <matlab:doc('fsolext') fsolext>:  replaces nloopext for using fsol. 
+% * <matlab:doc('fsolextf') fsolextf>:  rhs for fsolve  
+% * <matlab:doc('fsolvef') fsolvef>:  rhs for fsolve  
+% * <matlab:doc('genamat') genamat>:  generate extended matrix for arclength system.  
+% * <matlab:doc('getGlam') getGlam>:  get the finite difference approximation of derivative of G 
+% * <matlab:doc('getGlampde') getGlampde>:  get the finite difference approximation of derivative of G 
+% * <matlab:doc('getGu') getGu>:  compute jacobian of G, pde-part and auxiliary part separated. 
+% * <matlab:doc('getGupde') getGupde>:  get jacobian for pde part used in full jacobian of getGu. 
+% * <matlab:doc('getKuvd') getKuvd>:  compute \pa_u (div(c(u)\grad v) via numjac; useful for quasilin problems  
+% * <matlab:doc('getaux') getaux>:  return auxiliary variable (typically parameters) from p.u. 
+% * <matlab:doc('getder') getder>:  return jacobian Gu and derivative Glam depending on p.sw.jac  
+% * <matlab:doc('getdeta') getdeta>:  get determinant of extended system jacobian 
+% * <matlab:doc('getinitau') getinitau>:  compute initial tangent via inistep 
+% * <matlab:doc('getlam') getlam>:  return value of current primary parameter. 
+% * <matlab:doc('inistep') inistep>:  return p-structure and ok flag for (attempt of) initial continuation step  
+% * <matlab:doc('isoc') isoc>:  c-tensor for the isotropic case 
+% * <matlab:doc('loadp') loadp>:  load point from dir/fname.mat 
+% * <matlab:doc('loadp2') loadp2>:  load p.u, and other data (e.g., mesh) from different files, 
+% * <matlab:doc('loadp3') loadp3>:  overwrite p.u from different file 
+% * <matlab:doc('loadpp') loadpp>:  load point from dir/fname.mat, for plotting, setfemops NOT called 
+% * <matlab:doc('nleq1f') nleq1f>:  wrapper for resi and Jac for NLEQ1 Newton loops 
+% * <matlab:doc('nleq1getGu') nleq1getGu>:  wrapper for getGU  
+% * <matlab:doc('nleq1init') nleq1init>:  set options for NLEQ1 
+% * <matlab:doc('nleq1link') nleq1link>:  wrapper for resi and Jac for NLEQ1 Newton loops 
+% * <matlab:doc('nleq1resi') nleq1resi>:  resi wrapper for NLEQ1 
+% * <matlab:doc('nloop') nloop>:  Newton loop with damping according to settings,  
+% * <matlab:doc('nloopext') nloopext>:  Newton loop for arclength extended system. 
+% * <matlab:doc('nloopnleq1') nloopnleq1>:  Newton loop by calling NLEQ1 
+% * <matlab:doc('numjacinfo') numjacinfo>:  give info on what numjac did  
+% * <matlab:doc('p2pversion') p2pversion>:  print pde2path version/date  
+% * <matlab:doc('pderesi') pderesi>:  return pde-part of residual 
+% * <matlab:doc('pmcont') pmcont>:  parallel multi continuation version of cont  
+% * <matlab:doc('pmcontb1') pmcontb1>:  parallel multi continuation version of cont  
+% * <matlab:doc('pmnewtonloop') pmnewtonloop>:  parallel newtonloops called from pmcont  
+% * <matlab:doc('quuphi') quuphi>:  derivative of qu*phii, usually zero (for constraint q linear in u)  
+% * <matlab:doc('quuphii') quuphii>:  derivative of qu*phii, usually zero (for constraint q linear in u)  
+% * <matlab:doc('quuphir') quuphir>:  derivative of qu*phir, usually zero  
+% * <matlab:doc('quupsi') quupsi>:  derivative of qu*psi, usually zero (for constraint q linear in u)  
+% * <matlab:doc('resetc') resetc>:  reset counters in p and clear p.branch 
+% * <matlab:doc('resi') resi>:  residual for PDE and auxiliary equations 
+% * <matlab:doc('resinj') resinj>:  interface for numjac for pderesi 
+% * <matlab:doc('sG') sG>:  dummy sG, set in stanparam 
+% * <matlab:doc('sGjac') sGjac>:  dummy sGjac, set in stanparam;  
+% * <matlab:doc('setaux') setaux>:  set auxiliary variable in p.u 
+% * <matlab:doc('setfn') setfn>:  set problem directory name, check for label overwriting or create dir  
+% * <matlab:doc('setlam') setlam>:  set value of primary continuation parameter (see p.nc.ilam) 
+% * <matlab:doc('sgndetA') sgndetA>:  compute sign(detA), A extended arclength cont. matrix, from data in p  
+% * <matlab:doc('solfixpar') solfixpar>:  run Newtonloop to solve at fixed pars 
+% * <matlab:doc('spcontini') spcontini>:  initialization for "spectral cont" 
+% * <matlab:doc('specGu') specGu>:  computes and plots neig eigenvalues nearest to origin in figure p.plot.ifig 
+% * <matlab:doc('spnj') spnj>:  interface routine to compute pa_u(G_u\phi) via numjac  
+% * <matlab:doc('spreduce') spreduce>:  reduce to original system in case of fold continuation 
+% * <matlab:doc('sscontrol') sscontrol>:  continuation stepsize control called from cont. 
+% * <matlab:doc('stanbra') stanbra>:  standard function for output beyond bradat(p) to p.branch. 
+% * <matlab:doc('stanheadfu') stanheadfu>:  standard "header function" for runtime output called at start of cont/pmcont 
+% * <matlab:doc('stanmesh') stanmesh>:  generate mesh, pdetoolbox setting 
+% * <matlab:doc('stanparam') stanparam>:  settings of p-structure to 'standard' values.  
+% * <matlab:doc('stansavefu') stansavefu>:  standard-save-function of p-struct to file 
+% * <matlab:doc('stanspqjac') stanspqjac>:  2nd derivative of aux. eqns, usually zero, i.e., linear q-eqn! 
+% * <matlab:doc('stanufu') stanufu>:  standard "user function" called after each cont.step 
+% * <matlab:doc('swibra') swibra>:  branch switching (at simple BP)  
+% * <matlab:doc('swipar') swipar>:  switch parameter in p-struct 
+% * <matlab:doc('swiparf') swiparf>:  switch parameter, solution from file 
+% * <matlab:doc('tint') tint>:  time integration, semi-implicit (Euler)steps, full FEM assembling 
+% * <matlab:doc('tints') tints>:  time integration with LU-decomp. of M+dt*K, M,K pre-assembled  
+% * <matlab:doc('tintx') tintx>:  time integration with time series output, full G assembly 
+% * <matlab:doc('tintxs') tintxs>:  time integration with time-series output, LU-decomp. of M+dt*K,  
+% * <matlab:doc('tripledrop') tripledrop>:  triple the size of p.mat.drop and p.mat.fill   
+% * <matlab:doc('u2au') u2au>:  select only the active auxiliary variables and append to upde 
+% * <matlab:doc('ulamcheck') ulamcheck>:  test if an entry in p.usrlam or lammin or lammax has been passed;  
+% * <matlab:doc('xinorm') xinorm>:  compute the weighted arclength-continuation xi-norm of z 
+
+##### SOURCE END #####
+--></body></html>

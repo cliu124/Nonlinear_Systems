@@ -1,0 +1,457 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>stanparam</title><meta name="generator" content="MATLAB 9.13"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2024-04-29"><meta name="DC.source" content="stanparam.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; }
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+span.typesection { color:#A0522D }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><pre class="codeinput"><span class="keyword">function</span> p=stanparam(varargin)
+<span class="comment">% STANPARAM: settings of p-structure to 'standard' values.</span>
+<span class="comment">% We set some fields to [], because this file is also intended</span>
+<span class="comment">% as a quick reference for the meaning of fields.</span>
+<span class="comment">%</span>
+<span class="comment">%  p=stanparam(p)</span>
+<span class="keyword">if</span> nargin==1; p=varargin{1}; <span class="keyword">else</span> p=[]; <span class="keyword">end</span>
+
+<span class="comment">%%%%%%%% function handles for which there are 'standard choices'</span>
+p.fuha.headfu=@stanheadfu; <span class="comment">% headline</span>
+p.fuha.ufu=@stanufu;    <span class="comment">% printout, stop if lam&lt;&gt;p.sw.lammin,p.sw.lammax</span>
+p.fuha.outfu=@stanbra;  <span class="comment">% branch output</span>
+p.fuha.lss=@lss;        <span class="comment">% linear systems solver, default use \</span>
+p.fuha.blss=@lss;      <span class="comment">% bordered linear system solver, default \</span>
+p.fuha.savefu=@stansavefu; <span class="comment">% save function</span>
+p.fuha.postmmod=@stanpostmeshmod; <span class="comment">% post-mesh-modification</span>
+p.fuha.e2rs=@stane2rs;  <span class="comment">% elements2refine selection function</span>
+<span class="comment">% in the p.sw.sfem=+-1 setting, the rhs and (optional) Jacobian are encoded</span>
+<span class="comment">% in p.fuha.sG and p.fuha.sGjac. For convenience, we use defaults</span>
+p.fuha.sG=@sG;  <span class="comment">% rhs with signature r=sG(p,u), called for p.sw.sfem=+-1;</span>
+p.fuha.sGjac=@sGjac;  <span class="comment">% Jac of sG, with signature Gu=p.fuha.sGjac(p,u,r)</span>
+<span class="comment">% If you keep these names, then we recommend to provide sG (and sGjac) in</span>
+<span class="comment">% the current directory (not somewhere in the matlab-path).</span>
+<span class="comment">% *** if p.sw.sfem=0 (full assembly, somewhat obsolete), then G and Gjac</span>
+<span class="comment">% must be encoded as</span>
+<span class="comment">% [c,f,a,b]=p.fuha.G(p,u) and [c,a,b]=p.fuha.Gjac(p,u)</span>
+<span class="comment">%</span>
+<span class="comment">% the ff 2 fuhas are only needed in case of constraints</span>
+p.fuha.qf=@qf;        <span class="comment">% possible constraints</span>
+p.fuha.qfder=@qfder;  <span class="comment">% derivatives of constraints</span>
+<span class="comment">% the ff 4 fuhas are needed for BP, FP, HP continuation with constraints; the defaults</span>
+<span class="comment">% set here all return the appropriate zero matrices as q is usually linear in u</span>
+<span class="comment">%p.fuha.quupsi=@quupsi; % \pa_u(q_u*psiq) (for BP continuation with constraints)</span>
+<span class="comment">%p.fuha.quuphi=@quuphi; % \pa_u(q_u*psiq) (for FP continuation with constraints)</span>
+<span class="comment">%p.fuha.quuphir=@quuphir; % \pa_u(q_u*psiq_real) (for HP continuation with constraints)</span>
+<span class="comment">%p.fuha.quuphii=@quuphii; % \pa_u(q_u*psiq_imag) (for HP continuation with constraints)</span>
+<span class="comment">%%%%%%%% numerical param</span>
+p.nc.neq=1;             <span class="comment">% #of PDEs (components in PDE system)</span>
+p.nc.tol=1e-8;          <span class="comment">% residual tol (used for p.sw.tol=0 (default))</span>
+<span class="comment">%p.nc.tols=1e-6;         % step tol (used for p.sw.tol=1)</span>
+p.nc.imax=10;           <span class="comment">% max # of newton-iterations in corrector</span>
+p.nc.almin=0.5;        <span class="comment">% minimal damping for nloop</span>
+p.nc.almine=0.5;       <span class="comment">% minimal damping for nloopext</span>
+p.nc.dsmin=0.0001; p.nc.dsmax=5; <span class="comment">% min/max stepsize</span>
+p.nc.lammin=-1e6; p.nc.lammax=1e6; <span class="comment">% Bif.diagram bounds</span>
+p.nc.nsteps=20;         <span class="comment">% number of continuation steps (multi-steps for pmcont)</span>
+p.nc.ntot=1e4;          <span class="comment">% max total number of continuation steps</span>
+p.nc.del=1e-4;          <span class="comment">% perturbation size for finite differences</span>
+p.nc.lamdtol=0.5;       <span class="comment">% parametrization switch tolerance (for p.sw.para=1)</span>
+p.nc.dsinciter=p.nc.imax/2;   <span class="comment">% increase ds if iter &lt; dsinciter</span>
+p.nc.dsincfac=2;        <span class="comment">% by this factor</span>
+p.nc.errbound=0;        <span class="comment">% if &gt;0 and errchecksw&gt;0 this bound is determines call to mesh refinement</span>
+p.nc.dlammax=1;         <span class="comment">% max difference in lambda</span>
+p.nc.intol=0; <span class="comment">% consider evals with re(mu)&lt;intol as negative; last resort to suppress spurious instab.</span>
+p.nc.neig=10;           <span class="comment">% # eigenvalues for eigs for G_u, must be extended</span>
+                        <span class="comment">% to vector if  p.nc.eigref is vector</span>
+p.nc.neigdet=0;         <span class="comment">% # eigenvalues for eigs for A, 0 for LU-method</span>
+p.nc.eigref=0;          <span class="comment">% 0 (initially), but extended to vector by, e.g.,</span>
+                        <span class="comment">% initeig if looking for Hopf bifurcations</span>
+p.nc.eigint=[-1 0.1];   <span class="comment">% 'sarn' eigenvalue region real part interval</span>
+p.nc.bisecmax=10;       <span class="comment">% max # of bisections during special point locations</span>
+p.nc.dsminbis=1e-9;     <span class="comment">% dsmin for bif-and foldloc via bisection</span>
+p.nc.mu1=0.1;           <span class="comment">% start bisec if ineg changed, and |re mu|&lt;mu1</span>
+p.nc.mu2=1e-3;          <span class="comment">% assume re(mu)=0 if |re(mu)|&lt;mu2 at end of bisec</span>
+p.nc.foldtol=1e-3;      <span class="comment">% tolerance in bifdetec setting 2 to distinguish FPs from BPs</span>
+<span class="comment">%p.nc.hortol=1e-2;       % tolerance in swibra for assuming switching to horizontal branch</span>
+<span class="comment">%%%%%%%% mesh-adaption</span>
+p.nc.amod=0;            <span class="comment">% adapt mesh each amod-th step (0 for never)</span>
+p.nc.bddistx=0.1;       <span class="comment">% boundary distance x for mesh-ref. for pBC</span>
+p.nc.bddisty=0.1;
+p.nc.ngen=5;            <span class="comment">% max number of refinements during adaption</span>
+p.nc.sig=0.5;           <span class="comment">% sig-value for mesh-refinement</span>
+<span class="comment">%%%%%%%% switches</span>
+p.sw.bifcheck=1;        <span class="comment">% 0: off. 1: LU, 2: via spcalc</span>
+p.sw.cdbb=0; <span class="comment">% continue directly behind bif: 0: use u1 computed in cont;</span>
+                        <span class="comment">% 1: use ubb computed in bifdetec</span>
+<span class="comment">%p.sw.tol=0;             % 0: for residual, 1 for Newton stepsize</span>
+p.sw.bifloc=1;          <span class="comment">% 0 for tangent, 1 for secant, 2 for quadratic in bif.localization</span>
+p.sw.foldcheck=0;       <span class="comment">% 0: no fold detection, 1: fold detection on.</span>
+p.sw.spcont=0;          <span class="comment">% 0=normal continuation, 2/1=fold/branch point (zero eigenvalue) continuation</span>
+p.sw.spcalc=1;          <span class="comment">% 1/0 to calculate/not calculate stability EVals</span>
+p.sw.spjac=1;           <span class="comment">% 1/0 to use fuha.spjac or not during fold/branch point cont</span>
+p.sw.sfem=0;            <span class="comment">% switch for simple Jacobian and residual, e.g. semilinear problem:</span>
+                        <span class="comment">% 0: off, 1: use p.fuha.sG and p.fuha.sGjac, requires call to</span>
+                        <span class="comment">%            setfemops and setting p.eqn.c, p.eqn.b, p.eqn.a</span>
+p.sw.para=1;            <span class="comment">% parametrization switch: 0=nat, 2=arc, 1=auto-switch</span>
+p.sw.secpred=0;         <span class="comment">% for BP continuation use secant predictor via p.sw.secpred=1</span>
+p.sw.jac=1;             <span class="comment">% Jacobian switch, % 1: Gu analytically, else FD</span>
+p.sw.qjac=1;            <span class="comment">% 1: qu analytically, else FD</span>
+p.sw.newt=0;            <span class="comment">% 0=newton, 1=chord, 2=nleq1 (deuflhard)</span>
+p.sw.norm=<span class="string">'inf'</span>;        <span class="comment">% norm and tol for corrector</span>
+p.sw.errcheck=0;        <span class="comment">% 0: off, 1: put err-est to p.sol.err, but no further action</span>
+                        <span class="comment">% 2: meshadac if p.sol.err&gt;p.nc.errbound, &gt;2: as for 2 but refine mesh</span>
+p.sw.eigmeth=<span class="string">'eigs'</span>;    <span class="comment">% eigendata computation method 'eigs' or 'sarn'</span>
+p.sw.evopts.disp=0;     <span class="comment">% don't display anything during EVal calculations</span>
+p.sw.eigsstart=1;       <span class="comment">% 0 to use random start for eigs, 1 for [1;...;1]</span>
+p.sw.eigssol=0;         <span class="comment">% 0 standard, 1 global coupling, 2 ilu</span>
+p.sw.inter=1; p.sw.verb=1;  <span class="comment">% interaction/verbosity switch: 0=none, 1=some, 2=much</span>
+p.sw.bprint=0;         <span class="comment">% #branchcompos for printout by outfu</span>
+p.sw.bcper=0;           <span class="comment">% switch for periodic BC</span>
+<span class="comment">%%%%%%%% LSS</span>
+p.bel.tol=1e-4;         <span class="comment">% tol for lssbel (bordered elim)</span>
+p.bel.imax=10;          <span class="comment">% max # of iterations in bel</span>
+p.bel.bw=0;             <span class="comment">% border width</span>
+p.ilup.droptol=1e-3;    <span class="comment">% droptol for lssAMG        (may be adapted during lssAMG)</span>
+p.ilup.droptolS=1e-4;
+p.ilup.droptolmin=1e-8; <span class="comment">% min droptol for lssAMG</span>
+p.ilup.maxit=200;       <span class="comment">% max # of GMRES iterations (may be adapted during lssAMG)</span>
+p.ilup.maxitmax=1000;   <span class="comment">% upper bound for max # of GMRES iterations</span>
+p.ilup.noconvhandling=0;<span class="comment">% switch how to deal with no conv of AMG: 0: stop;</span>
+                        <span class="comment">% 1: change droptol, 2:  change maxit</span>
+p.ilup.nrestart=100;     <span class="comment">% 'default' in AMGinit says 0, but that gives seg-faults</span>
+p.ilup.ilun=0;          <span class="comment">% force new prec after ilun steps (0 = don't force)</span>
+<span class="comment">%%%%%%%% plotting</span>
+p.plot.pstyle=1;        <span class="comment">% solution plot style: 1 for mesh-plot of u, 2 for contour-plot,</span>
+                        <span class="comment">% 3 for surface, with lightning, 4 for only the mesh</span>
+p.plot.pfig=1;          <span class="comment">% screen layout of profile figure</span>
+p.plot.brfig=2;         <span class="comment">% same for branch figure</span>
+p.plot.ifig=6;          <span class="comment">% same for info figure</span>
+p.plot.pmod=1;          <span class="comment">% plot every pmod-th step,</span>
+p.plot.pcmp=1;          <span class="comment">% component of sol. plotting</span>
+p.plot.bpcmp=0;         <span class="comment">% component of branch for plotting</span>
+p.plot.cm=<span class="string">'parula'</span>;       <span class="comment">% colormap</span>
+p.plot.lpos=[0 0 10];   <span class="comment">% light-pos for pstyle=3</span>
+p.plot.axis=<span class="string">'tight'</span>;    <span class="comment">% choose, e.g., 'tight', 'equal', 'image'</span>
+p.plot.fs=16;           <span class="comment">% fontsize for sol-plots,</span>
+p.plot.labelsw=0;       <span class="comment">% 1/0 for labels/no labels in solplot</span>
+p.plot.spfig=4;         <span class="comment">% figure number for spectral output with spcalc (or specGu)</span>
+p.plot.brafig=3;        <span class="comment">% figure number for standard post-computation plotting of branch</span>
+p.plot.spfig2=6;        <span class="comment">% figure number for spectral output of bordered matrix Gua used in jaccheck</span>
+p.plot.udict={};        <span class="comment">% dictonary for names of u-components</span>
+p.plot.auxdict={};      <span class="comment">% dictonary for names of auxiliary variables</span>
+p.plot.alpha=1;       <span class="comment">% transparency for 3D plots (small alpha=transparent)</span>
+p.plot.view=[20,30];    <span class="comment">% view for 3D plots</span>
+p.plot.ng=20;           <span class="comment">% # points for interpol. for isosurf plot</span>
+p.plot.levc={<span class="string">'blue'</span>,<span class="string">'red'</span>}; <span class="comment">% colors for isoplots</span>
+p.plot.fancybd=2;       <span class="comment">% 0: old plotbra, 1 labels to point via line, 2 via annotate</span>
+p.plot.lsw=1;           <span class="comment">% Switch for default reg/FP/HP/BP/usrlam labels, 0: all off!</span>
+<span class="comment">% binary setting, i.e. usr=2^0, BP=2^1, ..., reg=2^4=16. eg: lsw=3=1+2 means usr and BP</span>
+<span class="comment">% lsw=16 means: reg, lsw=18 means reg+BP, lsw=31 means all</span>
+<span class="comment">%%%%%%%% file handling</span>
+p.file.pnamesw=0;       <span class="comment">% 1 to automatically set prefix of file names to variable name</span>
+p.file.mdir=<span class="string">'meshes'</span>;   <span class="comment">% dir so save meshes if ms=0;</span>
+p.file.dirchecksw=0;    <span class="comment">% 1 for user check if directories need to be created,</span>
+                        <span class="comment">% or written into if exist;  0 no check</span>
+p.file.smod=5;          <span class="comment">% save ev. smod-th step, 0 for none</span>
+p.file.count=0; p.file.bcount=1;  <span class="comment">% counter for steps and BPs</span>
+p.file.hcount=1; p.file.fcount=1; <span class="comment">% counter for HPs and FPs</span>
+p.file.msave=1;         <span class="comment">% mesh saving: 1 save mesh in every point, 0 only save mesh if it is changed</span>
+p.file.single=0;        <span class="comment">% 0 save p.u, p.tau, p.sol.muv, and p.branch as double, 1 save as single</span>
+<span class="comment">%%%%%%%% timing: here only for reference, values set in cont/pmcont</span>
+p.time.timesw=1;        <span class="comment">% 1 for output at end of cont</span>
+p.time.tot=0; p.time.totst=0; p.time.st=0; <span class="comment">% times: total, total for steps, current step</span>
+p.time.bif=0; p.time.spec=0; p.time.newton=0; <span class="comment">% times for: bifcheck, spcalc, nloop</span>
+<span class="comment">%%%%%%%% pmcont</span>
+p.pm.resfac=0.01;        <span class="comment">% resi-improvement for pmcont</span>
+p.pm.mst=5;            <span class="comment">% #predictors for pmcont</span>
+p.pm.imax=1;            <span class="comment">% base-max-iterations for pmcont</span>
+p.pm.runpar=1;          <span class="comment">% set to 0 for switching off parfor loops (clash with globals)</span>
+<span class="comment">%%%%%%%% fsolve</span>
+p.fsol.fsol=0;          <span class="comment">% use fsolve? 0:no, 1:pde, 2:ext, 3: both</span>
+p.fsol.meth=1;          <span class="comment">% 1=trust-reg., else Levenberg-Marquardt</span>
+p.fsol.disp=3;          <span class="comment">% 0=off, 1=final, 2=notify, 3=iter</span>
+p.fsol.tol=p.nc.tol^2; p.fsol.imax=10;
+<span class="keyword">try</span>; p.fsol.opt=optimset(<span class="string">'Jacobian'</span>,<span class="string">'on'</span>,<span class="string">'PrecondBandWidth'</span>,0);
+<span class="keyword">catch</span>; fprintf(<span class="string">'optimzation toolbox seems to be missing\m'</span>);
+<span class="keyword">end</span>
+<span class="comment">%%%%%%%% runtime data, here initialized for startup</span>
+p.sol.deta=0;           <span class="comment">% determinant of linearization -- change is used to detect bif</span>
+p.sol.err=0;            <span class="comment">% a posteriori error estimate</span>
+p.sol.meth=<span class="string">' '</span>;         <span class="comment">% string code for continuation step method 'arc', or 'nat'. See p.sw.para</span>
+p.sol.res=0;            <span class="comment">% residual of solution in norm p.sw.norm</span>
+p.sol.iter=0;           <span class="comment">% number of iterations used for this solution</span>
+p.sol.ineg=-1;          <span class="comment">% number of negative (i.e. unstable) eigenvalues</span>
+p.sol.muv=[];           <span class="comment">% eigenvalues (vector, or matrix if eigref is vector)</span>
+p.sol.lamd=0;           <span class="comment">% step length in primary parameter (from tangent vector)</span>
+p.sol.restart=1;        <span class="comment">% 1: make initial steps, 0: use tangent p.tau</span>
+p.sw.abs=0;
+p.tau=1;                <span class="comment">% tangent vector, here trivially initialized</span>
+p.branch=[];            <span class="comment">% branch, here trivially initialized</span>
+p.u=[];                 <span class="comment">% solution, here trivially initialized</span>
+p.sol.xiq=0;            <span class="comment">% weight of auxiliary eqns for arclength scalar product (needs to exist)</span>
+p.mat.fill=1;           <span class="comment">% fill operator (nontrivial in case of periodic b.c.)</span>
+p.mat.drop=1;           <span class="comment">% drop operator (nontrivial in case of periodic b.c.)</span>
+p.mat.M=[]; p.mat.K=[]; <span class="comment">% empty mass and stiffness matrices</span>
+p.mesh=[];              <span class="comment">% the FEM mesh</span>
+p.mesh.sympoi=0;        <span class="comment">% if 1 then make poimesh symmetric</span>
+p.sol.ptype=-99;        <span class="comment">% initial point type; types are: -1 (initial point),</span>
+                        <span class="comment">% -3 (user 'lam'), -2 (swibra point), 0 (normal), 1 (branch point),</span>
+                        <span class="comment">% 2 (fold point), 3 (Hopf point), 4 (normal point on Hopf branch)</span>
+p.usrlam=[];            <span class="comment">% desired lam-values</span>
+p.nc.nq=0;              <span class="comment">% number of auxiliary equations</span>
+</pre><p class="footer"><br><a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2022b</a><br></p></div><!--
+##### SOURCE BEGIN #####
+function p=stanparam(varargin)
+% STANPARAM: settings of p-structure to 'standard' values. 
+% We set some fields to [], because this file is also intended 
+% as a quick reference for the meaning of fields. 
+%
+%  p=stanparam(p)
+if nargin==1; p=varargin{1}; else p=[]; end 
+
+%%%%%%%% function handles for which there are 'standard choices' 
+p.fuha.headfu=@stanheadfu; % headline 
+p.fuha.ufu=@stanufu;    % printout, stop if lam<>p.sw.lammin,p.sw.lammax
+p.fuha.outfu=@stanbra;  % branch output 
+p.fuha.lss=@lss;        % linear systems solver, default use \ 
+p.fuha.blss=@lss;      % bordered linear system solver, default \
+p.fuha.savefu=@stansavefu; % save function
+p.fuha.postmmod=@stanpostmeshmod; % post-mesh-modification 
+p.fuha.e2rs=@stane2rs;  % elements2refine selection function 
+% in the p.sw.sfem=+-1 setting, the rhs and (optional) Jacobian are encoded
+% in p.fuha.sG and p.fuha.sGjac. For convenience, we use defaults 
+p.fuha.sG=@sG;  % rhs with signature r=sG(p,u), called for p.sw.sfem=+-1; 
+p.fuha.sGjac=@sGjac;  % Jac of sG, with signature Gu=p.fuha.sGjac(p,u,r)
+% If you keep these names, then we recommend to provide sG (and sGjac) in 
+% the current directory (not somewhere in the matlab-path).  
+% *** if p.sw.sfem=0 (full assembly, somewhat obsolete), then G and Gjac 
+% must be encoded as 
+% [c,f,a,b]=p.fuha.G(p,u) and [c,a,b]=p.fuha.Gjac(p,u) 
+% 
+% the ff 2 fuhas are only needed in case of constraints
+p.fuha.qf=@qf;        % possible constraints
+p.fuha.qfder=@qfder;  % derivatives of constraints
+% the ff 4 fuhas are needed for BP, FP, HP continuation with constraints; the defaults 
+% set here all return the appropriate zero matrices as q is usually linear in u 
+%p.fuha.quupsi=@quupsi; % \pa_u(q_u*psiq) (for BP continuation with constraints) 
+%p.fuha.quuphi=@quuphi; % \pa_u(q_u*psiq) (for FP continuation with constraints) 
+%p.fuha.quuphir=@quuphir; % \pa_u(q_u*psiq_real) (for HP continuation with constraints) 
+%p.fuha.quuphii=@quuphii; % \pa_u(q_u*psiq_imag) (for HP continuation with constraints) 
+%%%%%%%% numerical param   
+p.nc.neq=1;             % #of PDEs (components in PDE system)
+p.nc.tol=1e-8;          % residual tol (used for p.sw.tol=0 (default)) 
+%p.nc.tols=1e-6;         % step tol (used for p.sw.tol=1) 
+p.nc.imax=10;           % max # of newton-iterations in corrector 
+p.nc.almin=0.5;        % minimal damping for nloop
+p.nc.almine=0.5;       % minimal damping for nloopext
+p.nc.dsmin=0.0001; p.nc.dsmax=5; % min/max stepsize 
+p.nc.lammin=-1e6; p.nc.lammax=1e6; % Bif.diagram bounds 
+p.nc.nsteps=20;         % number of continuation steps (multi-steps for pmcont)
+p.nc.ntot=1e4;          % max total number of continuation steps 
+p.nc.del=1e-4;          % perturbation size for finite differences
+p.nc.lamdtol=0.5;       % parametrization switch tolerance (for p.sw.para=1)
+p.nc.dsinciter=p.nc.imax/2;   % increase ds if iter < dsinciter 
+p.nc.dsincfac=2;        % by this factor 
+p.nc.errbound=0;        % if >0 and errchecksw>0 this bound is determines call to mesh refinement
+p.nc.dlammax=1;         % max difference in lambda
+p.nc.intol=0; % consider evals with re(mu)<intol as negative; last resort to suppress spurious instab.
+p.nc.neig=10;           % # eigenvalues for eigs for G_u, must be extended 
+                        % to vector if  p.nc.eigref is vector 
+p.nc.neigdet=0;         % # eigenvalues for eigs for A, 0 for LU-method
+p.nc.eigref=0;          % 0 (initially), but extended to vector by, e.g., 
+                        % initeig if looking for Hopf bifurcations                           
+p.nc.eigint=[-1 0.1];   % 'sarn' eigenvalue region real part interval
+p.nc.bisecmax=10;       % max # of bisections during special point locations 
+p.nc.dsminbis=1e-9;     % dsmin for bif-and foldloc via bisection
+p.nc.mu1=0.1;           % start bisec if ineg changed, and |re mu|<mu1
+p.nc.mu2=1e-3;          % assume re(mu)=0 if |re(mu)|<mu2 at end of bisec 
+p.nc.foldtol=1e-3;      % tolerance in bifdetec setting 2 to distinguish FPs from BPs 
+%p.nc.hortol=1e-2;       % tolerance in swibra for assuming switching to horizontal branch
+%%%%%%%% mesh-adaption 
+p.nc.amod=0;            % adapt mesh each amod-th step (0 for never) 
+p.nc.bddistx=0.1;       % boundary distance x for mesh-ref. for pBC
+p.nc.bddisty=0.1; 
+p.nc.ngen=5;            % max number of refinements during adaption 
+p.nc.sig=0.5;           % sig-value for mesh-refinement
+%%%%%%%% switches
+p.sw.bifcheck=1;        % 0: off. 1: LU, 2: via spcalc
+p.sw.cdbb=0; % continue directly behind bif: 0: use u1 computed in cont;                        
+                        % 1: use ubb computed in bifdetec 
+%p.sw.tol=0;             % 0: for residual, 1 for Newton stepsize
+p.sw.bifloc=1;          % 0 for tangent, 1 for secant, 2 for quadratic in bif.localization
+p.sw.foldcheck=0;       % 0: no fold detection, 1: fold detection on.
+p.sw.spcont=0;          % 0=normal continuation, 2/1=fold/branch point (zero eigenvalue) continuation
+p.sw.spcalc=1;          % 1/0 to calculate/not calculate stability EVals 
+p.sw.spjac=1;           % 1/0 to use fuha.spjac or not during fold/branch point cont
+p.sw.sfem=0;            % switch for simple Jacobian and residual, e.g. semilinear problem:
+                        % 0: off, 1: use p.fuha.sG and p.fuha.sGjac, requires call to 
+                        %            setfemops and setting p.eqn.c, p.eqn.b, p.eqn.a 
+p.sw.para=1;            % parametrization switch: 0=nat, 2=arc, 1=auto-switch
+p.sw.secpred=0;         % for BP continuation use secant predictor via p.sw.secpred=1
+p.sw.jac=1;             % Jacobian switch, % 1: Gu analytically, else FD
+p.sw.qjac=1;            % 1: qu analytically, else FD 
+p.sw.newt=0;            % 0=newton, 1=chord, 2=nleq1 (deuflhard)   
+p.sw.norm='inf';        % norm and tol for corrector 
+p.sw.errcheck=0;        % 0: off, 1: put err-est to p.sol.err, but no further action 
+                        % 2: meshadac if p.sol.err>p.nc.errbound, >2: as for 2 but refine mesh 
+p.sw.eigmeth='eigs';    % eigendata computation method 'eigs' or 'sarn'
+p.sw.evopts.disp=0;     % don't display anything during EVal calculations
+p.sw.eigsstart=1;       % 0 to use random start for eigs, 1 for [1;...;1]  
+p.sw.eigssol=0;         % 0 standard, 1 global coupling, 2 ilu
+p.sw.inter=1; p.sw.verb=1;  % interaction/verbosity switch: 0=none, 1=some, 2=much
+p.sw.bprint=0;         % #branchcompos for printout by outfu
+p.sw.bcper=0;           % switch for periodic BC 
+%%%%%%%% LSS
+p.bel.tol=1e-4;         % tol for lssbel (bordered elim)
+p.bel.imax=10;          % max # of iterations in bel 
+p.bel.bw=0;             % border width
+p.ilup.droptol=1e-3;    % droptol for lssAMG        (may be adapted during lssAMG) 
+p.ilup.droptolS=1e-4; 
+p.ilup.droptolmin=1e-8; % min droptol for lssAMG
+p.ilup.maxit=200;       % max # of GMRES iterations (may be adapted during lssAMG) 
+p.ilup.maxitmax=1000;   % upper bound for max # of GMRES iterations
+p.ilup.noconvhandling=0;% switch how to deal with no conv of AMG: 0: stop;  
+                        % 1: change droptol, 2:  change maxit 
+p.ilup.nrestart=100;     % 'default' in AMGinit says 0, but that gives seg-faults
+p.ilup.ilun=0;          % force new prec after ilun steps (0 = don't force)
+%%%%%%%% plotting 
+p.plot.pstyle=1;        % solution plot style: 1 for mesh-plot of u, 2 for contour-plot, 
+                        % 3 for surface, with lightning, 4 for only the mesh
+p.plot.pfig=1;          % screen layout of profile figure
+p.plot.brfig=2;         % same for branch figure
+p.plot.ifig=6;          % same for info figure
+p.plot.pmod=1;          % plot every pmod-th step, 
+p.plot.pcmp=1;          % component of sol. plotting 
+p.plot.bpcmp=0;         % component of branch for plotting 
+p.plot.cm='parula';       % colormap 
+p.plot.lpos=[0 0 10];   % light-pos for pstyle=3
+p.plot.axis='tight';    % choose, e.g., 'tight', 'equal', 'image' 
+p.plot.fs=16;           % fontsize for sol-plots, 
+p.plot.labelsw=0;       % 1/0 for labels/no labels in solplot
+p.plot.spfig=4;         % figure number for spectral output with spcalc (or specGu)
+p.plot.brafig=3;        % figure number for standard post-computation plotting of branch
+p.plot.spfig2=6;        % figure number for spectral output of bordered matrix Gua used in jaccheck
+p.plot.udict={};        % dictonary for names of u-components
+p.plot.auxdict={};      % dictonary for names of auxiliary variables
+p.plot.alpha=1;       % transparency for 3D plots (small alpha=transparent) 
+p.plot.view=[20,30];    % view for 3D plots
+p.plot.ng=20;           % # points for interpol. for isosurf plot
+p.plot.levc={'blue','red'}; % colors for isoplots
+p.plot.fancybd=2;       % 0: old plotbra, 1 labels to point via line, 2 via annotate
+p.plot.lsw=1;           % Switch for default reg/FP/HP/BP/usrlam labels, 0: all off!
+% binary setting, i.e. usr=2^0, BP=2^1, ..., reg=2^4=16. eg: lsw=3=1+2 means usr and BP
+% lsw=16 means: reg, lsw=18 means reg+BP, lsw=31 means all
+%%%%%%%% file handling 
+p.file.pnamesw=0;       % 1 to automatically set prefix of file names to variable name
+p.file.mdir='meshes';   % dir so save meshes if ms=0; 
+p.file.dirchecksw=0;    % 1 for user check if directories need to be created, 
+                        % or written into if exist;  0 no check
+p.file.smod=5;          % save ev. smod-th step, 0 for none 
+p.file.count=0; p.file.bcount=1;  % counter for steps and BPs 
+p.file.hcount=1; p.file.fcount=1; % counter for HPs and FPs  
+p.file.msave=1;         % mesh saving: 1 save mesh in every point, 0 only save mesh if it is changed 
+p.file.single=0;        % 0 save p.u, p.tau, p.sol.muv, and p.branch as double, 1 save as single
+%%%%%%%% timing: here only for reference, values set in cont/pmcont 
+p.time.timesw=1;        % 1 for output at end of cont
+p.time.tot=0; p.time.totst=0; p.time.st=0; % times: total, total for steps, current step
+p.time.bif=0; p.time.spec=0; p.time.newton=0; % times for: bifcheck, spcalc, nloop 
+%%%%%%%% pmcont 
+p.pm.resfac=0.01;        % resi-improvement for pmcont 
+p.pm.mst=5;            % #predictors for pmcont 
+p.pm.imax=1;            % base-max-iterations for pmcont 
+p.pm.runpar=1;          % set to 0 for switching off parfor loops (clash with globals)  
+%%%%%%%% fsolve 
+p.fsol.fsol=0;          % use fsolve? 0:no, 1:pde, 2:ext, 3: both
+p.fsol.meth=1;          % 1=trust-reg., else Levenberg-Marquardt
+p.fsol.disp=3;          % 0=off, 1=final, 2=notify, 3=iter
+p.fsol.tol=p.nc.tol^2; p.fsol.imax=10; 
+try; p.fsol.opt=optimset('Jacobian','on','PrecondBandWidth',0); 
+catch; fprintf('optimzation toolbox seems to be missing\m'); 
+end 
+%%%%%%%% runtime data, here initialized for startup 
+p.sol.deta=0;           % determinant of linearization REPLACE_WITH_DASH_DASH change is used to detect bif
+p.sol.err=0;            % a posteriori error estimate
+p.sol.meth=' ';         % string code for continuation step method 'arc', or 'nat'. See p.sw.para
+p.sol.res=0;            % residual of solution in norm p.sw.norm
+p.sol.iter=0;           % number of iterations used for this solution
+p.sol.ineg=-1;          % number of negative (i.e. unstable) eigenvalues
+p.sol.muv=[];           % eigenvalues (vector, or matrix if eigref is vector)
+p.sol.lamd=0;           % step length in primary parameter (from tangent vector)
+p.sol.restart=1;        % 1: make initial steps, 0: use tangent p.tau 
+p.sw.abs=0; 
+p.tau=1;                % tangent vector, here trivially initialized
+p.branch=[];            % branch, here trivially initialized
+p.u=[];                 % solution, here trivially initialized
+p.sol.xiq=0;            % weight of auxiliary eqns for arclength scalar product (needs to exist)
+p.mat.fill=1;           % fill operator (nontrivial in case of periodic b.c.)
+p.mat.drop=1;           % drop operator (nontrivial in case of periodic b.c.)
+p.mat.M=[]; p.mat.K=[]; % empty mass and stiffness matrices 
+p.mesh=[];              % the FEM mesh
+p.mesh.sympoi=0;        % if 1 then make poimesh symmetric
+p.sol.ptype=-99;        % initial point type; types are: -1 (initial point), 
+                        % -3 (user 'lam'), -2 (swibra point), 0 (normal), 1 (branch point), 
+                        % 2 (fold point), 3 (Hopf point), 4 (normal point on Hopf branch)
+p.usrlam=[];            % desired lam-values
+p.nc.nq=0;              % number of auxiliary equations
+##### SOURCE END #####
+--></body></html>

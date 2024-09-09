@@ -1,0 +1,857 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>Pattern formation on a finite disk using the SH35 equation</title><meta name="generator" content="MATLAB 9.9"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2021-04-15"><meta name="DC.source" content="inhu.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; }
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+span.typesection { color:#A0522D }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><h1>Pattern formation on a finite disk using the SH35 equation</h1><!--introduction--><p><b>Author:</b> Nicol&aacute;s Verschueren</p><!--/introduction--><h2>Contents</h2><div><ul><li><a href="#1">Summary</a></li><li><a href="#2">Installation notes for <i>PDE2PATH</i></a></li><li><a href="#3">Cubic-quintic Swift-Hohenberg model (SH35) on a finite disk</a></li><li><a href="#4">SH35 in PDE2PATH</a></li><li><a href="#5">Initialization and continuation of the trivial branch</a></li><li><a href="#8">Switching branches from the trivial state</a></li><li><a href="#10">Radial branch</a></li><li><a href="#11">Wall branch</a></li><li><a href="#13">Presentation of results</a></li><li><a href="#14">Solutions on the full disk</a></li><li><a href="#15">Concluding Remarks</a></li><li><a href="#16">Troubleshooting</a></li></ul></div><h2 id="1">Summary</h2><p>This document offers a hands-on approach to the continuation code <i>PDE2PATH</i>. We consider the Swift-Hohenberg model with a cubic-quintic nonlinearity (<b>SH35</b>) solved on a finite disk of radius <img src="inhu_eq03442895190380135198.png" alt="$R$"> with no-flux (Neumann) boundary conditions. We investigate the possible bifurcations of the trivial branch <img src="inhu_eq05722455336418904729.png" alt="$u=0$">.  This document is the first part of the supplementary material of the paper <a href="https://drive.google.com/file/d/1Cyl428WD27mrTiyn2xVKyJmspM1gIwY2/view?usp=sharing"><i>Bifurcations of localized and extended patterns for the cubic-quintic Swift-Hohenberg equation on a finite disk</i> by N.Verschueren, E. Knobloch and H. Uecker</a>. The second part, consisting on a list of videos, can be accessed <a href="https://drive.google.com/file/d/1KOxiQFMVvodm1uwUIRIZWvhqY2gF4Fg_/view?usp=sharing">in this link</a>. The <b>html</b> file that you are reading has been produced from the script <b>index.m</b>, using the command <i>publish</i>. The reader can run <b>index.m</b> (included in the repository) to obtain the output shown below.</p><h2 id="2">Installation notes for <i>PDE2PATH</i></h2><p>For installation instructions, tutorials and the latest version of <i>PDE2PATH</i>; visit the official website <a href="http://www.staff.uni-oldenburg.de/hannes.uecker/pde2path/">here</a>. In this document we assume that the user is on a machine with <b>MATLAB</b> (notice that it is also possible to run <i>PDE2PATH</i> without <b>MATLAB</b>, see the website for details).</p><p>As <i>PDE2PATH</i> keeps evolving, future versions might present compatibility issues with this script (<b>index.m</b>). To avoid this, all the files needed to run it (including a version of <i>PDE2PATH</i>) are hosted in the <i>bitbucket</i> repository <a href="https://bitbucket.org/nverschueren/sh35disktutorial/src/master/">here</a>.</p><p>In order to install the materials, visit the <a href="https://bitbucket.org/nverschueren/sh35disktutorial/src/master/">repository website</a> and download the whole repository as a <i>zip</i>, by clicking on the download option on the left bar (this might change in the future). When the repository is unzipped into a <i>local</i> folder, the directory tree has the structure</p><p><img vspace="5" hspace="5" src="./tree.png" alt=""> </p><p>The two folders contain:</p><div><ul><li><i>pde2path/</i>: a minimal version of <i>PDE2PATH</i></li><li><i>sh35disk/</i>: the files used in what follows in this document.</li></ul></div><p>Most names are self-explanatory. The script <b>setpde2path.m</b> must be executed succesfully to use <i>PDE2PATH</i>.</p><p>Please make sure you have <i>PDE2PATH</i> working on your machine before going any further with the demonstration.</p><h2 id="3">Cubic-quintic Swift-Hohenberg model (SH35) on a finite disk</h2><p>In what follows, we study the <b>SH35</b> model</p><p><img src="inhu_eq15127027575197971238.png" alt="$$\partial_t u=\epsilon u+\nu u^3-u^5-(q^2+\Delta)^2 u. $$"></p><p>The variable <img src="inhu_eq02180391839516932797.png" alt="$u(\rho,\phi)$"> is defined over a disk of radius <img src="inhu_eq03442895190380135198.png" alt="$R$"> given by</p><p><img src="inhu_eq05549450505803787802.png" alt="$$\Omega_1=\{\mathbf{x}\in (\rho,\phi)|\rho\in[0,R],\phi\in[0,2\pi]\},$$"></p><p>although a sector of a disk (a slice) will also be considered (more details below).  The boundary conditions of this problem are given by</p><p><img src="inhu_eq09879009603017559060.png" alt="$$ \left. \nabla u \cdot \hat n\right|_{\delta \Omega}=0,\quad \left.&#xA;\nabla (\Delta u)\cdot \hat n\right|_{\delta \Omega}=0.$$"></p><p>Since the system is variational, we can focus on its time-independent solutions. More precisely, the system minimises the functional</p><p><img src="inhu_eq11003998338834921733.png" alt="$$\mathcal{F}[u]=\int_\Omega\left(\frac{1}{2}[(q^2+\Delta)u]^2-\frac{\epsilon}{2}u^2-\frac{\nu}{4}u^4+\frac{1}{6}u^6 \right) d\mathbf{x}.$$"></p><p>Finally, notice that the trivial solution <img src="inhu_eq05722455336418904729.png" alt="$u=0$"> exists for all parameter values and</p><p><img src="inhu_eq05150047716617588761.png" alt="$$ \mathcal{F}[0]=0.$$"></p><p>Although the system has 4 parameters (<img src="inhu_eq07054771810329410103.png" alt="$\epsilon,R,\nu,q$">), we keep <img src="inhu_eq15791858973907158333.png" alt="$q=1$">, <img src="inhu_eq04011213049757635717.png" alt="$R=14$">, <img src="inhu_eq15492850435421224042.png" alt="$\nu=2$">, and investigate the bifurcations when <img src="inhu_eq04202927574850129020.png" alt="$\epsilon$"> is varied.</p><h2 id="4">SH35 in PDE2PATH</h2><p><i>PDE2PATH</i> requires that the problem under study is written in the following (F)inite (E)element (M)ethod formulation (see documentation for details and explanations)</p><p><img src="inhu_eq00239187213520833976.png" alt="$$ \partial_t U=\mathcal{M} \dot U=-G(U;\lambda)=-(\mathcal{K} U-F(U;\lambda)), \quad F(U;\lambda)=\mathcal{M} f(U;\lambda), $$"></p><p>where <img src="inhu_eq07657233533591063549.png" alt="$\lambda$"> is the active continuation parameter, <img src="inhu_eq02619125812656254059.png" alt="$U$"> is a vector containing a discrete approximation of the solution of the system at different points in the space. The matrices <img src="inhu_eq10562239986221843539.png" alt="$\mathcal{K,M}$"> are to be defined. In this matrix F.E.M. formulation, the _boundary conditions correspond to Neumann type (i.e. they match the problem under study). In the case of the SH35 equation,  all derivatives are of even order and therefore the problem can be formulated as follows(see the SH23 tutorial in the tutorial section <a href="http://www.staff.uni-oldenburg.de/hannes.uecker/pde2path/">here</a> for details)</p><p><img src="inhu_eq10066956687696633379.png" alt="$$U=\left(\begin{array}{c} u \\ \Delta u\end{array}\right)=\left(\begin{array}{c} u_1 \\ u_2\end{array}\right), \quad \mathcal{M}=\left(\begin{array}{cc} M &amp; 0 \\ 0 &amp; 0 \end{array} \right), \quad \mathcal{K}=\left(\begin{array}{cc} 0 &amp; -K \\ K &amp; M \end{array}\right),\quad f(U;\lambda)=\left(\begin{array}{c}\epsilon u_1+\nu u_1^3-u_1^5-q^4 u_1-2 q^2u_2\\ 0\end{array}\right). $$"></p><p>Substituting these expressions into the FEM formulation leads to the equation</p><p><img src="inhu_eq03397433569320646478.png" alt="$$ \partial_t \left(\begin{array}{c} u_1 \\0 \end{array}\right)=\left(\begin{array}{c}-\Delta u_2+\epsilon u_1+\nu u_1^3-u_1^5-q^4 u_1-2q^2 u_2\\ \Delta u_1 -u_2\end{array}\right),$$"></p><p>where we have used that <img src="inhu_eq14998538597253601249.png" alt="$(-M^{-1} K)=\Delta$">.</p><p>The two main steps in  any <i>PDE2PATH</i>  project are:  <b>initialization</b> and <b>iteration</b>. <i>At minimum</i>, the following scripts are included in each project.</p><div><ul><li><b>nodalf.m</b> the file defining function <img src="inhu_eq18096895394918367257.png" alt="$f$"> (see above). This is the function acting at any point of the domain, without considering the neighbors.</li><li><b>sG.m</b>  The right hand side of the FEM formulation <img src="inhu_eq06138837281055640235.png" alt="$G(U;\lambda)$"></li><li><b>sGjac.m</b> the Jacobian of <img src="inhu_eq06138837281055640235.png" alt="$G(U;\lambda)$"></li><li><b>oosetfemops.m</b> the file with the FEM formulation. The definition of <img src="inhu_eq10281277428262536252.png" alt="$M,K,\mathcal{M,K}$"></li><li><b>shinit.m</b> the initialization file. This scripts calls all the above listed files and creates a structure of the problem <img src="inhu_eq09941021013676836398.png" alt="$p$">.</li></ul></div><h2 id="5">Initialization and continuation of the trivial branch</h2><p>The <b>html</b> that we are presenting (this document that you are looking at now), corresponds to the output of the script <b>index.m</b>. Hence, <b>index.m</b> can also be executed directly into <b>MATLAB</b> allowing exploration in the individual parts of the script.</p><p>Moving to the subdirectory <i>local/pde2path</i>, we set up <i>PODE2PATH</i> by calling the script <b>setpde2path.m</b>, then change directory (cd) into  <i>sh35disk/</i></p><pre class="codeinput">clear;close <span class="string">all</span>
+format <span class="string">compact</span>
+cd <span class="string">../pde2path/</span>
+setpde2path
+cd <span class="string">../sh35disk</span>
+</pre><pre class="codeoutput">pde2path, v2.9. Setting library path beginning with /anter/home/hu/path/work/nick/nverschueren-sh35disktutorial-65c433c1237f/pde2path
+*** No additional libs put into path ***
+No ilupack found: If you want it, edit setpde2path.m 
+</pre><p>When a <i>PDE2PATH</i> project is designed, the first task is to write the above listed files (e.g. sG.m, sGjac.m, etc) correctly (These files are already written and provided in the repository). Once this has been done, the code is ready to be used (initialized and iterated). Usually this is done on a separate script (often called commands <i>cmds.m</i> file). A possible initialization script is shown in the following cell. Each line contains a brief comment.</p><pre class="codeinput">p=[]; <span class="comment">%create the structure of the project</span>
+dswitch=6;<span class="comment">% this corresponds to half the disc</span>
+lam=-0.01;<span class="comment">% initial value of epsilon</span>
+nu=1.4; <span class="comment">%initial value of nu</span>
+q=1; <span class="comment">% initial value of q. This will not change</span>
+par=[lam nu q 0 0 0]; <span class="comment">%vector with parameters</span>
+rad=14; <span class="comment">%disk radius</span>
+nref=5; <span class="comment">% fineness of discretization</span>
+p=shinit(p,dswitch,par,rad,nref);<span class="comment">%initialize the structure p</span>
+plotsol(p,1,1,1); <span class="comment">%meshplot (to inspect mesh)</span>
+p=setfn(p,<span class="string">'0h'</span>);<span class="comment">%set the working directory</span>
+p.sol.ds=0.1; <span class="comment">%set the arclength stepsize</span>
+p=cont(p,7); <span class="comment">%continue the system for 7 steps</span>
+</pre><pre class="codeoutput">ans =
+        8192           3
+Problem directory name: 0h
+step   epsilon     L2-norm residual  iter meth   ds       #-EV b(0)       
+   0   -0.01000  0.000e+00 0.00e+00    0     0.000e+00   0  0.000e+00 
+   1  0.000e+00  0.000e+00 0.00e+00    0       0.01000   0  0.000e+00 
+   - 1 possible bif between 0 and 0.100003, om=0
+ mu_r=-9.46941e-05, mu_i=0 
+&lt;phi,psi&gt;=0,BP
+   2  9.76591e-05 (BP, saved to 0h/bpt1.mat) bisection steps 10, last ds -4.88281e-05
+   3    0.10000  0.000e+00 0.00e+00    0  nat    0.10000   4  0.000e+00 
+   - 1 possible bif between 0.100003 and 0.200006, om=0
+mu_r=-0.0115296, mu_i=0   - no convergence
+   4    0.20001  0.000e+00 0.00e+00    0  nat    0.10000   4  0.000e+00 
+   - 1 possible bif between 0.200006 and 0.300009, om=0
+mu_r=-0.0105761, mu_i=0   - no convergence
+   5    0.30001  0.000e+00 0.00e+00    0  nat    0.10000   2  0.000e+00 
+   - 1 possible bif between 0.300009 and 0.400012, om=0
+mu_r=-0.0144439, mu_i=0   - no convergence
+   6    0.40001  0.000e+00 0.00e+00    0  nat    0.10000   2  0.000e+00 
+   7    0.50001  0.000e+00 0.00e+00    0  nat    0.10000   2  0.000e+00 
+Timing: total=17.4736, av.step=2.20501, av.newton=0.00770214, av.spcalc=0.155337
+</pre><img vspace="5" hspace="5" src="inhu_01.png" alt=""> <img vspace="5" hspace="5" src="inhu_02.png" alt=""> <p>The previous snippet of code produces 7 rows with the relevant information of the continuation. This output will be supressed in the future continuations performed on this document. The <i>bifurcation diagram</i> on the left summarises the continuation information. The 7 points correspond to the continuation points, distinguishing stable (*) unstable (+) and bifurcation (o) points using different symbols (folds are also marked with an (x) see below). On the right, we can see a representation of the component <img src="inhu_eq09432559001641025030.png" alt="$u_1=u$"> of the solution. Notice that one bifurcation point was found in this way. We can use this point to switch into nontrivial branches.</p><h2 id="8">Switching branches from the trivial state</h2><p>In this problem, the trivial branch <img src="inhu_eq05722455336418904729.png" alt="$u=0$"> is connected to several solutions for <img src="inhu_eq16905628523952223150.png" alt="$|\epsilon |\ll 1$">. On the full disk, the bifurcations are generically simple (if indep.of <img src="inhu_eq06401276552089372917.png" alt="$\phi$">) or double (if <img src="inhu_eq06401276552089372917.png" alt="$\phi$"> dependent). On the half disk, they are generically all simple. However, as the BPs are very close together, and all yield pitchforks, here it is sufficient to localize only one BP, and subsequently compute eigenvectors to small eigenvalues as BIFURCATION DIRECTIONS. The bifurcations occur slightly off the computed BP on the trivial branch, but this method is simple and very robust for close together pitchfork bifurcations.</p><p>In detail, we proceed as</p><pre class="codeinput">aux.m=6; <span class="comment">%number of eigenvalues to look at\</span>
+aux.besw=0; <span class="comment">% don't derive/solve bifurcation equations (only compute appr.kernel)</span>
+possibles=cswibra(<span class="string">'0h'</span>,<span class="string">'bpt1'</span>,aux);
+</pre><pre class="codeoutput">using m=6
+</pre><img vspace="5" hspace="5" src="inhu_03.png" alt=""> <img vspace="5" hspace="5" src="inhu_04.png" alt=""> <img vspace="5" hspace="5" src="inhu_05.png" alt=""> <img vspace="5" hspace="5" src="inhu_06.png" alt=""> <img vspace="5" hspace="5" src="inhu_07.png" alt=""> <img vspace="5" hspace="5" src="inhu_08.png" alt=""> <p>The possible directions of continuation are listed as <img src="inhu_eq12318961823750766280.png" alt="$\phi_i$">. We investigate two of them: the <i>daisy</i> (<img src="inhu_eq16197032263871030048.png" alt="$\phi_3$">) and <i>radial</i> (<img src="inhu_eq12219313601759713383.png" alt="$\phi_5$">) branches. The process to investigate other possibilites is analogous and we encourage the reader to experiment.</p><h2 id="10">Radial branch</h2><p>Once the different directions have been identified, continuation of the radial branch is done by</p><pre class="codeinput">p=gentau(possibles,[0 0 0 0 1],<span class="string">'radial'</span>); <span class="comment">%we are taking the 5th vector of the possibles and choosing 'radial' as the new directory</span>
+close <span class="string">all</span>;
+screenlayout(p); <span class="comment">%close figures</span>
+p.sw.bifcheck=0; <span class="comment">%we are not interested in detecting bifurcations, so we disable this feature to increase the speed.</span>
+p=cont(p,5); <span class="comment">% Initially, the solution localizes in the center and consequently could move in y</span>
+p=qyon(p); <span class="comment">% We introduce a phase condition to eliminate the (approximate) neutral direction, which is also important for the linearization</span>
+p.sol.restart=1; <span class="comment">% restart the cont., as we also need a new tangent</span>
+p.sol.ds=-0.01;<span class="comment">% stepsize (direction) for initial trivial step, towards decreasing $\epsilon$</span>
+p.nc.neig=30; <span class="comment">%number of eigenvalues computed, closest to p.nc.eigref</span>
+p.nc.eigref=-1;<span class="comment">% which we set negative to not miss any negative (unstable) eigenvalues</span>
+p.sw.verb=2; <span class="comment">%maximum verbosity</span>
+p=cont(p,30); <span class="comment">%continuation on the radial branch for 30 extra steps</span>
+</pre><pre class="codeoutput">Problem directory name: radial
+step   epsilon     L2-norm residual  iter meth   ds       #-EV b(0)       
+   1    0.00843    0.16863 3.98e-12    2  arc    0.01000   2    0.16863 
+   2    0.00474    0.49874 1.18e-10    2  arc    0.02000   2    0.49874 
+   3   -0.01749    1.04848 4.77e-11    3  arc    0.04000   1    1.04848 
+   4   -0.07555    1.38756 7.32e-09    3  nat    0.08000   1    1.38756 
+   5   -0.14844    1.71822 1.30e-10    2  nat    0.08000   1    1.71822 
+Timing: total=3.67235, av.step=0.572332, av.newton=0.197913, av.spcalc=0.234289
+step   epsilon     L2-norm residual  iter meth   ds       #-EV b(0)       
+   5   -0.14844    1.71822 1.30e-10    2  nat  0.000e+00   1    1.71822 
+   6   -0.14944    1.72469 1.30e-10    2  nat   -0.00100   1    1.72469 
+   stepsizecontrol: dlam=-0.00888925, res=3.8656e-11, increasing ds to -0.02
+   7   -0.15833    1.78955 3.87e-11    2  nat   -0.01000   1    1.78955 
+   stepsizecontrol: dlam=-0.0169548, res=0.00062136, reducing ds to -0.01
+   stepsizecontrol: dlam=-0.00847739, res=4.40568e-09, increasing ds to -0.02
+   8   -0.16681    1.87444 4.41e-09    2  nat   -0.01000   1    1.87444 
+   stepsizecontrol: dlam=-0.0148119, res=0.0030755, reducing ds to -0.01
+   stepsizecontrol: dlam=-0.00740593, res=0.000135888, reducing ds to -0.005
+   stepsizecontrol: dlam=-0.00370297, res=2.58382e-09, increasing ds to -0.01
+   9   -0.17051    1.93053 2.58e-09    2  nat   -0.00500   1    1.93053 
+   stepsizecontrol: dlam=-0.00604375, res=0.00108472, reducing ds to -0.005
+   stepsizecontrol: dlam=-0.00302188, res=5.70871e-09, increasing ds to -0.01
+  10   -0.17353    2.01865 5.71e-09    3  nat   -0.00500   1    2.01865 
+   stepsizecontrol: dlam=0.00160619, res=5.77177e-09, increasing ds to -0.02
+   - fold between -0.173531 and -0.171925
+   - checking lam=-0.172728 ...   - ok, sign(lamd)=-1
+   - checking lam=-0.173639 ...   - ok, sign(lamd)=1
+   - checking lam=-0.173815 ...   - ok, sign(lamd)=-1
+   - checking lam=-0.17388 ...   - ok, sign(lamd)=-1
+   - checking lam=-0.173889 ...   - ok, sign(lamd)=1
+   - checking lam=-0.173894 ...   - ok, sign(lamd)=1
+   - checking lam=-0.173895 ...   - ok, sign(lamd)=1
+   - checking lam=-0.173896 ...   - ok, sign(lamd)=-1
+   - checking lam=-0.173896 ...   - ok, sign(lamd)=1
+   - checking lam=-0.173896 ...   - ok, sign(lamd)=1
+  11 -0.1739 (FP, saved to radial/fpt1.mat) bisection steps 10, last ds -4.88281e-06
+  12   -0.17192    2.17732 5.77e-09    2  arc   -0.01000   0    2.17732 
+   stepsizecontrol: dlam=0.0124368, res=4.49787e-11, increasing ds to -0.04
+  13   -0.15949    2.41593 4.50e-11    3  arc   -0.02000   0    2.41593 
+   stepsizecontrol: dlam=0.0269054, res=2.51645e-11, increasing ds to -0.08
+  14   -0.13258    2.88569 2.52e-11    3  nat   -0.04000   2    2.88569 
+   - fold between -0.132582 and -0.139911
+   - checking lam=-0.136247 ...   - ok, sign(lamd)=1
+   - checking lam=-0.127207 ...   - ok, sign(lamd)=-1
+   - checking lam=-0.123259 ...   - ok, sign(lamd)=-1
+   - checking lam=-0.122178 ...   - ok, sign(lamd)=-1
+   - checking lam=-0.121906 ...   - ok, sign(lamd)=-1
+   - checking lam=-0.121843 ...   - ok, sign(lamd)=-1
+   - checking lam=-0.121831 ...   - ok, sign(lamd)=1
+   - checking lam=-0.121829 ...   - ok, sign(lamd)=-1
+   - checking lam=-0.121828 ...   - ok, sign(lamd)=-1
+   - checking lam=-0.121827 ...   - ok, sign(lamd)=1
+  15 -0.1218 (FP, saved to radial/fpt2.mat) bisection steps 10, last ds 3.90625e-05
+   - also saved to radial/pt15.mat
+  16   -0.13991    4.25869 9.41e-12    3  arc   -0.08000   7    4.25869 
+  17   -0.18056    5.25555 3.21e-13    3  arc   -0.08000   9    5.25555 
+  18   -0.21368    6.44894 1.80e-10    4  arc   -0.08000  11    6.44894 
+  19   -0.24919    7.47905 7.24e-14    4  arc   -0.08000  10    7.47905 
+  20   -0.28521    8.43595 6.79e-09    3  arc   -0.08000  13    8.43595 
+  21   -0.32213    9.26081 2.69e-09    3  arc   -0.08000  18    9.26081 
+  22   -0.36032    9.97665 7.78e-13    3  arc   -0.08000  19    9.97665 
+  23   -0.39309   10.84553 2.75e-13    3  arc   -0.08000  17   10.84553 
+   - fold between -0.393085 and -0.389833
+   - checking lam=-0.391459 ...   - ok, sign(lamd)=1
+   - checking lam=-0.395044 ...   - ok, sign(lamd)=-1
+   - checking lam=-0.399264 ...   - ok, sign(lamd)=-1
+   - checking lam=-0.40009 ...   - ok, sign(lamd)=-1
+   - checking lam=-0.400243 ...   - ok, sign(lamd)=-1
+   - checking lam=-0.400266 ...   - ok, sign(lamd)=1
+   - checking lam=-0.400276 ...   - ok, sign(lamd)=1
+   - checking lam=-0.400278 ...   - ok, sign(lamd)=-1
+   - checking lam=-0.400278 ...   - ok, sign(lamd)=1
+   - checking lam=-0.400278 ...   - ok, sign(lamd)=-1
+  24 -0.4003 (FP, saved to radial/fpt3.mat) bisection steps 10, last ds 3.90625e-05
+  25   -0.38983   12.29117 1.50e-13    4  arc   -0.08000   0   12.29117 
+  26   -0.33692   13.40829 7.92e-09    3  arc   -0.08000   0   13.40829 
+  27   -0.27522   14.13198 7.54e-12    3  nat   -0.08000   0   14.13198 
+  28   -0.20558   14.73080 2.19e-14    3  nat   -0.08000   0   14.73080 
+  29   -0.13237   15.23688 5.65e-09    2  nat   -0.08000   0   15.23688 
+  30   -0.05729   15.67668 1.05e-09    2  nat   -0.08000   0   15.67668 
+  31    0.01891   16.06753 2.68e-10    2  nat   -0.08000   0   16.06753 
+  32    0.09583   16.42085 8.46e-11    2  nat   -0.08000   0   16.42085 
+  33    0.17325   16.74446 3.35e-11    2  nat   -0.08000   0   16.74446 
+  34    0.25104   17.04389 1.72e-11    2  nat   -0.08000   0   17.04389 
+  35    0.32909   17.32325 1.01e-11    2  nat   -0.08000   0   17.32325 
+Timing: total=38.9869, av.step=1.1136, av.newton=0.283787, av.spcalc=0.503126
+</pre><img vspace="5" hspace="5" src="inhu_09.png" alt=""> <img vspace="5" hspace="5" src="inhu_10.png" alt=""> <img vspace="5" hspace="5" src="inhu_11.png" alt=""> <h2 id="11">Wall branch</h2><p>Similarly, we can do continuation of the <i>wall</i> branch. Since we are interested also in secondary bifurcations, we turn the detection of bifurcation points (<b>p.sw.bifcheck=1</b>) for the first ten continuation points and subsequently complete the wall branch without detecting bifurcation points (to increase the speed as shown in the radial branch case).</p><pre class="codeinput">close <span class="string">all</span>;<span class="comment">%close the figures</span>
+p=gentau(possibles,[0 0 1],<span class="string">'wall'</span>); <span class="comment">%we are taking the 5th vector of the possibles and choosing 'radial' as the new directory</span>
+p.sw.bifcheck=1; <span class="comment">%we are interested in bifurcations</span>
+p=cont(p,10); <span class="comment">%</span>
+p.sw.bifcheck=0;
+p=cont(p,20);
+</pre><pre class="codeoutput">Problem directory name: wall
+step   epsilon     L2-norm residual  iter meth   ds       #-EV b(0)       
+   1   -0.00038    0.18561 1.39e-09    1  arc    0.01000   1    0.18561 
+   2   -0.00550    0.54735 4.63e-12    3  arc    0.02000   0    0.54735 
+   - bif between -0.00550298 and -0.0269359
+   3  -1.03756e-02 (BP, saved to wall/bpt1.mat) bisection steps 10, last ds 1.95313e-05
+   4   -0.02694    1.18790 6.03e-12    3  arc    0.04000   0    1.18790 
+   - bif between -0.0269359 and -0.0527475
+   5  -4.21355e-02 (BP, saved to wall/bpt2.mat) bisection steps 10, last ds 1.95313e-05
+   - also saved to wall/pt5.mat
+   6   -0.05275    1.66157 3.49e-12    3  nat    0.04000   1    1.66157 
+   - bif between -0.0527475 and -0.0830629
+   7  -7.45663e-02 (BP, saved to wall/bpt3.mat) bisection steps 10, last ds 1.95313e-05
+   8   -0.08306    2.09067 5.50e-10    3  nat    0.04000   1    2.09067 
+   - bif between -0.0830629 and -0.11578
+   9  -8.91974e-02 (BP, saved to wall/bpt4.mat) bisection steps 10, last ds -0.000222473
+  10   -0.11578    2.48078 1.90e-12    3  nat    0.04000   1    2.48078 
+Timing: total=21.6105, av.step=2.06321, av.newton=0.143866, av.spcalc=0.134689
+step   epsilon     L2-norm residual  iter meth   ds       #-EV b(0)       
+  11   -0.14979    2.84291 7.55e-11    2  nat    0.04000   1    2.84291 
+  12   -0.21924    3.52240 1.42e-10    2  nat    0.08000   1    3.52240 
+  13   -0.28949    4.22444 1.33e-11    2  nat    0.08000   1    4.22444 
+  14   -0.35784    5.16353 3.72e-15    4  nat    0.08000   0    5.16353 
+  15   -0.37102    5.52137 1.69e-10    3  nat    0.02000   1    5.52137 
+   - fold between -0.371018 and -0.370712
+  16 -0.3760 (FP, saved to wall/fpt1.mat) bisection steps 10, last ds -1.95313e-05
+  17   -0.37071    6.34159 7.22e-13    3  arc    0.04000   0    6.34159 
+  18   -0.32200    7.41569 9.26e-09    3  arc    0.08000   0    7.41569 
+  19   -0.27113    8.22490 9.60e-12    3  nat    0.08000   0    8.22490 
+  20   -0.22229    8.94834 1.22e-10    3  nat    0.08000   2    8.94834 
+  21   -0.17337    9.58271 3.33e-12    3  nat    0.08000   1    9.58271 
+  22   -0.12052   10.14773 2.53e-12    3  nat    0.08000   3   10.14773 
+  23   -0.06244   10.65720 4.61e-12    3  nat    0.08000   1   10.65720 
+  24    0.00020   11.11809 8.18e-14    3  nat    0.08000   3   11.11809 
+  25    0.06626   11.53681 8.05e-15    3  nat    0.08000   1   11.53681 
+  26    0.13468   11.91921 3.36e-15    3  nat    0.08000   0   11.91921 
+  27    0.20499   12.27222 4.81e-09    2  nat    0.08000   1   12.27222 
+  28    0.27666   12.59993 2.00e-09    2  nat    0.08000   1   12.59993 
+  29    0.34936   12.90612 9.16e-10    2  nat    0.08000   2   12.90612 
+  30    0.42287   13.19382 4.68e-10    2  nat    0.08000   1   13.19382 
+Timing: total=16.1041, av.step=0.656337, av.newton=0.229496, av.spcalc=0.211105
+</pre><img vspace="5" hspace="5" src="inhu_12.png" alt=""> <img vspace="5" hspace="5" src="inhu_13.png" alt=""> <img vspace="5" hspace="5" src="inhu_14.png" alt=""> <p>As shown in the manuscript, the secondary bifurcation leads to localization and snaking in the angular direction: daisy snaking. In this case we know <i>a priori</i> that there is a single unstable direction and therefore there is no need to use <b>cswibra</b> and <b>gentau</b>. Instead, we simply use <b>swibra</b>:</p><pre class="codeinput">clf(2);
+p=swibra(<span class="string">'wall'</span>,<span class="string">'bpt1'</span>,<span class="string">'daisysnake'</span>);
+p.sw.bifcheck=0;
+p=cont(p,120);
+</pre><pre class="codeoutput">lam=-0.010376; 4 smallest eigenvalues: 1.8632e-06   0.0040375   0.0053953    0.013171
+zero eigenvalue is 1.86316e-06
+d/ds(lam)=-0.469647
+Problem directory name: daisysnake
+creating directory daisysnake
+step   epsilon     L2-norm residual  iter meth   ds       #-EV b(0)       
+   1   -0.01225    0.76495 2.68e-09    2  arc    0.01000   0    0.76495 
+   2   -0.01712    0.81349 1.07e-11    3  arc    0.01000   0    0.81349 
+   3   -0.02277    0.85391 9.35e-10    3  nat    0.01000   0    0.85391 
+   4   -0.02571    0.86581 8.92e-13    3  nat    0.00500   0    0.86581 
+   5   -0.02804    0.85176 8.06e-09    3  arc    0.01000   0    0.85176 
+   6   -0.03166    0.84240 3.54e-13    3  arc    0.01000   0    0.84240 
+   7   -0.04402    0.87365 7.51e-09    3  nat    0.02000   0    0.87365 
+   8   -0.08067    0.97714 4.87e-11    3  nat    0.04000   0    0.97714 
+   9   -0.15811    1.24592 1.74e-14    3  nat    0.08000   0    1.24592 
+  10   -0.16753    1.31183 3.05e-15    3  nat    0.01000   1    1.31183 
+  11   -0.17193    1.36227 1.13e-13    3  nat    0.00500   1    1.36227 
+  12   -0.17379    1.40071 4.09e-12    3  nat    0.00250   1    1.40071 
+   - fold between -0.17379 and -0.173542
+  13 -0.1745 (FP, saved to daisysnake/fpt1.mat) bisection steps 10, last ds 2.44141e-06
+  14   -0.17354    1.50350 8.54e-12    3  arc    0.00500   0    1.50350 
+   - fold between -0.173542 and -0.168556
+  15 -0.1686 (FP, saved to daisysnake/fpt2.mat) bisection steps 10, last ds 4.88281e-06
+   - also saved to daisysnake/pt15.mat
+  16   -0.16856    1.63487 5.31e-11    3  arc    0.01000   1    1.63487 
+  17   -0.18782    1.71807 3.89e-15    4  arc    0.02000   1    1.71807 
+  18   -0.22149    1.80700 1.24e-13    3  nat    0.04000   1    1.80700 
+  19   -0.25757    1.98606 4.77e-12    3  nat    0.04000   1    1.98606 
+  20   -0.26604    2.08236 2.39e-12    3  nat    0.01000   1    2.08236 
+  21   -0.26938    2.18741 9.94e-13    5  nat    0.00500   1    2.18741 
+   - fold between -0.269385 and -0.268642
+  22 -0.2694 (FP, saved to daisysnake/fpt3.mat) bisection steps 10, last ds 2.44141e-06
+  23   -0.26864    2.27074 2.35e-10    2  arc    0.00500   0    2.27074 
+  24   -0.26332    2.40632 1.02e-12    3  arc    0.01000   0    2.40632 
+  25   -0.26042    2.46639 8.33e-10    2  nat    0.00500   0    2.46639 
+  26   -0.25786    2.54271 1.40e-11    4  nat    0.00500   0    2.54271 
+   - fold between -0.257859 and -0.261355
+  27 -0.2577 (FP, saved to daisysnake/fpt4.mat) bisection steps 10, last ds -4.88281e-06
+  28   -0.26136    2.63761 5.55e-14    3  arc    0.01000   1    2.63761 
+  29   -0.27355    2.70226 7.24e-12    3  nat    0.02000   1    2.70226 
+  30   -0.28923    2.78225 8.40e-12    2  nat    0.02000   1    2.78225 
+  31   -0.29665    2.87807 3.61e-09    3  nat    0.01000   1    2.87807 
+   - fold between -0.296645 and -0.280773
+  32 -0.2976 (FP, saved to daisysnake/fpt5.mat) bisection steps 10, last ds -9.76563e-06
+  33   -0.28077    3.33498 2.87e-15    5  arc    0.02000   0    3.33498 
+  34   -0.27821    3.39552 8.59e-12    3  nat    0.00500   0    3.39552 
+   - fold between -0.278213 and -0.279164
+  35 -0.2773 (FP, saved to daisysnake/fpt6.mat) bisection steps 10, last ds 4.88281e-06
+   - also saved to daisysnake/pt35.mat
+  36   -0.27916    3.49129 4.10e-10    3  arc    0.01000   1    3.49129 
+  37   -0.29264    3.53012 7.83e-13    3  arc    0.02000   1    3.53012 
+  38   -0.29960    3.55663 9.11e-10    2  nat    0.01000   1    3.55663 
+  39   -0.30272    3.58772 2.04e-13    3  nat    0.00500   1    3.58772 
+   - fold between -0.302725 and -0.30262
+  40 -0.3042 (FP, saved to daisysnake/fpt7.mat) bisection steps 10, last ds 4.88281e-06
+   - also saved to daisysnake/pt40.mat
+  41   -0.30262    3.72877 4.92e-12    3  arc    0.01000   0    3.72877 
+  42   -0.29092    3.96191 1.69e-15    4  arc    0.02000   0    3.96191 
+  43   -0.27909    4.19896 2.18e-11    4  nat    0.02000   0    4.19896 
+   - fold between -0.279088 and -0.278319
+  44 -0.2783 (FP, saved to daisysnake/fpt8.mat) bisection steps 10, last ds 2.44141e-06
+  45   -0.27832    4.24390 3.92e-13    3  arc    0.00500   1    4.24390 
+  46   -0.28312    4.25349 7.13e-10    3  arc    0.01000   1    4.25349 
+  47   -0.29366    4.22365 5.83e-14    3  nat    0.02000   1    4.22365 
+  48   -0.29990    4.22233 1.93e-09    2  nat    0.01000   1    4.22233 
+  49   -0.30276    4.23905 1.09e-12    3  nat    0.00500   1    4.23905 
+   - fold between -0.302764 and -0.300843
+  50 -0.3039 (FP, saved to daisysnake/fpt9.mat) bisection steps 10, last ds -4.88281e-06
+   - also saved to daisysnake/pt50.mat
+  51   -0.30084    4.38649 2.02e-09    3  arc    0.01000   0    4.38649 
+  52   -0.29077    4.57269 1.56e-13    4  nat    0.02000   0    4.57269 
+  53   -0.27904    4.78057 4.28e-12    3  nat    0.02000   0    4.78057 
+  54   -0.27520    4.87481 2.99e-09    3  arc    0.01000   0    4.87481 
+   - fold between -0.275201 and -0.280572
+  55 -0.2751 (FP, saved to daisysnake/fpt10.mat) bisection steps 10, last ds 4.88281e-06
+   - also saved to daisysnake/pt55.mat
+  56   -0.28057    4.86813 1.96e-13    4  arc    0.01000   1    4.86813 
+  57   -0.29175    4.80609 3.32e-09    2  arc    0.02000   1    4.80609 
+  58   -0.29764    4.78546 1.03e-10    2  nat    0.01000   1    4.78546 
+  59   -0.30048    4.78412 1.00e-09    2  nat    0.00500   1    4.78412 
+  60   -0.30298    4.80490 4.85e-13    4  nat    0.00500   1    4.80490 
+   - fold between -0.302985 and -0.29945
+  61 -0.3032 (FP, saved to daisysnake/fpt11.mat) bisection steps 10, last ds 4.88281e-06
+  62   -0.29945    4.93744 1.68e-11    3  arc    0.01000   0    4.93744 
+  63   -0.28933    5.11989 7.88e-15    4  nat    0.02000   0    5.11989 
+  64   -0.27809    5.31878 2.86e-10    3  nat    0.02000   0    5.31878 
+  65   -0.27622    5.36159 2.31e-09    2  arc    0.00500   0    5.36159 
+   - fold between -0.276225 and -0.27587
+  66 -0.2757 (FP, saved to daisysnake/fpt12.mat) bisection steps 10, last ds -2.44141e-06
+  67   -0.27587    5.39160 2.75e-14    3  arc    0.00500   1    5.39160 
+  68   -0.28005    5.38029 1.65e-13    3  arc    0.01000   1    5.38029 
+  69   -0.29073    5.31270 2.39e-15    3  arc    0.02000   1    5.31270 
+  70   -0.30188    5.27296 2.49e-10    3  nat    0.02000   1    5.27296 
+   - fold between -0.301879 and -0.300854
+  71 -0.3034 (FP, saved to daisysnake/fpt13.mat) bisection steps 10, last ds 4.88281e-06
+  72   -0.30085    5.38660 2.04e-10    4  arc    0.01000   0    5.38660 
+  73   -0.29040    5.58514 6.48e-09    3  arc    0.02000   0    5.58514 
+  74   -0.27993    5.77464 5.55e-12    3  nat    0.02000   0    5.77464 
+  75   -0.27637    5.85947 5.06e-10    3  arc    0.01000   0    5.85947 
+   - fold between -0.276373 and -0.283102
+  76 -0.2763 (FP, saved to daisysnake/fpt14.mat) bisection steps 10, last ds 4.88281e-06
+  77   -0.28310    5.83703 4.21e-09    3  arc    0.01000   1    5.83703 
+  78   -0.29335    5.75872 1.45e-09    2  arc    0.02000   1    5.75872 
+  79   -0.29859    5.72736 1.81e-10    2  nat    0.01000   1    5.72736 
+  80   -0.30111    5.71925 1.26e-09    2  nat    0.00500   1    5.71925 
+  81   -0.30300    5.72519 2.78e-09    2  arc    0.00500   1    5.72519 
+   - fold between -0.302996 and -0.298171
+  82 -0.3034 (FP, saved to daisysnake/fpt15.mat) bisection steps 10, last ds 4.88281e-06
+  83   -0.29817    5.88533 4.20e-12    4  arc    0.01000   0    5.88533 
+  84   -0.28847    6.06696 2.46e-10    3  arc    0.02000   0    6.06696 
+  85   -0.27955    6.23636 8.95e-15    3  arc    0.02000   0    6.23636 
+  86   -0.27621    6.31786 1.21e-09    3  arc    0.01000   0    6.31786 
+   - fold between -0.276212 and -0.277034
+  87 -0.2761 (FP, saved to daisysnake/fpt16.mat) bisection steps 10, last ds 2.44141e-06
+  88   -0.27703    6.33158 2.63e-12    3  arc    0.00500   1    6.33158 
+  89   -0.28102    6.29990 7.23e-14    3  arc    0.01000   1    6.29990 
+  90   -0.29020    6.21463 7.73e-09    2  arc    0.02000   1    6.21463 
+  91   -0.29985    6.14136 5.63e-15    3  arc    0.02000   1    6.14136 
+  92   -0.30348    6.15153 5.59e-14    4  arc    0.01000   1    6.15153 
+   - fold between -0.303479 and -0.289389
+  93 -0.3035 (FP, saved to daisysnake/fpt17.mat) bisection steps 10, last ds 9.76563e-06
+  94   -0.28939    6.46895 3.89e-09    4  arc    0.02000   0    6.46895 
+  95   -0.28129    6.62826 2.53e-14    3  arc    0.02000   0    6.62826 
+  96   -0.27801    6.70504 1.94e-11    3  arc    0.01000   0    6.70504 
+   - fold between -0.278006 and -0.277833
+  97 -0.2775 (FP, saved to daisysnake/fpt18.mat) bisection steps 10, last ds -2.44141e-06
+  98   -0.27783    6.73196 2.17e-09    3  arc    0.00500   1    6.73196 
+  99   -0.28169    6.70347 8.45e-13    3  arc    0.01000   1    6.70347 
+ 100   -0.29030    6.61655 3.50e-15    3  arc    0.02000   1    6.61655 
+ 101   -0.29948    6.53400 4.23e-09    2  arc    0.02000   1    6.53400 
+ 102   -0.30379    6.51554 1.16e-11    3  arc    0.01000   1    6.51554 
+   - fold between -0.303788 and -0.304483
+ 103 -0.3046 (FP, saved to daisysnake/fpt19.mat) bisection steps 10, last ds -2.44141e-06
+ 104   -0.30448    6.54228 3.49e-12    3  arc    0.00500   0    6.54228 
+ 105   -0.30138    6.63471 7.54e-10    3  arc    0.01000   0    6.63471 
+ 106   -0.29394    6.79500 7.59e-10    3  arc    0.02000   0    6.79500 
+ 107   -0.28708    6.94256 5.81e-14    3  arc    0.02000   0    6.94256 
+ 108   -0.28470    7.00926 1.73e-11    3  arc    0.01000   0    7.00926 
+   - fold between -0.284701 and -0.285161
+ 109 -0.2846 (FP, saved to daisysnake/fpt20.mat) bisection steps 10, last ds -2.44141e-06
+ 110   -0.28516    7.02564 7.59e-13    3  arc    0.00500   1    7.02564 
+ 111   -0.28980    6.99086 2.01e-13    3  arc    0.01000   1    6.99086 
+ 112   -0.29993    6.88966 8.37e-09    2  arc    0.02000   1    6.88966 
+ 113   -0.31049    6.80072 8.65e-13    3  nat    0.02000   1    6.80072 
+ 114   -0.31301    6.79341 7.16e-15    3  nat    0.00500   1    6.79341 
+   - fold between -0.313009 and -0.31458
+ 115 -0.3146 (FP, saved to daisysnake/fpt21.mat) bisection steps 10, last ds 4.88281e-06
+   - also saved to daisysnake/pt115.mat
+ 116   -0.31458    6.83088 1.72e-12    3  arc    0.01000   0    6.83088 
+   - fold between -0.31458 and -0.315956
+ 117 -0.3143 (FP, saved to daisysnake/fpt22.mat) bisection steps 10, last ds 9.76563e-06
+ 118   -0.31596    6.90197 1.54e-09    3  arc    0.02000   1    6.90197 
+ 119   -0.34284    6.58836 1.80e-11    4  arc    0.04000   0    6.58836 
+ 120   -0.36652    6.17123 1.29e-14    4  nat    0.04000   0    6.17123 
+Timing: total=152.027, av.step=1.13629, av.newton=0.479137, av.spcalc=0.198559
+</pre><img vspace="5" hspace="5" src="inhu_15.png" alt=""> <img vspace="5" hspace="5" src="inhu_16.png" alt=""> <img vspace="5" hspace="5" src="inhu_17.png" alt=""> <h2 id="13">Presentation of results</h2><p><i>PDE2PATH</i> includes the functions <b>plotsol</b> and <b>plotbra</b> to represent the solutions and solution branch, respectively. The following cell illustrates some of the capabilities of these functions (see the tutorial called <i>plot</i> in the documentation for details) by showing two figures: one for the radial branch and one with the daisy and daisy snaking behavior. In each case, the bifurcation diagram is presented with four sample solutions marked and illustrated on the sides</p><pre class="codeinput">keep <span class="string">pphome</span>
+close <span class="string">all</span>
+f=10; <span class="comment">%figure number radial</span>
+figure(f);
+subplot(2,4,[1 2 5 6])
+plotbra(<span class="string">'radial'</span>,<span class="string">'cl'</span>,<span class="string">'r'</span>,<span class="string">'lab'</span>,[5,15,25,30],<span class="string">'wnr'</span>,f)
+ylabel(<span class="string">'||u||_2'</span>)
+subplot(2,4,3);plotsol(<span class="string">'radial'</span>,<span class="string">'pt5'</span>,f);solstyle(<span class="string">'5'</span>)
+subplot(2,4,4);plotsol(<span class="string">'radial'</span>,<span class="string">'pt15'</span>,f);solstyle(<span class="string">'15'</span>)
+subplot(2,4,7);plotsol(<span class="string">'radial'</span>,<span class="string">'pt25'</span>,f);solstyle(<span class="string">'25'</span>)
+subplot(2,4,8);plotsol(<span class="string">'radial'</span>,<span class="string">'pt30'</span>,f);solstyle(<span class="string">'30'</span>)
+set(gcf,<span class="string">'Position'</span>,[200 300 1000 800])
+f=11;figure(f)<span class="comment">%wall</span>
+subplot(2,4,[2 3 6 7])
+plotbra(<span class="string">'wall'</span>,<span class="string">'cl'</span>,<span class="string">'b'</span>,<span class="string">'lab'</span>,[10, 20],<span class="string">'wnr'</span>,f,<span class="string">'lp'</span>,20)
+plotbra(<span class="string">'daisysnake'</span>,<span class="string">'cl'</span>,p2pc(<span class="string">'g1'</span>),<span class="string">'lab'</span>,[50,90],<span class="string">'wnr'</span>,f)
+ylabel(<span class="string">'||u||_2'</span>)
+subplot(2,4,5);plotsol(<span class="string">'wall'</span>,<span class="string">'pt10'</span>,f);solstyle(<span class="string">'10'</span>)
+subplot(2,4,1);plotsol(<span class="string">'wall'</span>,<span class="string">'pt20'</span>,f);solstyle(<span class="string">'20'</span>)
+subplot(2,4,8);plotsol(<span class="string">'daisysnake'</span>,<span class="string">'pt50'</span>,f);solstyle(<span class="string">'50'</span>)
+subplot(2,4,4);plotsol(<span class="string">'daisysnake'</span>,<span class="string">'pt90'</span>,f);solstyle(<span class="string">'90'</span>)
+set(gcf,<span class="string">'Position'</span>,[200 300 1000 800])
+</pre><pre class="codeoutput">lam=-0.148439
+lam=-0.121827
+lam=-0.389833
+lam=-0.0572851
+lam=-0.11578
+lam=-0.222289
+lam=-0.30392
+lam=-0.290197
+</pre><img vspace="5" hspace="5" src="inhu_18.png" alt=""> <img vspace="5" hspace="5" src="inhu_19.png" alt=""> <h2 id="14">Solutions on the full disk</h2><p>So far we have used a sector of the full disk (half a disk). As explained on the paper, using a sector has many advantages (e.g. reduced the number of points, most solutions can be continued with no phase condition, there is a filter for the possible solutions allowed). A drawback is that stability is computed for the sector and some solutions will be stable on the sector and unstable on the full disk.</p><p>In order to perform continuation on the full disk, the script <b>shinit.m</b> includes the case of the full disk when <b>ndim=5</b>. Hence, one option is to re-run the above code with <b>ndim=5</b> instead of <b>6</b>. Alternatively, we can reflect a given solutions from half-disk into the full-disk. A simple script to perform such a task, called <i>h2fdisk.m</i>, has been provided. We illustrate the continuation of the localized daisies on the full disk.</p><pre class="codeinput">keep <span class="string">pphome</span>; close <span class="string">all</span>;
+p0=[]; <span class="comment">%Firstly, we create a structure with a domain for the full disk</span>
+dsw=5;<span class="comment">%full disk</span>
+lam=-0.01;
+nu=1.4;
+q=1;
+par=[lam nu q 0 0 0];
+rad=14;
+nref=5;
+p0=shinit(p0,dsw,par,rad,nref);
+p=h2fdisk(<span class="string">'daisysnake'</span>,<span class="string">'pt30'</span>,p0,<span class="string">'daisysnakefull'</span>); <span class="comment">%pt30 from half domain is mirrored</span>
+p=resetc(p);
+p.sw.bifcheck=0;
+p=qron(p); <span class="comment">% a phase condition is added to avoid rotation</span>
+p.sol.ds=-p.sol.ds;
+p=cont(p,30);
+plotbra(<span class="string">'daisysnakefull'</span>);
+ylabel(<span class="string">'||u||_2'</span>)
+</pre><pre class="codeoutput">ans =
+       16384           3
+Problem directory name: daisysnakefull
+creating directory daisysnakefull
+Problem directory name: daisysnakefull
+step   epsilon     L2-norm residual  iter meth   ds       #-EV b(0)       
+   0   -0.28923    3.93470 0.00e+00    0     0.000e+00   2    3.93470 
+   1   -0.29023    3.94576 0.00e+00    0      -0.00100   2    3.94576 
+   2   -0.29756    4.13233 6.52e-11    5  nat   -0.01000   1    4.13233 
+   - fold between -0.297557 and -0.29439
+   3 -0.2976 (FP, saved to daisysnakefull/fpt1.mat) bisection steps 10, last ds -4.88281e-06
+   4   -0.29439    4.35170 5.52e-15    3  arc   -0.01000   0    4.35170 
+   5   -0.28388    4.63364 5.57e-14    4  nat   -0.02000   0    4.63364 
+   6   -0.27797    4.81283 1.81e-13    4  nat   -0.01000   0    4.81283 
+   - fold between -0.277973 and -0.279555
+   7 -0.2773 (FP, saved to daisysnakefull/fpt2.mat) bisection steps 10, last ds 4.88281e-06
+   8   -0.27956    4.94183 6.07e-11    3  arc   -0.01000   2    4.94183 
+   9   -0.28962    4.98366 3.53e-13    3  nat   -0.02000   2    4.98366 
+  10   -0.30350    5.09612 2.29e-13    4  nat   -0.02000   2    5.09612 
+   - fold between -0.3035 and -0.283524
+  11 -0.3042 (FP, saved to daisysnakefull/fpt3.mat) bisection steps 10, last ds -9.76563e-06
+  12   -0.28352    5.79296 1.42e-14    5  arc   -0.02000   0    5.79296 
+  13   -0.27840    5.97692 7.34e-09    4  nat   -0.01000   0    5.97692 
+   - fold between -0.278401 and -0.279013
+  14 -0.2783 (FP, saved to daisysnakefull/fpt4.mat) bisection steps 10, last ds -2.44141e-06
+  15   -0.27901    6.01991 3.60e-14    3  arc   -0.00500   2    6.01991 
+  16   -0.28383    6.01231 1.28e-14    3  arc   -0.01000   2    6.01231 
+  17   -0.29474    5.97064 5.35e-14    3  nat   -0.02000   2    5.97064 
+  18   -0.30100    5.97642 2.13e-14    3  nat   -0.01000   2    5.97642 
+  19   -0.30368    6.02094 4.15e-13    4  nat   -0.00500   2    6.02094 
+   - fold between -0.303677 and -0.300297
+  20 -0.3039 (FP, saved to daisysnakefull/fpt5.mat) bisection steps 10, last ds -4.88281e-06
+   - also saved to daisysnakefull/pt20.mat
+  21   -0.30030    6.22037 1.36e-12    3  arc   -0.01000   0    6.22037 
+  22   -0.28987    6.48844 2.55e-14    4  nat   -0.02000   0    6.48844 
+  23   -0.27815    6.78642 6.53e-11    3  nat   -0.02000   0    6.78642 
+  24   -0.27609    6.85244 1.35e-09    2  arc   -0.00500   0    6.85244 
+   - fold between -0.27609 and -0.275184
+  25 -0.2751 (FP, saved to daisysnakefull/fpt6.mat) bisection steps 10, last ds 2.44141e-06
+   - also saved to daisysnakefull/pt25.mat
+  26   -0.27518    6.90832 9.10e-12    3  arc   -0.00500   2    6.90832 
+  27   -0.27930    6.89512 3.03e-12    3  arc   -0.01000   2    6.89512 
+  28   -0.29030    6.80658 2.80e-15    3  arc   -0.02000   2    6.80658 
+  29   -0.30205    6.77502 2.27e-09    3  nat   -0.02000   2    6.77502 
+   - fold between -0.302046 and -0.300294
+  30 -0.3032 (FP, saved to daisysnakefull/fpt7.mat) bisection steps 10, last ds 4.88281e-06
+   - also saved to daisysnakefull/pt30.mat
+  31   -0.30029    6.95704 3.10e-14    4  arc   -0.01000   0    6.95704 
+Timing: total=94.1174, av.step=2.84099, av.newton=1.14642, av.spcalc=0.403579
+</pre><img vspace="5" hspace="5" src="inhu_20.png" alt=""> <img vspace="5" hspace="5" src="inhu_21.png" alt=""> <img vspace="5" hspace="5" src="inhu_22.png" alt=""> <h2 id="15">Concluding Remarks</h2><p>In this document, we have illustrated the first steps on using the code <i>PDE2PATH</i>, considering the SH35 Model on a finite disk as an example.  The aim of the document is not to be thorough, but to provide a brief introduction to <i>PDE2PATH</i> as well as illustrate how to obtain some of the results presented in the paper. Hopefully this can be the starting point for many future users of <i>PDE2PATH</i>.</p><p>Several aspects of <i>PDE2PATH</i>, some of them included in the paper, were not investigated at all here.  We briefly mention some possible future investigations.</p><p>The last continuation on the full disk, shows how <i>PDE2PATH</i> slows down as the number of points increases. It is possible to increase the speed by installing and linking the library <i>ilupack</i>. This step can vary between operative systems and we suggest the interested reader to refer to the official documentation. Once this library is working, the routine can be called via the function <i>setilup</i> and continuation can be perfomed as shown before.</p><p>Throughout this document, we explored numerical continuation in <img src="inhu_eq04202927574850129020.png" alt="$\epsilon$">. It is of course possible to perform continuation in any other parameter as well as changing the parameter (see <b>swipar</b> in the documentation) at any continuation point. Moreover continuation of special points is possible (e.g. continuation of <i>folds</i>, <i>Hopf bifurcation points</i>, <i>bifurcation points</i>). For such cases, additional derivatives should be provided. It is also possible to:  implement different boundary conditions, perform direct numerical simulation of solutions, redistribute (remesh) the points in the domain, to name just a few.  All the above mentioned features are explained well in the repesctive <a href="http://www.staff.uni-oldenburg.de/hannes.uecker/pde2path/">tutorials</a>.</p><h2 id="16">Troubleshooting</h2><p>If you encounter any discrepancies between what is reported here and the output of your computer, this can be due to the eigenvectors sorted in a different way. For primary bifurcations, make sure that the eigenvectors <img src="inhu_eq12318961823750766280.png" alt="$\phi_i$"> look like those reported here. The same phenomenon can happen with the bifurcations from the wall branch. If problems persist, feel free to send me an email to <a href="mailto:nv13699@my.bristol.ac.uk">nv13699@my.bristol.ac.uk</a>. Also feedback (e.g. suggestions to improve this document, typos, etc) is more than welcome.</p><p class="footer"><br><a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2020b</a><br></p></div><!--
+##### SOURCE BEGIN #####
+%% Pattern formation on a finite disk using the SH35 equation
+% *Author:* Nicolás Verschueren
+%
+
+%% Summary
+% This document offers a hands-on approach to the continuation code _PDE2PATH_. We consider the
+% Swift-Hohenberg model with a cubic-quintic nonlinearity (*SH35*) solved on a finite disk of radius $R$ with no-flux (Neumann) boundary conditions.
+% We investigate the possible bifurcations of the trivial branch $u=0$.  This document is the first part of the
+% supplementary material of the paper <https://drive.google.com/file/d/1Cyl428WD27mrTiyn2xVKyJmspM1gIwY2/view?usp=sharing _Bifurcations of localized and extended patterns for the cubic-quintic Swift-Hohenberg
+% equation on a finite disk_ by N.Verschueren, E. Knobloch and H. Uecker>.
+% The second part, consisting on a list of videos, can be accessed
+% <https://drive.google.com/file/d/1KOxiQFMVvodm1uwUIRIZWvhqY2gF4Fg_/view?usp=sharing
+% in this link>. The *html* file that you are reading has been produced from the
+% script *index.m*, using the command _publish_. The reader can run *index.m* (included in the repository) to obtain the output shown below.
+%  
+%
+%% Installation notes for _PDE2PATH_
+%
+% For installation instructions, tutorials and the latest version of _PDE2PATH_; visit
+% the official website <http://www.staff.uni-oldenburg.de/hannes.uecker/pde2path/ here>. 
+% In this document we assume that the user is on a machine with
+% *MATLAB* (notice that it is also possible to run _PDE2PATH_
+% without *MATLAB*, see the website for details). 
+%
+% As _PDE2PATH_ keeps evolving, future versions might present compatibility
+% issues with this script (*index.m*). To avoid this, all the files needed to run it (including a version of _PDE2PATH_) are hosted in the _bitbucket_ repository <https://bitbucket.org/nverschueren/sh35disktutorial/src/master/ here>. 
+%
+%
+% In order to install the materials, visit the
+% <https://bitbucket.org/nverschueren/sh35disktutorial/src/master/ repository
+% website> and download the whole repository as a _zip_, by clicking on the download option
+% on the left bar (this might change in the future). 
+% When the repository is unzipped into a _local_ folder, the directory tree
+% has the structure
+% 
+%
+% 
+% <<./tree.png>>
+% 
+%
+% The two folders contain: 
+%
+% 
+% * _pde2path/_: a minimal version of _PDE2PATH_
+% * _sh35disk/_: the files used in what follows in this document.
+%
+% Most names are self-explanatory. The script *setpde2path.m* must be executed succesfully to use _PDE2PATH_. 
+%
+% Please make sure you have _PDE2PATH_ working on your machine before going
+% any further with the demonstration.
+%
+%% Cubic-quintic Swift-Hohenberg model (SH35) on a finite disk
+% In what follows, we study the *SH35* model 
+% 
+% $$\partial_t u=\epsilon u+\nu u^3-u^5-(q^2+\Delta)^2 u. $$
+%
+% The variable $u(\rho,\phi)$ is defined over a disk of radius $R$ given by
+%
+% $$\Omega_1=\{\mathbf{x}\in (\rho,\phi)|\rho\in[0,R],\phi\in[0,2\pi]\},$$
+% 
+% although a sector of a disk (a slice) will also be considered (more
+% details below).  The boundary conditions of this problem are given by
+%
+% 
+% $$ \left. \nabla u \cdot \hat n\right|_{\delta \Omega}=0,\quad \left.
+% \nabla (\Delta u)\cdot \hat n\right|_{\delta \Omega}=0.$$
+%
+% Since the system is variational, we can focus on its time-independent
+% solutions. More precisely, the system minimises the functional
+%
+% $$\mathcal{F}[u]=\int_\Omega\left(\frac{1}{2}[(q^2+\Delta)u]^2-\frac{\epsilon}{2}u^2-\frac{\nu}{4}u^4+\frac{1}{6}u^6 \right) d\mathbf{x}.$$
+%
+% Finally, notice that the trivial solution $u=0$ exists for all parameter values and 
+%
+% $$ \mathcal{F}[0]=0.$$
+%
+% Although the system has 4 parameters ($\epsilon,R,\nu,q$), we keep
+% $q=1$, $R=14$, $\nu=2$, and investigate the bifurcations when $\epsilon$ is varied. 
+%
+%
+%% SH35 in PDE2PATH
+% _PDE2PATH_ requires that the problem under study is written in the following (F)inite (E)element (M)ethod formulation (see
+% documentation for details and explanations)
+% 
+% $$ \partial_t U=\mathcal{M} \dot U=-G(U;\lambda)=-(\mathcal{K} U-F(U;\lambda)), \quad F(U;\lambda)=\mathcal{M} f(U;\lambda), $$
+%
+% where $\lambda$ is the active continuation parameter, $U$ is a vector
+% containing a discrete approximation of the solution of the system at
+% different points in the space. The matrices $\mathcal{K,M}$ are to be defined.
+% In this matrix F.E.M. formulation, the _boundary conditions correspond to Neumann type
+% (i.e. they match the problem under study).
+% In the case of the SH35 equation,  all derivatives are of even order and
+% therefore the problem can be formulated as follows(see the SH23
+% tutorial in the tutorial section <http://www.staff.uni-oldenburg.de/hannes.uecker/pde2path/ here>
+% for details)
+% 
+% $$U=\left(\begin{array}{c} u \\ \Delta u\end{array}\right)=\left(\begin{array}{c} u_1 \\ u_2\end{array}\right), \quad \mathcal{M}=\left(\begin{array}{cc} M & 0 \\ 0 & 0 \end{array} \right), \quad \mathcal{K}=\left(\begin{array}{cc} 0 & -K \\ K & M \end{array}\right),\quad f(U;\lambda)=\left(\begin{array}{c}\epsilon u_1+\nu u_1^3-u_1^5-q^4 u_1-2 q^2u_2\\ 0\end{array}\right). $$
+%
+% Substituting these expressions into the FEM formulation leads to the
+% equation
+%
+% $$ \partial_t \left(\begin{array}{c} u_1 \\0 \end{array}\right)=\left(\begin{array}{c}-\Delta u_2+\epsilon u_1+\nu u_1^3-u_1^5-q^4 u_1-2q^2 u_2\\ \Delta u_1 -u_2\end{array}\right),$$
+%
+% where we have used that $(-M^{-1} K)=\Delta$.
+%
+% The two main steps in  any _PDE2PATH_  project are:  *initialization* and
+% *iteration*. _At minimum_, the following scripts are included in each
+% project.
+%  
+% * *nodalf.m* the file defining function $f$ (see above). This is the
+% function acting at any point of the domain, without considering the
+% neighbors.
+% * *sG.m*  The right hand side of the FEM formulation $G(U;\lambda)$ 
+% * *sGjac.m* the Jacobian of $G(U;\lambda)$
+% * *oosetfemops.m* the file with the FEM formulation. The definition of
+% $M,K,\mathcal{M,K}$
+% * *shinit.m* the initialization file. This scripts calls all the above
+% listed files and creates a structure of the problem $p$.
+
+%% Initialization and continuation of the trivial branch
+%
+% The *html* that we are presenting (this document that you are looking at
+% now), corresponds to the output of the script *index.m*. Hence, *index.m* can also be executed directly into *MATLAB* allowing
+% exploration in the individual parts of the script.
+%
+% Moving to the subdirectory _local/pde2path_, we set up _PODE2PATH_ by calling
+% the script *setpde2path.m*, then change directory (cd) into  _sh35disk/_
+% 
+clear;close all
+format compact
+cd ../pde2path/
+setpde2path
+cd ../sh35disk
+%%
+% When a _PDE2PATH_ project is designed, the first task is to write the above
+% listed files (e.g. sG.m, sGjac.m, etc) correctly (These files are already written and provided in the repository). Once this has been done, the
+% code is ready to be used (initialized and iterated). Usually this is done on a separate script (often called
+% commands _cmds.m_ file). A possible initialization script is shown in the following cell. Each line contains a brief comment.
+p=[]; %create the structure of the project
+dswitch=6;% this corresponds to half the disc
+lam=-0.01;% initial value of epsilon
+nu=1.4; %initial value of nu 
+q=1; % initial value of q. This will not change
+par=[lam nu q 0 0 0]; %vector with parameters
+rad=14; %disk radius
+nref=5; % fineness of discretization 
+p=shinit(p,dswitch,par,rad,nref);%initialize the structure p
+plotsol(p,1,1,1); %meshplot (to inspect mesh) 
+p=setfn(p,'0h');%set the working directory
+p.sol.ds=0.1; %set the arclength stepsize 
+p=cont(p,7); %continue the system for 7 steps
+
+%% 
+% The previous snippet of code produces 7 rows with the relevant
+% information of the continuation. This output will be supressed in the
+% future continuations performed on this document. The _bifurcation diagram_ on
+% the left summarises the continuation information. The 7 points
+% correspond to the continuation points, distinguishing stable (*)
+% unstable (+) and bifurcation (o) points using different symbols
+% (folds are also marked with an (x) see below). On the right, we can
+% see a representation of the component $u_1=u$ of the solution. Notice
+% that one bifurcation point was found in this way. We can use this
+% point to switch into nontrivial branches. 
+%% Switching branches from the trivial state
+% In this problem, the trivial branch $u=0$ is connected to several solutions 
+% for $|\epsilon |\ll 1$. On the full disk, the bifurcations are generically 
+% simple (if indep.of $\phi$) or double (if $\phi$ dependent). On the half disk, 
+% they are generically all simple. However, as the BPs are very close together, 
+% and all yield pitchforks, here it is sufficient to localize only one BP, and 
+% subsequently compute eigenvectors to small eigenvalues as BIFURCATION DIRECTIONS. 
+% The bifurcations occur slightly off the computed BP on the trivial branch, but 
+% this method is simple and very robust for close together pitchfork bifurcations. 
+% 
+% In detail, we proceed as  
+aux.m=6; %number of eigenvalues to look at\
+aux.besw=0; % don't derive/solve bifurcation equations (only compute appr.kernel) 
+possibles=cswibra('0h','bpt1',aux); 
+%%
+% The possible directions of continuation are listed as $\phi_i$. We
+% investigate two of them: the _daisy_ ($\phi_3$) and _radial_
+% ($\phi_5$) branches. The process to investigate other possibilites is
+% analogous and we encourage the reader to experiment.
+%% Radial branch
+%
+% Once the different directions have been identified, continuation of the
+% radial branch is done by
+p=gentau(possibles,[0 0 0 0 1],'radial'); %we are taking the 5th vector of the possibles and choosing 'radial' as the new directory
+close all;
+screenlayout(p); %close figures
+p.sw.bifcheck=0; %we are not interested in detecting bifurcations, so we disable this feature to increase the speed.
+p=cont(p,5); % Initially, the solution localizes in the center and consequently could move in y 
+p=qyon(p); % We introduce a phase condition to eliminate the (approximate) neutral direction, which is also important for the linearization 
+p.sol.restart=1; % restart the cont., as we also need a new tangent 
+p.sol.ds=-0.01;% stepsize (direction) for initial trivial step, towards decreasing $\epsilon$ 
+p.nc.neig=30; %number of eigenvalues computed, closest to p.nc.eigref
+p.nc.eigref=-1;% which we set negative to not miss any negative (unstable) eigenvalues 
+p.sw.verb=2; %maximum verbosity
+p=cont(p,30); %continuation on the radial branch for 30 extra steps
+%% Wall branch
+%
+% Similarly, we can do continuation of the _wall_ branch. Since we are
+% interested also in secondary bifurcations, we turn the detection of bifurcation
+% points (*p.sw.bifcheck=1*) for the first ten continuation points and subsequently complete the wall branch
+% without detecting bifurcation points (to increase the speed as shown in the radial branch case).
+close all;%close the figures
+p=gentau(possibles,[0 0 1],'wall'); %we are taking the 5th vector of the possibles and choosing 'radial' as the new directory
+p.sw.bifcheck=1; %we are interested in bifurcations 
+p=cont(p,10); %
+p.sw.bifcheck=0;
+p=cont(p,20);
+%%  
+% As shown in the manuscript, the secondary bifurcation leads to
+% localization and snaking in the angular direction: daisy snaking. In
+% this case we know _a priori_ that there is a single unstable direction
+% and therefore there is no need to use *cswibra* and *gentau*. Instead, we
+% simply use *swibra*:
+clf(2); 
+p=swibra('wall','bpt1','daisysnake'); 
+p.sw.bifcheck=0;
+p=cont(p,120);
+%% Presentation of results
+% _PDE2PATH_ includes the functions *plotsol* and *plotbra* to represent
+% the solutions and solution branch, respectively. The following cell
+% illustrates some of the capabilities of these functions (see the tutorial called _plot_
+% in the documentation for details) by showing two figures: one for the
+% radial branch and one with the daisy and daisy snaking behavior. In each
+% case, the bifurcation diagram is presented with four sample solutions
+% marked and illustrated on the sides
+keep pphome
+close all
+f=10; %figure number radial
+figure(f);
+subplot(2,4,[1 2 5 6])
+plotbra('radial','cl','r','lab',[5,15,25,30],'wnr',f)
+ylabel('||u||_2')
+subplot(2,4,3);plotsol('radial','pt5',f);solstyle('5')
+subplot(2,4,4);plotsol('radial','pt15',f);solstyle('15')
+subplot(2,4,7);plotsol('radial','pt25',f);solstyle('25')
+subplot(2,4,8);plotsol('radial','pt30',f);solstyle('30')
+set(gcf,'Position',[200 300 1000 800])
+f=11;figure(f)%wall
+subplot(2,4,[2 3 6 7])
+plotbra('wall','cl','b','lab',[10, 20],'wnr',f,'lp',20)
+plotbra('daisysnake','cl',p2pc('g1'),'lab',[50,90],'wnr',f)
+ylabel('||u||_2')
+subplot(2,4,5);plotsol('wall','pt10',f);solstyle('10')
+subplot(2,4,1);plotsol('wall','pt20',f);solstyle('20')
+subplot(2,4,8);plotsol('daisysnake','pt50',f);solstyle('50')
+subplot(2,4,4);plotsol('daisysnake','pt90',f);solstyle('90')
+set(gcf,'Position',[200 300 1000 800])
+%% Solutions on the full disk
+% So far we have used a sector of the full disk (half a disk). As explained
+% on the paper, using a sector has many advantages (e.g. reduced the number
+% of points, most solutions can be continued with no phase condition, there
+% is a filter for the possible solutions allowed). A drawback is that
+% stability is computed for the sector and some solutions will be stable on
+% the sector and unstable on the full disk.
+%
+% In order to perform continuation on the full disk, the script *shinit.m*
+% includes the case of the full disk when *ndim=5*. Hence, one option is
+% to re-run the above code with *ndim=5* instead of *6*.
+% Alternatively, we can reflect a given solutions from half-disk into the
+% full-disk. A simple script to perform such a task, called _h2fdisk.m_, has
+% been provided. We illustrate the continuation of the localized daisies on
+% the full disk.
+keep pphome; close all; 
+p0=[]; %Firstly, we create a structure with a domain for the full disk
+dsw=5;%full disk
+lam=-0.01;
+nu=1.4;
+q=1;
+par=[lam nu q 0 0 0];
+rad=14;
+nref=5;
+p0=shinit(p0,dsw,par,rad,nref);
+p=h2fdisk('daisysnake','pt30',p0,'daisysnakefull'); %pt30 from half domain is mirrored
+p=resetc(p);
+p.sw.bifcheck=0;
+p=qron(p); % a phase condition is added to avoid rotation
+p.sol.ds=-p.sol.ds;
+p=cont(p,30); 
+plotbra('daisysnakefull');
+ylabel('||u||_2')
+
+%% Concluding Remarks
+%
+% In this document, we have illustrated the first steps on using the code
+% _PDE2PATH_, considering the SH35 Model on a finite disk as an example.  The aim of the document is not to be
+% thorough, but to provide a brief introduction to _PDE2PATH_ as well as
+% illustrate how to obtain some of the results presented in the paper. Hopefully this can be the starting point for many
+% future users of _PDE2PATH_. 
+%
+% Several aspects of _PDE2PATH_, some of them included in the paper, were
+% not investigated at all here.  We briefly mention some possible future
+% investigations. 
+%
+% The last continuation on the full disk, shows how _PDE2PATH_ slows down as the
+% number of points increases. It is possible to increase the speed by
+% installing and linking the library _ilupack_. This step can vary between
+% operative systems and we suggest the interested reader to refer to the
+% official documentation. Once this library is working, the routine can be
+% called via the function _setilup_ and continuation can be perfomed as
+% shown before.
+%
+%
+% Throughout this document, we explored numerical continuation in $\epsilon$.
+% It is of course possible to perform continuation in any other parameter as well as changing the
+% parameter (see *swipar* in the documentation) at any continuation point. Moreover
+% continuation of special points is possible (e.g. continuation of _folds_,
+% _Hopf bifurcation points_, _bifurcation points_). For such cases,
+% additional derivatives should be provided. It is also possible to:  implement different
+% boundary conditions, perform direct numerical simulation of solutions,
+% redistribute (remesh) the points in the domain, to name just a few.  All
+% the above mentioned features are explained well in the repesctive
+% <http://www.staff.uni-oldenburg.de/hannes.uecker/pde2path/ tutorials>.
+
+
+%% Troubleshooting
+%
+% If you encounter any discrepancies between what is reported here and the
+% output of your computer, this can be due to the eigenvectors sorted in a
+% different way. For primary bifurcations, make sure that the eigenvectors
+% $\phi_i$ look like those reported here. The same phenomenon can happen
+% with the bifurcations from the wall branch. If problems persist, feel
+% free to send me an email to nv13699@my.bristol.ac.uk. Also feedback (e.g.
+% suggestions to improve this document, typos, etc) is more than welcome.
+% 
+
+
+
+
+
+
+
+
+
+##### SOURCE END #####
+--></body></html>

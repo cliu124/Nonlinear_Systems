@@ -1,0 +1,59 @@
+This directory provides support for running pde2path in 
+
+gnu-octave 
+
+https://www.gnu.org/software/octave/  (free and open source) 
+
+For pde2path, currently the main difference between Matlab and octave 
+is that octave requires OOPDE to be organized in @folders, 
+that saving objects in octave seems not fully supported, and a different 
+way of saving function handles. 
+Additionally: 
+* Not all pde2path pdeobjects are currently 
+  available in octave due to a lack of delaunayTriangulation 
+  functionality, for which we provide only a very basic emulation. 
+* Presently we cannot 'mex' pqzschur in Octave, such that Floquet 
+  multipliers must be computed with p.hopf.flcheck=1 setting.  
+  Consequently, Floquet multipliers of periodic orbits for optimal 
+  control problems (which require pqzschur) cannot be handled. 
+
+To use ilupack in octave, I recommend to download 
+ilupack4m from https://github.com/fastsolve/ilupack4m, 
+together with 
+paracoder from https://github.com/fastsolve/paracoder
+To install ilupack, then either follow the instructions in 
+the ilupack4m root folder, or cp ./octave/hustart.m to 
+the ilupack4m root folder, and run  
+hustart; startup; 
+there. 
+To then make ilupack4m available for pde2path, run  p2poct 
+from the present directory. This assumes that you 
+already ran setpde2path from the pde2path root directory. 
+
+Alternatively: edit 'starthere.m' appropriately, and call 
+starthere 
+p2poct
+
+Essentially, p2poct adds ./overload 
+to the pde2path library path, and ./overload contains a 
+few functions (saving/loading points, interpolation, ...) 
+which shadow the original pde2path library functions as 
+they require a few modifications, or which emulate some 
+matlab functions currently not available in octave. 
+
+The directory *** octavedemos *** then contains slight modifications 
+of a few selected pde2path demos, namely (with some comments) 
+
+* ac*D: 1D as under matlab, 2D and 3D with slightly different settings for the 
+    meshes as we only have an ad hoc and slow emulation of 
+    matlab's delaunayTriangulation
+* acdisk: as in matlab, but using diskpdeo2 instead of diskpdeo
+* cgl: as in matlab, in 2D and 3D with meshing modifications as in ac*D 
+* CH, schnakpat, sh: as in matlab, but again with meshing modifications for 
+    2D and 3D  
+* vegoc: as in matlab
+
+The idea is to have examples/demos for immediate testing and as 
+templates for your own problems in octave. 
+In general, these octave demos run about as fast as the 
+original matlab demo version, but with less fancy plotting. 

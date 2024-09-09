@@ -1,0 +1,1 @@
+function M=getM(p); M=p.mat.M; end 

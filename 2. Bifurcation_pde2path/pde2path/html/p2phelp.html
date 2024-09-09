@@ -1,0 +1,99 @@
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>pde2path help</title><meta name="generator" content="MATLAB 8.2"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2014-06-24"><meta name="DC.source" content="stanparam.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 10px; font-family:Arial, Helvetica, sans-serif; font-size:1.25em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img { margin-bottom:0px; } 
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, tt, code { font-size:12px; }
+pre { margin:0px 0px 20px; }
+pre.error { color:red; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content">
+ <h1>pde2path help menu</h1>
+Thematic structure and function <a href='overview.html'>overview</a><br>
+<a href='readme.html'>Tips and tricks</a><br><br>
+<a href='demos.html'>Demos</a><br><br>
+<h2>Function overviews (by sublibrary)</h2><br>
+The organization into sublibraries is aimed to help finding functions; there are 
+various ambiguities, e.g., hoplot.m (from hopf/) could as well be in plot/. Thus, when 
+searching for a function you may want to check different subdirectories. Also try the 
+ thematic overview above, or use, e.g., edit stan->tab or pdeo->tab or similar 
+at the command line to see suggestions 
+for completions; this, however, also includes <it>all</it> functions in the path, e.g., 
+also the built-in MATLAB functions. <br><br>
+<a href='index/p2p_index.html'>p2p</a>: the "main" functions (which are not in another subdir)<br>
+  <a href='index/plot_index.html'>plot</a>: Plotting<br>
+<a href='index/hopf_index.html'>hopf</a>: Hopf bifurcation and periodic orbit continuation, 
+including Floquet computation stuff.<br>
+<a href='index/fem_index.html'>fem</a>: Main FEM functions, including matrix assembly.<br>
+<a href='index/hofem_index.html'>hofem</a>: Higher Order FEM functions, including some 6-node 
+triangle PDE objects.<br>
+<a href='index/pdeo_index.html'>pdeo</a>: Various pde-objects (domain, discretization, 
+FE space), for the OOPDE setting. <br>
+<a href='index/meshada_index.html'>meshada</a>: Mesh-refinement and coarening.<br>
+<a href='index/spcont_index.html'>spcont</a>: spectral continuation, i.e., fold-point-, branch-point-, and Hopf-point-continuation.<br>
+<a href='index/Xcont_index.html'>Xcont</a>: Functions for the continuation of manifolds X.<br>
+<a href='index/linalg_index.html'>linalg</a>: Mostly linear system solvers.<br> 
+<a href='index/mbif_index.html'>mbif</a>: Branch switching at BPs of higher multipicity.<br>
+<a href='index/misc_index.html'>misc</a>: Various, in particular tests and check (e.g., jaccheck.m etc).<br>
+<a href='index/tom_index.html'>tom</a>: Main functions of TOM (by F.Mazzia), and interfaces.<br>
+<a href='index/deflation_index.html'>deflation</a>: The basic setup for deflation.<br>
+<a href='index/oclib_index.html'>oclib</a>: Functions for the Optimal Control stuff.<br>
+<a href='index/ampsys_index.html'>ampsys</a>: Extra library (independent of all others) for the 
+derivation of amplitude equations. 
+<br><br>
+
+</body></html>

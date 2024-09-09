@@ -1,0 +1,62 @@
+README from the pde2path root folder. 
+---------------------------------------------
+Setup: In principle, you just have to execute 
+setpde2path 
+from the command window, or by loading it into the editor by typing 
+edit setpde2path.m 
+and executing it from there. 
+
+This sets the matlab paths to the (default) libraries and makes 
+available the help system. For the latter, type 
+p2phelp 
+in the command window. 
+
+To use  *** pqzschur ***, go into the incl3rdpartylibs/pqzschur folder and *mex* it, 
+following the instructions in pqzschur/README. 
+
+To use the iterative linear system solvers from *** ilupack *** (linux and mac), 
+you must download them from, e.g., 
+(a) http://ilupack.tu-bs.de/
+or 
+(b) https://github.com/fastsolve/ilupack4m  (recommended, as it includes 
+                 octave support; downloads the actual library from (a)). 
+In both cases, place the downloaded folder outside the pde2path tree, for 
+instance one directory up, and follow the instructions at the sites or in 
+the downloaded folders to *mex* the library. 
+Subsequently, depending on the version/directory you chose, you may have to 
+adapt setpde2path and call it again. 
+
+To use pde2path in *** octave *** (this is work in progress), cd into the 
+folder pde2path/octave and follow the instructions in README. 
+Currently there is no direct windows support for ilupack. 
+--------------------------------------------
+First steps: We believe the best way to start is to follow some tutorial from 
+*tuthome*, i.e., 
+http://www.staff.uni-oldenburg.de/hannes.uecker/pde2path/tutorials.html
+
+where probably 
+
+Rademacher/Uecker, The OOPDE setting of pde2path - a tutorial via some Allen-Cahn models 
+
+is easiest. For this, cd into pde2path/demos/acsuite/ac1D_simple, call 
+edit cmds.m 
+and execute this script CELL-BY-CELL (to see what a given cell does). 
+In parallel, have the tutorial-pdf on the screen or desk. 
+
+An overview of (almost) all of the pde2path demos, and an overview of the 
+data-structures and functions, and further tips and tricks, are given in the 
+"Quickstart guide and reference card" at (*tuthome*). 
+Additionally, the folders demos/ and hopfdemos/ contain README(s) giving 
+overviews of the contained demo collections and directories. 
+Finally, most of the demo-directories contain a file aaa.txt which 
+gives a short description of the problem and the m-files used to implement it.  
+
+When you want to study your own new problem, copy a similar pde2path demo to a new 
+directory OUTSIDE THE PDE2PATH FOLDER (separate program data from user data) and start 
+modifying the files there. 
+--------------------------------------------
+
+Happy continuation and bifurcation, 
+
+the pde2path developers. 
+

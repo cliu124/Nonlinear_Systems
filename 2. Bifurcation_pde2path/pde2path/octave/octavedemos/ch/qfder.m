@@ -1,0 +1,1 @@
+function qu=qfder(p,u); qu=(1/p.Om)*p.mat.vM;  % pa_u q of mass constraint

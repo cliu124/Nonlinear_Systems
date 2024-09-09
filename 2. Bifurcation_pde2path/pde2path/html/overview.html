@@ -1,0 +1,152 @@
+<!DOCTYPE html  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>pde2path 2.4: Overview</title><meta name="generator" content="MATLAB 8.2"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2014-06-24"><meta name="DC.source" content="stanparam.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img { margin-bottom:0px; } 
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, tt, code { font-size:12px; }
+pre { margin:0px 0px 20px; }
+pre.error { color:red; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content">
+
+        <h1> pde2path: Brief structural and function overview</h1>
+
+	<p>To implement a continuation problem for pde2path the user needs to supply some variables and functions.<br>
+	  The first step is usually of the form <tt> p=[]; 
+	    <a href="matlab:doc('stanparam')">p=stanparam(p)</a></tt>,
+	  which creates a standard pde2path problem struct <tt>p</tt>, and
+	  initializes most fields in <tt> p</tt> to standard values.
+	  Then of course we need to set the problem dependent fields.<br> 
+	  We recommend to
+	  put this initialization into a function
+	  such as 
+	  <a href="matlab:edit('acinit')">acinit</a><br>
+(from <a href="matlab:cd([pphome '/demos/acsuite/ac1D_simple'])">ac1D_simple</a>, see Section 2 in the <a href="http://www.staff.uni-oldenburg.de/hannes.uecker/pde2path/tuts/actuts">"Allen-Cahn tutorial"</a>, for a description)
+	  <br>
+A minimal setting contains:</p>
+
+    <ul>
+      <li>Function handles to routines defining the PDE (<a href="matlab:edit('sG')">sG</a>) and the boundary conditions.
+      <li>Domain and mesh initializations, and, in the OOPDE setting, FEM operator initializations via <a href="matlab:edit('oosetfemops')">oosetfemops</a>
+      <li>Initial conditions and settings for the continuation to be done.
+      <li> Additionally, function handles for Jacobians (
+<a href="matlab:edit('sGjac')">sGjac</a>)
+	are recomended and usually simple to implement. 
+    </ul>
+    
+    <h2><a id="fields"></a>Main fields in the structure p </h2>
+The data in a pde2path structure p is organized as follows. Most 
+values for stationary problems are initialized to standard values via <a href='index/stanparam.html'>stanparam</a>, while <tt> p.hopf </tt> is initialized via <a href='index/hostanparam.html'>hostanparam</a>.<br><br>
+    <ul>
+      <li><tt>fuha</tt>: struct of function handles; in particular defining the PDE (<tt>G=0</tt>), boundary condition and Jacobian (<tt>Gu</tt>).
+      <li><tt>nc,sw</tt>: structs of numerical controls such as <tt>p.nc.tol</tt>, <tt>p.nc.nq</tt>, ..., and switches such as <tt>p.sw.bifcheck</tt>, ...
+      <li><tt>u,np,nu</tt>: the solution <tt>u</tt> ( including all parameters / auxiliary variables in <tt>u(p.nu+1:end)</tt> ), the number of nodes <tt>p.np</tt> in the mesh, and the number of nodal values <tt>p.nu</tt> of PDE-variables
+      <li><tt>tau,branch</tt>: tangent <tt>tau(1:p.nu+p.nc.nq+1)</tt>, and the branch, filled via <tt>bradat.m</tt> and<tt> p.fuha.outfu</tt>.
+      <li><tt>sol</tt>: struct of other values/fields calculated at runtime
+      <li><tt>eqn</tt>: the tensors c; a; b for the simple FEM setup
+      <li><tt>pdeo</tt>:  an OOPDE pde object, containing the geometry data,
+	mesh, and FEM data; if the legacy <tt>pdetoolbox</tt> setup is
+	used, then the geometry and mesh are in <tt>p.mesh</tt>
+      <li><tt>plot,file</tt>: structs of switches (and, e.g., figure numbers and directory name) for plotting and file output
+      <li><tt>time,pm</tt>: structs of timing information, and pmcont switches
+      <li><tt>fsol</tt>: switches for the interface to fsolve.
+      <li><tt>mat</tt>: problem matrices, e.g., mass / stiffness matrices M, K for the the simple FEM setting, and
+drop and fill for periodic BC; by default, the fields <tt>mat</tt> is not saved to disk.
+<li><tt>hopf</tt>: Hopf data, initialized by <tt><a href="matlab:doc('hoswibra')">hoswibra</a></tt>, and further 
+filled at runtime. 
+
+</ul>    
+ <h2><a id="init"></a>Functions typically called during init (in the OOPDE setting)</h2>
+ <ul>  
+<li><tt><a href="matlab:doc('stanparam')">p=stanparam(p)</a></tt>: sets many parameters to "standard" values; typically called during initialization;
+also serves as a documentation of the meaning of parameters. See also <a href="settings.html">here</a>. 
+ <li><tt> <a href="matlab:edit([pphome '/libs/fem/stanpdeo1d'])">pdeo=stanpdeo1D(lx,h)</a></tt>: generate pde-object in the OOPDE 
+setting; see also <tt> stanpdeo2D, stanpdeo3D</tt>
+ <li><tt><a href="matlab:edit('oosetfemops')">p=oosetfemops(p)</a></tt>: set the FEM operators such as M, K
+      <li><tt><a href="matlab:doc('setfn')">p=setfn(p,name)</a></tt>: set output directory to name (or "p", if name omitted).
+</ul>
+     <h2><a id="functions"></a>Main functions for user calls </h2>
+ <ul>     
+      <li><tt> <a href="matlab:doc('cont')">p=cont(p)</a></tt>: continuation of problem p.
+      <li><tt> <a href="matlab:doc('pmcont')">p=pmcont(p)</a></tt>: parallel multi-predictor version of <tt>cont</tt>.
+ <li><tt> <a href="matlab:doc('findbif')">p=findbif(p,varargin)</a></tt>: bifurcation detection via change of stability index; alternative to bifurcation detection in <tt>cont</tt> or <tt>pmcont</tt>. 
+      <li><tt><a href="matlab:doc('swibra')">p=swibra(dir,bpnr,var)</a></tt>: branch-switching.
+ <li><tt><a href="matlab:doc('hoswibra')">p=hoswibra(dir,bpnr,var)</a></tt>: Hopf branch-switching.
+      <li><tt><a href="matlab:doc('swipar')">p=swipar(p,var)</a></tt>: switch parametrization, see also <tt>swiparf</tt>.
+  <li><tt><a href="matlab:doc('spcontini')">p=spcontini(dir,name,npar)</a></tt>: initialization for "spectral continuation".
+      <li><tt>  <a href="matlab:doc('spcontexit')">p=spcontexit(dir,name)</a></tt>: exit spectral continuation.
+ <li><tt> <a href="matlab:doc('setpar')">p=setpar(p,par)</a></tt>: set parameter values, see also <tt>par=getpar(p,varargin)</tt>. 
+</ul>
+ <h2><a id="plotting"></a>Most basic plotting routines </h2>
+ <ul>
+     <li><tt><a href="matlab:doc('plotbra')">plotbra(p,var)</a></tt>: plot branch in <tt>p</tt>, see also <tt>plotbraf</tt>, 
+and the settings in <tt>p.plot</tt> field.
+      <li><tt> <a href="matlab:doc('plotsol')">plotsol(p,wnr,cmp,style)</a></tt>: plot solution, see also <tt>plotsolu</tt> and <tt>plotsolf</tt>.
+<li><tt> <a href="matlab:doc('hoplot')">hoplot(p,wnr,cnr,var)</a></tt>: plot periodic orbit contained in p.hopf.y. 
+ </ul>
+<h2><a id="Misc"></a>Misc additional routines </h2>
+<ul>
+ <li><tt><a href="matlab:doc('nloop')">[u,...]=nloop(p,u1) </a></tt>: Newton-loop for <tt>(G(u);q(u))=0</tt> (often called for 
+preparation). 
+  <li><tt> <a href="matlab:doc('loadp')">p=loadp(dir,pname,varargin)</a></tt>: load point pname from dir; varargin to set new dir.
+      <li><tt><a href="matlab:doc('meshref')">p=meshref(p)</a></tt>: adaptively refine mesh, see also 
+<tt><a href="matlab:doc('meshadac')">p=meshadac(p)</a></tt>.
+      <li><tt><a href="matlab:doc('errcheck')">err=errcheck(p)</a></tt>: compute error-estimate.
+  <li><tt><a href="matlab:doc('tint')">p=tint(p,dt,nt,pmod)</a></tt>: time integration of <i>u_t = -G(u)</i>; <a href="matlab:doc('tintx')">see also <tt>tintx</tt></a> for a version with more output. 
+      <li><tt><a href="matlab:doc('tints')">p=tints(p,dt,nt,pmod,nu)</a></tt>: time integration for semilinear case, see also <tt>tintxs</tt>.
+ </ul>
+
+    </body></html>

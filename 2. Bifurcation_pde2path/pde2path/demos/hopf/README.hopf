@@ -1,0 +1,23 @@
+Various demos to illustrate the Hopf setup (Hopf bifurcation from steady states, periodic orbit 
+continuation, and period-doublings) of pde2path, as described in the "Hopf bifurcations" tutorial. 
+
+brussel: An extended (3-compo) Brusselator system, 1D and 2D; see pftut/bruosc for the standard Brusselator. 
+
+cgl: The complex Ginzburg–Landau (cGL) equation, written as a real 2–component system, over 1D, 2D and 3D 
+  with BCs that break translational invariance (no phase conditions)
+cglpbc: The cGL equation over 1D and 2D cuboids with periodic BCs. Hence branches of standing waves (SWs) 
+  vs traveling waves (TWs, treated via twswibra as relative equlibria). (Hopf) Bifurcations from TWs yield 
+  modulated TWs. 
+cgldisk: The cGL equation over disk, leading to, e.g., meandering spirals. 
+cglext: Variants of the cGL, including non–autonomous cases. Includes examples for computing periodic orbits 
+  with fixed period T, and which are not generated in Hopf bifurcations. 
+
+gksspirals: A 2-compo RD-system with Robin BCs. 
+
+mass-cons: A 2-compo RD system toy problem for periodic orbits with mass conservation.
+
+kspbc2: The 4th order Kuramoto-Sivashinsky (KS) equation with pBCs written as a 2-compo 2nd order system
+kspbc4: The KS equation as a scalar 4th equation (possible since M and K commute for pBCs). 
+
+pollution: An optimal control (OC) problem with a 4-component canonical system showing Hopf bifurcations. 
+  See oc/pollution for an extended demo. 

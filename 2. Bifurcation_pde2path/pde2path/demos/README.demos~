@@ -1,0 +1,38 @@
+The folder demos/ contains the following subfolders, which again contain some READMEs 
+with more details. 
+
+acsuite: A collection of demos dealing with **Allen-Cahn** (AC) type equations of 
+the form u_t=Lu+f(u), where u:Omega->R is a scalar function, Omega a domain (mostly a box)
+in 1D, 2D, or 3D, L is the Laplacian (in 1D, 2D and 3D), and f(u)=lam*u+u^3-u^5  (cubic-quintic case). 
+With various boundary conditions (BCs), except periodic BCs; demos for these are collected in acpbc. 
+
+acpbc: Allen-Cahn type equations with **periodic BCs** (pBC). 
+
+geomtut: A collection of demos dealing with **geometric bifurcation problems** as 
+described in the "Geometric bifurcation problems in pde2path" tutorial. 
+ 
+hofem: Some demos illustrating the use of **higher order FEM**. 
+
+JBDMV: The demos described in "Hannes Uecker: Num.cont..", JBDMV, 2021 
+
+pftut: Demos describing ** pattern formation problems **, e.g. for 4th order equations 
+such as the Swift-Hohenberg (SH) and Cahn-Hilliard (CH) equations, 
+for Reaction-Diffusion systems such as Schnakenberg and the Brusselator, 
+and some Allen-Cahn type problems but on curved manifolds. 
+
+symtut: Simple demos explaining how to deal with ** symmetries and constraints ** 
+which naturally also occur in various other demos. 
+
+modtut: Demos explaining implementations of "other right hand sides" and of 
+modified discretizations, e.g., acG and schnakG for AC resp.Schnakenberg on graphs, 
+and ac1Dcheb and ac1Dfou for the AC equation discretized by Chebychev nodes and 
+Fourier nodes. 
+
+misc: Various demos, mostly older, i.e., related to the original pde2path-paper 
+(NMTMA 2014), but updated to the current pde2path syntax. 
+
+ampsysdemos: Demos explaining the ampsys-module of pde2path to (numerically) derive 
+(coefficients for) amplitude equations for some pattern forming systems.  
+
+outdated: Old demos, which in newer versions became part of different tutorials and 
+hence of other demo directories. 

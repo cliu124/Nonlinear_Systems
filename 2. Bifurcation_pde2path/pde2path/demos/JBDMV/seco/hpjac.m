@@ -1,0 +1,21 @@
+function Guuph=hpjac(p,u) % for HP continuation  
+nu=p.nu; np=p.np; M=p.mat.M(1:np,1:np); 
+u1=u(1:np); u2=u(np+1:2*np); 
+ph1r=u(nu+1:nu+np); ph2r=u(nu+np+1:nu+2*np);  
+ph1i=u(2*nu+1:2*nu+np); ph2i=u(2*nu+np+1:2*nu+2*np);  
+Guuph=sparse(2*nu,nu); 
+d1=(u2-u1).^2+1; d2=d1.^2; d3=d1.*d2; 
+f1uu=-6*(u2-u1)./d2+8*(u2-u1).^3./d3; f1uv=-f1uu; f1vv=f1uu; 
+f2uu=0*u1; f2uv=f2uu; f2vv=f2uu;
+M11=spdiags(f1uu.*ph1r+f1uv.*ph2r,0,np,np); 
+M12=spdiags(f1uv.*ph1r+f1vv.*ph2r,0,np,np); 
+M21=spdiags(f2uu.*ph1r+f2uv.*ph2r,0,np,np); 
+M22=spdiags(f2uv.*ph1r+f2vv.*ph2r,0,np,np); 
+Guuph(1:np,1:np)=-M*M11; Guuph(1:np,np+1:2*np)=-M*M12; 
+Guuph(np+1:2*np,1:np)=-M*M21; Guuph(np+1:2*np,np+1:2*np)=-M*M22; 
+M11=spdiags(f1uu.*ph1i+f1uv.*ph2i,0,np,np); 
+M12=spdiags(f1uv.*ph1i+f1vv.*ph2i,0,np,np); 
+M21=spdiags(f2uu.*ph1i+f2uv.*ph2i,0,np,np); 
+M22=spdiags(f2uv.*ph1i+f2vv.*ph2i,0,np,np); 
+Guuph(nu+1:nu+np,1:np)=-M*M11; Guuph(nu+1:nu+np,np+1:2*np)=-M*M12; 
+Guuph(nu+np+1:nu+2*np,1:np)=-M*M21; Guuph(nu+np+1:nu+2*np,np+1:2*np)=-M*M22; 

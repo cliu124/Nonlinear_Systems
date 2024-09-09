@@ -1,0 +1,16 @@
+Demos dealing with higher-order FEM as described in the 
+"pde2path with higher order finite elements" tutorial. 
+
+ac1D: Allen-Cahn (AC) 1D with Dirichlet BCs, similar to demos/acsuite/ac1D; select 
+ FEM order (Lobatto) at start of cmds.m.
+ac1Dq: 1D with Dirichlet BCs, quadratic FEM
+ac2D: 2D with Dirichlet BCs, similar to demos/acsuite/ac2D
+
+sh2D: Swift-Hohhenberg (SH) over (rather large) 2D rectangle with NBCs, focusing on 
+  a primary hexagon branch and a snaking branch of fronts between hexagons and u = 0.
+sh3D: SH, 3D with NBCs over a long and slender bar. 
+
+schnaktor: Schnakenberg on a torus, using assem6g to build the LBO in 6–node 
+  triangles, with periodic BCs and hence some phase–condition matrices. 
+acS: AC on a sphere. 
+schnakcone: Schnakenberg on a cone, hence with a non–diagonal LBO. 

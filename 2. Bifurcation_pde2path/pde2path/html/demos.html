@@ -1,0 +1,396 @@
+<!DOCTYPE html  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>pde2path 3.1 demos</title><meta name="generator" content="MATLAB 8.2"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2014-06-24"><meta name="DC.source" content="stanparam.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 10px; font-family:Arial, Helvetica, sans-serif; font-size:1.25em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img { margin-bottom:0px; } 
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, tt, code { font-size:12px; }
+pre { margin:0px 0px 20px; }
+pre.error { color:red; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+</style></head><body><div class="content">
+
+<h1> pde2path demos</h1>
+Clicking on the demo name changes to that directory; clicking the m file(s) opens them in the editor, 
+where they should be run cell-by-cell. For this to work, either run <tt>setpde2path</tt>, or set 
+<tt>p2phome</tt> by hand, for instance by calling <tt> p2phome=pwd</tt> in the <tt>pde2path</tt> root 
+directory.<br><br>
+
+<h2>Contents</h2><div>
+<ul>
+<li><a href="#scal">Scalar problems</a></li>
+<li><a href="#sys">Systems</a></li>
+<li><a href="#hopf">Hopf</a></li>
+<li><a href="#oc">Optimal Control (OC)</a></li>
+<li><a href="#modtut">pde2path without FEM (general rhs)</a></li>
+<li><a href="#hofem">Higher order FEM</a></li>
+<li><a href="#geomtut">Geometric PDEs </a></li>
+</ul>
+
+<h2><a id="scal"></a>Scalar problems</h2>
+<ul>
+  <li> <a href="matlab:cd([pphome '/demos/acsuite/'])">acsuite</a>: a collection of demos for the Allen-Cahn equation in 1D, 2D, and 3D, using the OOPDE setting, mostly described <a href="http://www.staff.uni-oldenburg.de/hannes.uecker/pde2path/tuts/actut.pdf">here</a>.
+ <ul>
+      <li>
+    <a href="matlab:cd([pphome '/demos/acsuite/ac1D_simple'])">ac1D_simple</a>,  
+    <a href="matlab:edit([pphome '/demos/acsuite/ac1D_simple/cmds'])"> cmds.m </a>: Allen-Cahn eq. on 1D interval with homogeneous Neumann BC: a starting point for beginners.
+     <li>
+    <a href="matlab:cd([pphome '/demos/acsuite/ac1D'])">ac1D</a>,  
+    <a href="matlab:edit([pphome '/demos/acsuite/ac1D/cmds1'])"> cmds1.m </a>:
+    1D Allen-Cahn eq. with Dirichlet BC, including mesh-adaption, fold continuation, imperfect bifurcation, and 
+deflation. 
+     <li>
+       6 further demo-directories, including x-dependent terms,
+       quasilinear problems, global coupling, and nonlinear BC, in 1D, 2D and 3D.
+       See the tutorial. 
+<li> <a href="matlab:cd([pphome '/demos/acsuite/ac2Dwspot/'])">ac2Dwspot</a>,  
+<a href="matlab:edit([pphome '/demos/acsuite/ac2Dwspot/cmds1'])"> cmds1.m </a>:
+    2D Allen-Cahn eq. with a parameter dependent spot BCs, a basic demo for trullekrul mesh--adaptation. 
+    <li> <a href="matlab:cd([pphome '/demos/acsuite/ac3Dwspot/'])">ac3Dwspot</a>, 
+<a href="matlab:edit([pphome '/demos/acsuite/ac3Dwspot/cmds1'])"> cmds1.m </a>: 3D variant of ac2Dwspot. 
+    </ul>
+  <li> <a href="matlab:cd([pphome '/demos/acpbc/'])">acpbc</a>: a variant
+    of acsuite with periodic BC, described in "Periodic boundary conditions in  pde2path". 
+    <ul>
+    <li>
+    <a href="matlab:cd([pphome '/demos/acpbc/ac1Dpbc'])">ac1Dpbc</a>,  
+    <a href="matlab:edit([pphome '/demos/acpbc/ac1Dpbc/cmds'])"> cmds.m </a>:
+    1D Allen-Cahn eq. with periodic BC, including mesh-adaption and fold continuation.
+     <li>
+       3 further demo-directories, including x-dependent terms,
+       quasilinear problems, in 2D and 3D.
+       See the tutorial. 
+    </ul>
+   
+  <li> Some 'old' AC demos are here:
+    <ul>
+<li><a href="matlab:cd([pphome '/demos/misc/acfront'])">acfront</a>, 
+<a href="matlab:edit([pphome '/demos/misc/acfront/acfront_cmds'])"> acfront_cmds.m </a>:
+ Traveling wave continuation for Allen-Cahn eq., 
+quasi 1D with NBC
+<li><a href="matlab:cd([pphome '/demos/misc/achex'])">achex</a>,
+<a href="matlab:edit([pphome '/demos/misc/achex/ac6cmds'])"> ac6cmds.m </a>:
+ Allen-Cahn eq. on hexagon with space dependent 
+BC (example for <tt>gnbcs.m</tt>)
+</ul>
+<li><a href="matlab:cd([pphome '/demos/misc/bratu'])">bratu</a>,
+<a href="matlab:edit([pphome '/demos/misc/bratu/bratu_cmds'])"> bratu_cmds.m </a>:
+ Bratu's problem on a rectangle
+<li><a href="matlab:cd([pphome '/demos/misc/nlbc'])">nlbc</a>,
+<a href="matlab:edit([pphome '/demos/misc/nlbc/nlbccmds'])"> nlbccmds.m </a>:
+Laplace(u)=0 on disk, with nonlinear BC. 
+<li><a href="matlab:cd([pphome '/demos/pftut/hexex'])">hexex</a>,
+<a href="matlab:edit([pphome '/demos/pftut/hexex/cmds'])"> cmds.m </a>:
+A simple scalar problem on a hexagon, example for higher order degenerate
+bifurcations.
+<li><a href="matlab:cd([pphome '/demos/pftut/sh'])">sh</a>: 
+  The (quadratic-cubic) Swift-Hohenberg (SH) equation in 1D <a href="matlab:edit([pphome '/demos/pftut/sh/cmds1d'])">cmds1d.m</a>,
+  2D <a href="matlab:edit([pphome '/demos/pftut/sh/cmds2dhex'])">cmds2dhex.m</a>,
+  and 3D  <a href="matlab:edit([pphome '/demos/pftut/sh/cmds3dcube'])"> cmds3dcube.m</a>, including multiple bifurcation points and snaking of localized patterns.
+  We rewrite the SH equation as a second order system with a singular mass matrix.
+<li><a href="matlab:cd([pphome '/demos/pftut/shgc'])">shgc</a>: SH with an
+  additional global coupling, in 1D, <a href="matlab:edit([pphome '/demos/pftut/sh/cmds1d'])"> cmds1d.m </a>, and 2D
+  <a href="matlab:edit([pphome '/demos/pftut/gcsh/cmds2dhexfro'])"> cmds2dhexfro.m </a>
+<li> <a href="matlab:cd([pphome '/demos/pftut/fCH'])">fCH</a>: 
+  a "functionalized" Cahn Hilliard, showing interesting pearling and meandering instabilities 
+of 'channels'. Again rewritten as a 2nd order system with singular mass matrix. Needs mass 
+and phase constraints. <br>
+<a href="matlab:edit([pphome '/demos/pftut/fCH/cmds1'])"> cmds1.m </a> pearling and meandering of a "straight" channel <br>
+<a href="matlab:edit([pphome '/demos/fCH/fchcmds2'])"> cmds2.m </a> for pearling from a curved 
+channel, and some time integration. <br>
+</ul>
+
+ <h2><a id="sys"></a>Systems</h2>
+ <ul>
+   <li><a href="matlab:cd([pphome '/demos/pftut/schnakpat'])">schnakpat</a>, 
+     <a href="matlab:edit([pphome '/demos/pftut/schnakpat/cmds1d'])"> cmds1d.m </a>: A somewhat comprehensive treatment of the Schnakenberg RD system in 1D and 2D. Including (in 2D, e.g., <a href="matlab:edit([pphome '/demos/pftut/schnakpat/cmds2da'])"> cmds2da.m </a>) multiple bifurcation points,
+     and the numerical computation of dispersion relations.  
+<li><a href="matlab:cd([pphome '/demos/misc/schnakfold'])">schnakfold</a>, 
+<a href="matlab:edit([pphome '/demos/misc/schnakfold/schnakcmds1'])"> schnakcmds1.m </a>: Fold continuation in the Schnakenberg problem; example for fuha.spjac in system. Examples of time integration in 
+<a href="matlab:edit([pphome '/demos/schnakfold/schnakcmds2'])"> schnakcmds2.m </a>. 
+<li> <a href="matlab:cd([pphome '/demos/misc/schnaktravel'])">schnaktravel</a>, 
+<a href="matlab:edit([pphome '/demos/misc/schnaktravel/schnak_cmds'])"> schnak_cmds.m </a>:
+ Traveling waves in the Schnakenberg problem; 
+example for cylinder geometry and fuha.qf and fuha.qjac in a 2-component system. 
+<li> <a href="matlab:cd([pphome '/demos/misc/gpsol'])">gpsol</a>, 
+<a href="matlab:edit([pphome '/demos/misc/gpsol/gpcmds'])"> gpcmds.m </a>: Time harmonic (vector) Gross-Pitaeevsky in a rotating 
+frame; scalar, i.e., 2-component real system, and vector 
+(2 complex components) versions.  
+An example for space-dependent convection terms. 
+<li> <a href="matlab:cd([pphome '/demos/pftut/chemtax'])">chemtax</a>, 
+<a href="matlab:edit([pphome '/demos/pftut/chemtax/chemcmds'])"> cmds2D.m </a>:
+A quasilinear chemotaxis RD system. 
+<li> <a href="matlab:cd([pphome '/demos/misc/animalchem'])">animalchem</a>, 
+<a href="matlab:edit([pphome '/demos/misc/animalchem/animalcmds'])"> animalcmds.m </a>:  chemtax on a fun domain. 
+<li> <a href="matlab:cd([pphome '/demos/misc/rbconv'])">rbconv</a>,
+<a href="matlab:edit([pphome '/demos/misc/rbconv/rbconv_cmds'])"> rbconv_cmds.m </a>:
+ A classical Rayleigh-Benard convection problem
+<li> <a href="matlab:cd([pphome '/demos/nlb'])">nlb</a>, 
+<a href="matlab:edit([pphome '/demos/nlb/nlbcmds'])"> nlbcmds.m </a>: 
+ Nonlinear Bloch waves. An example for periodic 
+BC and customization of bifdetc and swibra due to multiplicity of eigenvalues. 
+<li> <a href="matlab:cd([pphome '/demos/twoFluid'])">twofluid</a>, 
+<a href="matlab:edit([pphome '/demos/twoFluid/tf_cmds'])"> tf_cmds.m </a>: 
+2D traveling waves in a cylinder, with mixed boundary conditions and 
+advection. 
+<li> <a href="matlab:cd([pphome '/demos/vkplate'])">vkplate</a>, 
+<a href="matlab:edit([pphome '/demos/vkplate/vkcmds'])"> vkcmds.m </a>: 
+the Von Karman equations for the buckling of elastic plates, here written 
+as a (regularized) 6-component system.
+<li> The following four demos are described in "Symmetries and freezing in  pde2path", available 
+    <a href="http://www.staff.uni-oldenburg.de/hannes.uecker/pde2path">here</a>.
+    <ul>
+      <li><a href="matlab:cd([pphome '/demos/symtut/cGL'])">cGL</a>,
+	<a href="matlab:edit([pphome '/demos/symtut/cGL/cmds1'])"> cmds1.m </a>:
+	a complex Ginzburg-Landau equation with various symmetries (translational and rotational). Basic example how to set up phase conditions.
+  <li><a href="matlab:cd([pphome '/demos/symtut/fhn'])">fhnfreeze</a>,
+    <a href="matlab:edit([pphome '/demos/symtut/fhn/cmds1'])"> cmds1.m </a>:  explains phase conditions and 'freezing' to obtain and continue
+    fronts in a Fitzhugh--Nagumo system.
+     <li><a href="matlab:cd([pphome '/demos/symtut/modfro'])">modfro</a>,
+       <a href="matlab:edit([pphome '/demos/symtut/modfro/cmds1'])"> cmds1.m </a>: Modulated fronts, i.e., Hopf-bifurcation from traveling waves, in model for autocatalysis, a 2 component reaction-diffusion system. 
+      <li><a href="matlab:cd([pphome '/demos/symtut/breathe'])">breathe</a>,
+	<a href="matlab:edit([pphome '/demos/symtut/breathe/cmds1'])"> cmds1.m </a>: Standing pulses in another Fitzhugh--Nagumo type system. 
+    </ul>
+    </ul>
+
+</ul>
+
+<h2><a id="hopf"></a>Hopf</h2>
+These demos are explained in the "Hopf - tutorial", available 
+<a href="http://www.staff.uni-oldenburg.de/hannes.uecker/pde2path/tutorials">here</a>
+<ul> 
+<li> <a href="matlab:cd([pphome '/demos/hopf/cgl'])">cgl</a>: 
+  a complex Ginzburg-Landau equation on boxes with BCs that
+  yield simple Hopf bifurcation points (HBPs) as a simple example with 
+Hopf bifurcations. 1D <a href="matlab:edit([pphome '/demos/hopf/cGL/cmds1d'])">cmds1d.m</a>, 
+2D <a href="matlab:edit([pphome '/demos/hopf/cgl/cmds2d'])"> cmds2d.m</a>, 
+and 3D <a href="matlab:edit([pphome '/demos/hopf/cgl/cmds2d'])"> cmds3d.m</a>; 
+<li> <a href="matlab:cd([pphome '/demos/hopf/cglpbc'])">cglpbc</a>: The cGL
+  equation on 1D and 2D boxes with periodic BC. The resulting O(2) symmetry
+  yields that most HBPs have multiplicity at least two, leading to the bifurcation of standing waves (SWs) and traveling waves (TWs). Using suitable
+  phase--conditions, the TWs can
+  be continued as <i> relative equilibria</i>, and secondary bifurcation then yield modulated TWs, or <i> relative periodic orbits.</i>
+  1D <a href="matlab:edit([pphome '/demos/hopf/cglpbc/cmds1d'])">cmds1d.m</a>, 
+2D <a href="matlab:edit([pphome '/demos/hopf/cglpbc/cmds2d'])"> cmds2d.m</a>
+ <li> <a href="matlab:cd([pphome '/demos/hopf/cgldisk'])">cgldisk</a>: The cGL
+   equation on a disk. Again O(2) invariant, where we now obtain standing waves
+   and rotating waves (RWs), which take the form of rigigdly rotating spirals,
+   and can be continued as realtive equilibria. 
+   Secondary bifurcations yield meandering spirals.
+   <a href="matlab:edit([pphome '/demos/hopf/cgldisk/cmds2d'])"> cmds2d.m</a>
+<li> <a href="matlab:cd([pphome '/demos/hopf/cglext'])">cglext</a>: The cGL
+   equation, 1D with NBCs, and with periodic BCs. Illustrates continuation 
+of periodic orbits (POs) with <i>fixed period T</i>, 
+of POs for <i> nonautonomous 
+problems </i>, and of generation of POs via <i>poiniguess</i>, independent of HBPs. 
+NBCs <a href="matlab:edit([pphome '/demos/hopf/cglext/cmds1'])">cmds1.m</a>, 
+pBCs <a href="matlab:edit([pphome '/demos/hopf/cglext/cmds2'])">cmds2.m</a>
+ <li> <a href="matlab:cd([pphome '/demos/hopf/gksspirals'])">gksspirals</a>,
+   a RD system on the unit disk, similar to the cGL equation, but with
+   somewhat nonstandard BC. O(2) symmetry again yields SWs and RWs. 
+   <a href="matlab:edit([pphome '/demos/hopf/gksspirals/cmds1'])">cmds1.m</a>
+   is the starting point. 
+<li> <a href="matlab:cd([pphome '/demos/hopf/brussel'])">brussel</a>: 
+Interaction of Turing and Hopf mode in a Brusselator model, in 1D 
+<a href="matlab:edit([pphome '/demos/hopf/brussel/bru1dcmds'])">bru1dcmds.m</a>, 
+and 2D <a href="matlab:edit([pphome '/demos/hopf/brussel/bru2dcmds'])">bru2dcmds.m</a>. 
+<li> <a href="matlab:cd([pphome '/demos/hopf/pollution'])">pollution</a>, 
+<a href="matlab:edit([pphome '/demos/hopf/pollution/pollcmds'])">pollcmds.m</a>: 
+Hopf bifurcation in a canonical system for optimal pollution control. 
+(An OC problem, but canonical paths are not yet computed).
+<li> <a href="matlab:cd([pphome '/demos/hopf/mass-cons'])">mass-cons</a>, 
+  <a href="matlab:edit([pphome '/demos/hopf/mass-cons/cmds1d'])">cmds1d.m</a>:
+  Hopf bifurcation in a two component reaction diffusion toy model with
+  cross diffusion and mass conservation. 
+  <li> <a href="matlab:cd([pphome '/demos/hopf/kspbc4'])">kspbc</a>, 
+    <a href="matlab:edit([pphome '/demos/hopf/kspbc4/cmds1'])">cmds1.m</a>:
+    Hopf bifurcation of standing (and traveling, <a href="matlab:edit([pphome '/demos/hopf/kspbc4/cmds2'])">cmds2.m</a>) waves in the Kuramoto-Sivashinsky
+    (KS) equation with periodic BC. We thus have two symmetries, i.e., translational and boost invariance. Also an example how to set up 4th
+    order equations in pde2path. 
+</ul>
+
+
+<h2><a id="oc"></a>Optimal Control (OC)</h2>
+Explained in "Infinite time horizon spatially distributed
+optimal control problems with pde2path, a user guide", 
+available 
+<a href="http://www.staff.uni-oldenburg.de/hannes.uecker/pde2path">here</a>.
+<br>
+<ul> 
+<li> <a href="matlab:cd([pphome '/demos/ocdemos/sloc'])">sloc</a>, 
+a "Shallow Lake" optimal control problem; scalar PDE, 2-component 
+canonical system; <br> 
+<a href="matlab:edit([pphome '/demos/ocdemos/sloc/bdcmds1D'])">bdcmd1Ds.m</a>,
+ <a href="matlab:edit([pphome '/demos/ocdemos/sloc/cpdemo1D'])">cpdemo1D.m</a>.<br>
+<li> <a href="matlab:cd([pphome '/demos/ocdemos/vegoc'])">vegoc</a>: 
+An optimal harvesting problem, 2-component PDE, 4-component 
+canonical system; 
+<a href="matlab:edit([pphome '/demos/ocdemos/vegoc/bdcmds'])">bdcmds.m</a>,
+<a href="matlab:edit([pphome '/demos/ocdemos/vegoc/cpcmds'])">cpcmds.m</a>
+<li> <a href="matlab:cd([pphome '/demos/ocdemos/vegoc'])">lvoc</a>: 
+  A boundary control problem, 2-component PDE of Lottka-Volterra type;
+  Fishing on shore leads to a 4-component canonical system with
+  nonlinear BC. 
+<a href="matlab:edit([pphome '/demos/ocdemos/lvoc/bdcmds'])">bdcmds.m</a>,
+ <a href="matlab:edit([pphome '/demos/ocdemos/lvoc/cpcmds'])">cpcmds.m</a>
+<li> <a href="matlab:cd([pphome '/demos/ocdemos/pollution'])">pollution</a>: 
+The 'pollution' demo from Hopf--demos, now extended by computation of 
+canonical paths to canonical periodic states. 
+<a href="matlab:edit([pphome '/demos/ocdemos/pollution/bdcmds'])">bdcmds.m</a>,
+ <a href="matlab:edit([pphome '/demos/ocdemos/pollution/cpcmds'])">cpcmds.m</a>
+</ul>
+
+<h2><a id="modtut"></a>pde2path without FEM</h2>
+Explained in "pde2path without FEM", available 
+    <a href="http://www.staff.uni-oldenburg.de/hannes.uecker/pde2path">here</a>.
+<ul> 
+  <li> <a href="matlab:cd([pphome '/demos/modtut/acG'])">acG</a>, the Allen--Cahn
+    equation on graphs; based on the matlab graph class, little extra coding
+    needed, see <a href="matlab:edit([pphome '/demos/modtut/acG/cmds1'])">
+      cmds1.m </a> for Watts-Strogatz graphs and
+    <a href="matlab:edit([pphome '/demos/modtut/acG/cmds2'])">
+      cmds2.m </a> for Barabasi-Albert graphs. 
+  <li> <a href="matlab:cd([pphome '/demos/modtut/schnakG'])">schnakG</a>, the
+    Schnakenberg problem 
+    equation on graphs; like for acG, see
+    <a href="matlab:edit([pphome '/demos/modtut/acG/cmds1'])">
+      cmds1.m </a> for Watts-Strogatz graphs and
+    <a href="matlab:edit([pphome '/demos/modtut/acG/cmds2'])">
+      cmds2.m </a> for Barabasi-Albert graphs.
+  <li> <a href="matlab:cd([pphome '/demos/modtut/ac1Dcheb'])">ac1Dcheb</a>, the Allen--Cahn equation discretized via Chebychev FDs. See
+    <a href="matlab:edit([pphome '/demos/modtut/ac1Dcheb/cmds1'])">cmds1</a>, and      
+      <a href="matlab:cd([pphome '/demos/modtut/ac2DDBC'])">ac2DDBC</a>
+      and <a href="matlab:cd([pphome '/demos/modtut/ac2DNBC'])">ac2NDBC</a>
+      for 2D cases with Dirichlet BCs and Neumann BCs, respectively.
+  <li> <a href="matlab:cd([pphome '/demos/modtut/schnak2D'])">schnak2D</a>, the
+    Schnakenberg problem via Chebychev FDs. See
+    <a href="matlab:edit([pphome '/demos/modtut/schnak2D/cmds1'])">cmds1</a>. 
+
+  <li> <a href="matlab:cd([pphome '/demos/modtut/sh1Dfou'])">sh1Dfou</a>,
+    the Swift-Hohenberg equation via dct, 
+    <a href="matlab:edit([pphome '/demos/modtut/sh1Dfou/cmds1'])">cmds1</a>.
+    See  <a href="matlab:cd([pphome '/demos/modtut/sh2Dfou'])">sh2Dfou</a>
+    and  <a href="matlab:edit([pphome '/demos/modtut/sh2Dfou/cmds1'])">cmds1</a>.
+    for the 2D case.
+  <li> <a href="matlab:cd([pphome '/demos/modtut/sh1Dmfree'])">sh1Dmfree</a>,
+    and  <a href="matlab:edit([pphome '/demos/modtut/sh1Dmfree/cmds1'])">cmds1</a> for a matrix-free implementations (no explicit Jacobians) of
+    sh1Dfou, and similarly  <a href="matlab:cd([pphome '/demos/modtut/sh2Dmfree'])">sh2Dmfree</a>,
+    and  <a href="matlab:edit([pphome '/demos/modtut/sh2Dmfree/cmds2'])">cmds1</a> for the 2D case. 
+</ul>
+
+<h2><a id="hofem"></a>Higher order FEM</h2>
+Explained in "pde2path with higher order FEM", available 
+    <a href="http://www.staff.uni-oldenburg.de/hannes.uecker/pde2path">here</a>.
+<ul> 
+  <li> <a href="matlab:cd([pphome '/demos/hofem/ac1D'])">AC1D</a>, 1D Allen--Cahn; 
+based on FSElib, prepare by running  
+<a href="matlab:edit([pphome '/demos/hofem/sethofem'])">
+      sethofem.m </a>, then see 
+    <a href="matlab:edit([pphome '/demos/hofem/ac1D/cmds'])">
+      cmds.m </a>. 
+</li>
+<li> AC variants <a href="matlab:cd([pphome '/demos/hofem/ac1D'])">AC1Dq</a> 
+(with advection), and <a href="matlab:cd([pphome '/demos/hofem/ac1D'])">AC2D</a> 
+(2D) 
+</li>
+<li> 
+Swift-Hohenberg,  
+<a href="matlab:cd([pphome '/demos/hofem/sh2D6'])">2D</a>,  
+ <a href="matlab:edit([pphome '/demos/hofem/sh2D/cmds'])">cmds.m </a>; 
+<a href="matlab:cd([pphome '/demos/hofem/sh3D10'])">3D</a>, 
+<a href="matlab:edit([pphome '/demos/hofem/sh3D10/cmds'])">cmds.m </a> 
+</li>
+<li> 
+Schnakenberg on 
+<a href="matlab:cd([pphome '/demos/hofem/schnaktor'])">torus</a>, 
+  <a href="matlab:edit([pphome '/demos/hofem/sh2D6/cmds'])">
+ cmds.m </a>, and on 
+<a href="matlab:cd([pphome '/demos/hofem/schnakcone'])">cone</a>, 
+<a href="matlab:edit([pphome '/demos/hofem/schnakcone/cmds'])">cmds1.m </a> 
+</li>
+</ul>
+
+<h2><a id="geomtut"></a>Geometric PDEs</h2>
+Explained in "Differential geometric bifurcation problems in pde2path", 
+    <a href="http://www.staff.uni-oldenburg.de/hannes.uecker/pde2path">here</a>.
+<ul> 
+  <li> <a href="matlab:cd([pphome '/demos/geomtut/spcap1'])">spcap1</a>, 
+continuation of spherical caps, based on surface FEM. 
+See  <a href="matlab:edit([pphome '/demos/geomtut/spcap1/cmds1'])">
+      cmds1.m </a>. 
+</li>
+<li> <a href="matlab:cd([pphome '/demos/geomtut/enneper'])">enneper</a>, 
+Bifurcation from the Enneper minimal surface  
+<a href="matlab:edit([pphome '/demos/geomtut/enneper/cmds1'])">cmds1.m </a>, 
+and experiments with mean curvature flow 
+<a href="matlab:edit([pphome '/demos/geomtut/enneper/cmds2'])">cmds2.m </a>. 
+</li>
+<li> <a href="matlab:cd([pphome '/demos/geomtut/nodDBC'])">nodDBC</a>, 
+Nodoids with Dirichlet BCs (starting with liquid bridges), short 
+<a href="matlab:edit([pphome '/demos/geomtut/nodDBC/cmds1'])">cmds1.m </a> 
+and long 
+<a href="matlab:edit([pphome '/demos/geomtut/nodDBC/cmds1'])">cmds1.m </a>. 
+</li>
+<li> <a href="matlab:cd([pphome '/demos/geomtut/nodDBC'])">nodpBC</a>, 
+Nodoids with periodic BCs, short 
+<a href="matlab:edit([pphome '/demos/geomtut/nodDBC/cmds1'])">cmds1.m </a> 
+and long 
+<a href="matlab:edit([pphome '/demos/geomtut/nodDBC/cmds1'])">cmds1.m </a>. 
+</li>
+<li> <a href="matlab:cd([pphome '/demos/geomtut/nodDBC'])">TPS</a>, 
+Triply periodic surfaces, namely the minimal Schwarz P
+<a href="matlab:edit([pphome '/demos/geomtut/TPS/cmds1'])">cmds1</a> 
+and it's non-zero-H companions 
+<a href="matlab:edit([pphome '/demos/geomtut/nodDBC/cmds2'])">cmds2.m </a>. 
+</li>
+
+
+</body></html>

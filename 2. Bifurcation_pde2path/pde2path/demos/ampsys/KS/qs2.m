@@ -1,0 +1,1 @@
+function q=qs2(k); q=-norm(k)^2; 

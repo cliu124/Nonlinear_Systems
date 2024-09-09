@@ -1,0 +1,13 @@
+ The demos described in "Hannes Uecker: Num.cont..", JBDMV, 2021 
+
+acdc: a modified Allen-Cahn (AC) equation with (nonsmooth) nonlinearity 
+  lam*u^gamma with 0<gamma<1 leading to Dead Cores 
+
+schnakdc: Schnakenberg with a "dead-core" nonlinearity
+
+seco: a semiconductor model in the form of a 2-component RD system with 
+  co-dimension-2 points of Hopf and Turing bifurcations, yielding 
+  "interaction of Hopf and Turing branches". 
+
+sh35disk: the cubic-quintic SH equation on a disk. 
+  

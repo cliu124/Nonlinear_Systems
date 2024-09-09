@@ -1,0 +1,114 @@
+This is a set of scripts for performing anisotropic mesh adaptation in two and three dimensions using Octave/MATLAB. It is authored by Kristian Ejlebjerg Jensen at Imperial College London.
+
+
+The MATLAB implementation consists of 80 files for a total of 7500 lines (before test cases), and 2000 of those relate to three dimensional refinement, most
+of that for the template based approach. There is a brief description of each file in the README. The files test_box_uniform.m and test_box_sphere.m generate the meshes in figure 8 of the article, while test_spr_uniform.m and test_spr_sphere.m generate figure 9. Files starting with geom , mesh and metric can be used for generating signed distance functions, meshes and metrics, respectively. The various options are described in the gen_options.m file. 
+Note that the code does, both two- and three dimensional mesh adaptation, see test_box_circ.m for a two dimensional example.
+
+
+3D test problems related to the article "Details of Tetrahedral Anisotropic Mesh Adaptation" are
+test_box_sphere.m
+test_box_uniform.m
+test_spr_sphere.m
+test_spr_uniform.m
+test_pnorm.m
+
+A 2D test case is
+test_box_circ.m
+
+--------------------------------------------------------
+
+Description of files:
+
+   filename      semicolons : Description
+      adapt_add_nd.m : 310  : 2D refinement
+    adapt_add_nd3D.m : 1992 : 3D refinement
+     adapt_flipedg.m : 302  : swapping (all kinds, 2D and 3D)
+        adapt_mesh.m : 127  : main adapt function for initialising variables and calling all local operations in a for loop
+       adapt_mv_nd.m : 148  : smoothing
+      adapt_rm_edg.m : 297  : coarsening by contraction of an edge to its center (expensive, prohibitively so in 3D)
+       adapt_rm_nd.m : 656  : coarsening by node removal, cavity filled by edge collapse or cavity filling
+        analyt_eig.m : 91   : eigen decomposition of SPD 2x2 and 3x3 tensor
+    analyt_fulleig.m : 4    : convert eigenvalue vector to a diagonal matrix
+       analyt_prod.m : 30   : calculate x*metric or R*y*R', where x is coordinates, R is rotation matrix, while y and metric are SPD tensors and 
+           bks_all.m : 50   : computate books in 2D from element list. Including edges and all possible maps between, elements, edges, directed edges and nodes
+         bks_all3D.m : 111  : computate books in 3D from element list. Including edges, faces and all possible maps between, elements, faces, directed faces, edges, directed edges and nodes
+          bks_all_.m : 51   : experimental function for computation of books in 2D for the case where not only the element list, but also edge list, inverted element table and inverted edge table is maintained.
+    bks_bndedg2edg.m : 35   : calculate the edge/face numbers of boundary (or other) edges/faces
+           bks_clr.m : 139  : colouring function
+bks_edg2nd2tri2nd2edg.m : 262 : symmetric edge to edge map for colouring in the coarsening by contraction of an edge to its center
+   bks_edg2tri2edg.m : 74   : symmetric edge to edge map for colouring in edge swapping or face2face map for face swapping
+          bks_init.m : 3    : initialise active node lists for smoothing and coarsening by node removal
+     bks_nd2tri2nd.m : 14   : symmetric node to node list for colouring in  smoothing or coarsening by node removal
+    bks_nd2tri2nd2.m : 28   : improved version of symmetric node to node list (used in smoothing). 
+    bks_nd2tri2ndO.m : 181  : symmetric node to node list for colouring in coarsening by node removal, nodes are ordered 
+   bks_nd2tri2ndO2.m : 117  : construction of cavity and cavity boundary in 3D node removal
+   bndmesh_polygon.m : 27   : compute boundary mesh in 2D, assumes polygonal geometry
+bndmesh_polyhedron.m : 31   : compute boundary mesh in 3D, assumes polyhedral geometry
+        elem_angle.m : 114  : calculate quality criterion based on element angles in real space
+         elem_cond.m : 50   : playfull script illustrating difference between working with a metric tensor and the squareroot of one
+          elem_fix.m : 4    : flip inverted elements
+          elem_inv.m : 25   : check for element inversion
+       elem_metric.m : 161  : calculate element metric
+         elem_qual.m : 168  : compute element quality
+      fill_circles.m : 353  : fills 2D cavities for 2D coarsening and 3D edge swapping
+      fill_spheres.m : 410  : fills 3D cavities for 3D coarsening
+  fill_spheres_new.m : 631  : fills 3D cavities for 3D coarsening with fewer sorts at the cost of more book keeping (profiling indicates strategy is not worthwhile)
+        gen_edgalt.m : 17   : compute alternate edge for 2D edge swapping and 3D face swapping
+       gen_options.m : 34   : generate default options struct - suitable for 2D mesh adaptation
+           gen_vtk.m : 31   : generate VTK files for use with Paraview
+         geom_circ.m : 9    : signed distance function for a disk or (for 3D input) a sphere
+        geom_crnds.m : 63   : compute corner nodes based on surface mesh and in 3D also edges
+          geom_cyl.m : 26   : signed distance function for an infinite cylinder
+         geom_diff.m : 16   : difference between two signed distance functions
+        geom_flipy.m : 2    : 2D flip distance function along x-axis
+    geom_intersect.m : 17   : intersect between two signed distance functions
+         geom_move.m : 1    : translate a signed distance function
+        geom_point.m : 5    : signed distance function for a point
+         geom_rect.m : 50   : signed distance function for a 2D or 3D box
+       geom_rotate.m : 8    : rotate 2D distance function
+       geom_shrink.m : 4    : shrink a distance function
+  geom_skewextrude.m : 30   : extrude a 2D distance function to 3D along the z-axis
+        geom_union.m : 17   : union between two signed distance functions
+         inv_table.m : 4    : invert a table of nodes defining elements, edges or faces. Outout is a masked array
+          makehist.m : 12   : bin 2D edge lengths in metric space for use in histogram
+      mesh_Lfillet.m : 27   : generate a mesh with a fillet
+         mesh_circ.m : 14   : generate a disk mesh
+          mesh_cyl.m : 39   : generate a cylinder mesh
+    mesh_convexity.m : 59   : try to remove non convex sets around nodes in 2D
+         mesh_rect.m : 30   : generate 2D rectangle mesh
+       mesh_rect3D.m : 72   : generate 3D box mesh
+    mesh_rect_hole.m : 20   : generate a 2D rectangle mesh with a hole
+  mesh_rect_hole3D.m : 36   : generate a 3D box mesh with a hole
+       mesh_sphere.m : 40   : generate 3D sphere mesh (fails for very fine meshes)
+        metric_avg.m : 35   : calculate the average metric in an element
+       metric_circ.m : 14   : generate a circular shock (squareroot) metric
+      metric_pnorm.m : 102  : minimises p-norm error of nodal scalar
+      metric_shock.m : 14   : generate a planar shock (squareroot) metric
+     metric_sphere.m : 12   : generate a spherical shock (squareroot) metric
+       metric_sqrt.m : 7    : compuate a metric squareroot
+    metric_uniform.m : 6    : generate a uniform (squareroot) metric
+ metric_vec2rthbss.m : 8    : generate an orthogonal basis in 3D based on an input vector
+           rpval2M.m : 17   : low level subfunction to inv_table, which (depending on input) can sometimes be called directly
+     rpval2M_clean.m : 6    : cleans up duplicate entries in masked arrays arising from construction of inverted tables
+      sanity_check.m : 34   : check if mesh is valid, only called in the context of debugging.
+      test_bndmesh.m : 28   : tests the boundary mesh
+        test_books.m : 26   : tests the various table generated by bks_all
+     test_box_circ.m : 47   : tests circular shock metric in 2D rectangular geometry
+   test_box_sphere.m : 57   : tests spherical shock metric in 3D box geometry
+  test_box_uniform.m : 57   : tests uniform metric in 3D box geometry
+test_box_uniform2D.m : 13   : tests uniform metric in 2D box geometry
+          test_clr.m : 48   : plot colouring
+      test_forpres.m : 62   : generate files pngs for gif movie of mesh adaptation
+         test_geom.m : 48   : test signed distance functions
+        test_pnorm.m : 74   : test metric_pnorm function
+         test_qual.m : 20   : example of elem_qual usage
+      test_rpval2M.m : 10   : test table inverse
+    test_semicolon.m : 19   : count files and semicolons
+  test_small2large.m : 65   : general 2D test case
+test_small2large3D.m : 123  : general 3D test case
+   test_spr_sphere.m : 56   : test spherical shock metric in sphere geometry
+  test_spr_uniform.m : 59   : test uniform metric in sphere geometry
+        test_triID.m : 106  : test region IDs (2D and 3D)
+            test_vtk : 17   : test gen_vtk using metric_pnorm. This setup is close to what could be used in the context of solving partial differential equations.
+   vacation_driver.m : 35   : driver for mesh adaptation, when input is zero based

@@ -1,0 +1,24 @@
+pqzschur and percomplex.f is software by Daniel Kressner 
+daniel.kressner@epfl.ch
+
+This directory additionally contains percomplex.F, which is an 
+adaption of percomplex.f to 64 bit systems by Hannes Uecker. 
+This adaption is very ad hoc, i.e., it works (on Linux Mint 17, 
+with Matlab 2013a), but it may not follow default procedures for 
+such adaptions, see, e.g., 
+de.mathworks.com/help/matlab/matlab_external/upgrading-mex-files-to-use-64-bit-api.html
+
+Essentially, I simply replaced hard-coded parameters such as "1" in 
+function calls by variables "hu1" (where hu1=1 is of type mwpointer, 
+which seems to be the most general setting available). 
+
+To use pqzschur.m (and hence floqps in pde2path), proceed as follows: 
+
+* on 32-bit systems, in the matlab prompt call 
+  mex percomplex.f -lmwlapack -lmwblas
+  You may have to call mex -setup beforehand. 
+
+* Similarly, on 64-bit systems, call 
+  mex percomplex.F -lmwlapack -lmwblas
+
+* test percomplex (and pqzschur.m) via pstest.m 

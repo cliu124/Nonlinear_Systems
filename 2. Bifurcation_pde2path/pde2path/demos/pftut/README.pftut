@@ -1,0 +1,27 @@
+Demos describing pattern formation problems. 
+
+sh: The Swift–Hohenberg (SH) equation on 1D, 2D and 3D boxes with homogeneous 
+ Neumann BCs
+shpbc: 2D with pBCs
+shEck: 1D, with branch–point continuation to approximate the Eckhaus instability
+shgc : SH with global coupling, to illustrate customized linear system solvers
+
+schnakpat: A Schnakenberg 2-component reaction diffusion model, 1D, 2D and 3D
+schnakS/tor: Schnakenberg model on spheres and tori
+schnakcone: Schnakenberg on a cone
+
+ch   : Cahn-Hilliard (CH), 1D, 2D and 3D, to illustrate a mass constraint setup
+fCH  : a ’functionalized’ CH model
+chtor: CH on a torus 
+
+hexex: scalar problem on a hexagonal domain, multiple BPs of higher degeneracy
+chemtax: A quasilinear RD system modeling chemotaxis. 
+
+actor, acS: Allen-Cahn (AC) equations on tori and spheres, 
+  illustrating Laplace–Beltrami operators
+accyl: AC equation on a cylinder with boundary coupling to a Poisson eqn
+
+cpol : a model for cell–polarization with bulk–surface coupling
+
+bruosc: The Brusselator, with oscillating Turing patterns and period doubling
+bruosc-tpf: Brusselator with time-periodic-forcing 

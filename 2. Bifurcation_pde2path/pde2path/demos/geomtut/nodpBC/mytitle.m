@@ -1,0 +1,3 @@
+function tis=mytitle(p)
+tis=[p.file.pname mat2str(p.file.count) ', ' ...
+            '(r,H)=(' mat2str(p.branch(6+19,end),3) ',' mat2str(p.u(p.nu+1),3) ')']; 

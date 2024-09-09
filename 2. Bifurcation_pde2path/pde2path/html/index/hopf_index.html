@@ -1,0 +1,135 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>hopf index</title><meta name="generator" content="MATLAB 9.13"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2024-04-29"><meta name="DC.source" content="hopf_index.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; }
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+span.typesection { color:#A0522D }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><h1>hopf index</h1><div><ul><li><a href="matlab:doc('flmcoll')">flmcoll</a>:  extract blocks from Hopf-jac to prepare multiplier-comp</li><li><a href="matlab:doc('floq')">floq</a>:  compute Floquet multipliers and instability index of u_H</li><li><a href="matlab:doc('floqap')">floqap</a>:  Floquet multipliers and ind(u_H)  (a posteriori)</li><li><a href="matlab:doc('floqps')">floqps</a>:  Floquet multipliers by periodic Schur decomposition</li><li><a href="matlab:doc('floqpsap')">floqpsap</a>:  Floquet multipliers by pqzSchur (a posteriori)</li><li><a href="matlab:doc('fsol_np')">fsol_np</a>:  interface to call fsolve for Hopf in natural parametrization</li><li><a href="matlab:doc('fsolextfh')">fsolextfh</a>:  rhs for fsolve</li><li><a href="matlab:doc('fsolexth')">fsolexth</a>:  interface to call fsolve for Hopf in arclength parametrization</li><li><a href="matlab:doc('gethoA')">gethoA</a>:  build extended Jac for Hopf-arclength setting</li><li><a href="matlab:doc('gethoA_np')">gethoA_np</a>:  build Jac for Hopf natural parametrization setting</li><li><a href="matlab:doc('getmuc')">getmuc</a>:  get critical multiplier ga, i.e. ga closest to unit circle</li><li><a href="matlab:doc('getqhder')">getqhder</a>:  get derivatives of Hopf constraint p.fuha.qfh</li><li><a href="matlab:doc('hoMini')">hoMini</a>:  initialize M for TOM (para=3); also used for para=4 with nq=0,</li><li><a href="matlab:doc('hoarcl')">hoarcl</a>:  arclength for Hopf</li><li><a href="matlab:doc('hoasol')">hoasol</a>:  solve in arclength setting but with ds=0, use to decrease tol</li><li><a href="matlab:doc('hoassempbc')">hoassempbc</a>:  assemble rhs and jac for hopf with pBC, pad y accordingly</li><li><a href="matlab:doc('hobc')">hobc</a>:  BC for Hopf, for tomsol via tom</li><li><a href="matlab:doc('hobcjac')">hobcjac</a>:  BC jacobian for Hopf, for tomsol via tom</li><li><a href="matlab:doc('hobifdetec')">hobifdetec</a>:  Hopf version of bifdetec, para=4 required</li><li><a href="matlab:doc('hobra')">hobra</a>:  output for bifurcation diagram, setup for Hopf, including Krylov</li><li><a href="matlab:doc('hobratw')">hobratw</a>:  output for bifurcation diagram, setup for TW-Hopf</li><li><a href="matlab:doc('hocont')">hocont</a>:  cont for Hopf; also called by cont if p.sol.ptype=3</li><li><a href="matlab:doc('hodummybc')">hodummybc</a>:  dummy BC for Hopf, used (and then irrelevant) in tomassempbc</li><li><a href="matlab:doc('hodummybcjac')">hodummybcjac</a>:  dummy BC jac for Hopf, used (but irrelevant) in tomassempbc</li><li><a href="matlab:doc('hogetnf')">hogetnf</a>:  get dlam and alpha for Hopf initial guess</li><li><a href="matlab:doc('hogradinf')">hogradinf</a>:  print info on <tt>u'</tt>_infty</li><li><a href="matlab:doc('hoinistep')">hoinistep</a>:  tomsol for first 2 points on branch; also comp.secant (para=3)</li><li><a href="matlab:doc('hojac')">hojac</a>:  Jac of rhs for Hopf (para=3)</li><li><a href="matlab:doc('honloop')">honloop</a>:  Newton loop for Hopf at fixed lam, for now nqh=0</li><li><a href="matlab:doc('honloop_np')">honloop_np</a>:  Newton loop for Hopf in natural parametrization (fixed lam)</li><li><a href="matlab:doc('honloopext')">honloopext</a>:  Newton loop for Hopf in arclength</li><li><a href="matlab:doc('honorm')">honorm</a>:  arclength norm (with weights) for Hopf</li><li><a href="matlab:doc('hopc')">hopc</a>:  phase condition</li><li><a href="matlab:doc('hopftref')">hopftref</a>:  mesh refinement in t for hopf;</li><li><a href="matlab:doc('hoplot')">hoplot</a>:  basic plotting routine for Hopf orbits</li><li><a href="matlab:doc('horhs')">horhs</a>:  rhs for Hopf, with aux vars for pBC in t</li><li><a href="matlab:doc('hosjac')">hosjac</a>:  Jac for Hopf, pad u with par, then call getGu</li><li><a href="matlab:doc('hosrhs')">hosrhs</a>:  pad u with par, then call resi</li><li><a href="matlab:doc('hosscon')">hosscon</a>:  Hopf step size control</li><li><a href="matlab:doc('hostanheadfu')">hostanheadfu</a>:  standard "header function" for runtime output for Hopf</li><li><a href="matlab:doc('hostanopt')">hostanopt</a>:  standard options for Hopf (TOM)</li><li><a href="matlab:doc('hostanparam')">hostanparam</a>:  settings of p.hopf parameters to 'standard' values</li><li><a href="matlab:doc('hostanufu')">hostanufu</a>:  standard "user function" called after each cont.step, HOPF</li><li><a href="matlab:doc('hoswibra')">hoswibra</a>:  branch switching from Hopf points</li><li><a href="matlab:doc('hoswipar')">hoswipar</a>:  switch parameter for (Hopf) solution from file</li><li><a href="matlab:doc('hoswiparf')">hoswiparf</a>:  switch parameter for (Hopf) solution from file (old name)</li><li><a href="matlab:doc('hotintxs')">hotintxs</a>:  time integration with LU-decomp. of M+dt*K,</li><li><a href="matlab:doc('huassem')">huassem</a>:  assemble rhs and jac for hopf (arclength), extracted from TOM</li><li><a href="matlab:doc('huassempbc')">huassempbc</a>:  assemble rhs and jac for hopf with pBC, pad y accordingly</li><li><a href="matlab:doc('hunorm')">hunorm</a>:  l2-norm, dim-independent</li><li><a href="matlab:doc('lframeplot')">lframeplot</a>:  x-t-plot of rel. Hopf orbit with period T in lab frame</li><li><a href="matlab:doc('lssfloq')">lssfloq</a>:  AMG interface for it. soln of LSS for Floq-comp (eperimental!)</li><li><a href="matlab:doc('pobifpred')">pobifpred</a>:  predictor at bif FROM hopf orbit via monodromy M</li><li><a href="matlab:doc('poiniguess')">poiniguess</a>:  do iniguess for periodic orbit (indep. of branch-switching)</li><li><a href="matlab:doc('poswibra')">poswibra</a>:  branch-switching from periodic orbits (pitch/trans or period-doubling),</li><li><a href="matlab:doc('sety0dot')">sety0dot</a>:  set y0dot for the phase condiion (in t) for Hopf orbits</li><li><a href="matlab:doc('twswibra')">twswibra</a>:  branch switching from Hopf points to TWs in O(2) symmetry</li><li><a href="matlab:doc('uhopftref')">uhopftref</a>:  uniform mesh refinement in t for hopf ;</li><li><a href="matlab:doc('ulamcheckho')">ulamcheckho</a>:  called by ulamcheck, if hopf setting</li></ul></div><p class="footer"><br><a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2022b</a><br></p></div><!--
+##### SOURCE BEGIN #####
+%% hopf index
+%
+% * <matlab:doc('flmcoll') flmcoll>:  extract blocks from Hopf-jac to prepare multiplier-comp  
+% * <matlab:doc('floq') floq>:  compute Floquet multipliers and instability index of u_H  
+% * <matlab:doc('floqap') floqap>:  Floquet multipliers and ind(u_H)  (a posteriori)  
+% * <matlab:doc('floqps') floqps>:  Floquet multipliers by periodic Schur decomposition 
+% * <matlab:doc('floqpsap') floqpsap>:  Floquet multipliers by pqzSchur (a posteriori)  
+% * <matlab:doc('fsol_np') fsol_np>:  interface to call fsolve for Hopf in natural parametrization 
+% * <matlab:doc('fsolextfh') fsolextfh>:  rhs for fsolve  
+% * <matlab:doc('fsolexth') fsolexth>:  interface to call fsolve for Hopf in arclength parametrization 
+% * <matlab:doc('gethoA') gethoA>:  build extended Jac for Hopf-arclength setting 
+% * <matlab:doc('gethoA_np') gethoA_np>:  build Jac for Hopf natural parametrization setting 
+% * <matlab:doc('getmuc') getmuc>:  get critical multiplier ga, i.e. ga closest to unit circle 
+% * <matlab:doc('getqhder') getqhder>:  get derivatives of Hopf constraint p.fuha.qfh 
+% * <matlab:doc('hoMini') hoMini>:  initialize M for TOM (para=3); also used for para=4 with nq=0,  
+% * <matlab:doc('hoarcl') hoarcl>:  arclength for Hopf 
+% * <matlab:doc('hoasol') hoasol>:  solve in arclength setting but with ds=0, use to decrease tol  
+% * <matlab:doc('hoassempbc') hoassempbc>:  assemble rhs and jac for hopf with pBC, pad y accordingly 
+% * <matlab:doc('hobc') hobc>:  BC for Hopf, for tomsol via tom  
+% * <matlab:doc('hobcjac') hobcjac>:  BC jacobian for Hopf, for tomsol via tom  
+% * <matlab:doc('hobifdetec') hobifdetec>:  Hopf version of bifdetec, para=4 required 
+% * <matlab:doc('hobra') hobra>:  output for bifurcation diagram, setup for Hopf, including Krylov  
+% * <matlab:doc('hobratw') hobratw>:  output for bifurcation diagram, setup for TW-Hopf 
+% * <matlab:doc('hocont') hocont>:  cont for Hopf; also called by cont if p.sol.ptype=3 
+% * <matlab:doc('hodummybc') hodummybc>:  dummy BC for Hopf, used (and then irrelevant) in tomassempbc 
+% * <matlab:doc('hodummybcjac') hodummybcjac>:  dummy BC jac for Hopf, used (but irrelevant) in tomassempbc 
+% * <matlab:doc('hogetnf') hogetnf>:  get dlam and alpha for Hopf initial guess   
+% * <matlab:doc('hogradinf') hogradinf>:  print info on |u'|_infty 
+% * <matlab:doc('hoinistep') hoinistep>:  tomsol for first 2 points on branch; also comp.secant (para=3) 
+% * <matlab:doc('hojac') hojac>:  Jac of rhs for Hopf (para=3) 
+% * <matlab:doc('honloop') honloop>:  Newton loop for Hopf at fixed lam, for now nqh=0 
+% * <matlab:doc('honloop_np') honloop_np>:  Newton loop for Hopf in natural parametrization (fixed lam)  
+% * <matlab:doc('honloopext') honloopext>:  Newton loop for Hopf in arclength 
+% * <matlab:doc('honorm') honorm>:  arclength norm (with weights) for Hopf  
+% * <matlab:doc('hopc') hopc>:  phase condition 
+% * <matlab:doc('hopftref') hopftref>:  mesh refinement in t for hopf;  
+% * <matlab:doc('hoplot') hoplot>:  basic plotting routine for Hopf orbits 
+% * <matlab:doc('horhs') horhs>:  rhs for Hopf, with aux vars for pBC in t 
+% * <matlab:doc('hosjac') hosjac>:  Jac for Hopf, pad u with par, then call getGu  
+% * <matlab:doc('hosrhs') hosrhs>:  pad u with par, then call resi 
+% * <matlab:doc('hosscon') hosscon>:  Hopf step size control 
+% * <matlab:doc('hostanheadfu') hostanheadfu>:  standard "header function" for runtime output for Hopf  
+% * <matlab:doc('hostanopt') hostanopt>:  standard options for Hopf (TOM) 
+% * <matlab:doc('hostanparam') hostanparam>:  settings of p.hopf parameters to 'standard' values 
+% * <matlab:doc('hostanufu') hostanufu>:  standard "user function" called after each cont.step, HOPF  
+% * <matlab:doc('hoswibra') hoswibra>:  branch switching from Hopf points 
+% * <matlab:doc('hoswipar') hoswipar>:  switch parameter for (Hopf) solution from file  
+% * <matlab:doc('hoswiparf') hoswiparf>:  switch parameter for (Hopf) solution from file (old name)  
+% * <matlab:doc('hotintxs') hotintxs>:  time integration with LU-decomp. of M+dt*K,  
+% * <matlab:doc('huassem') huassem>:  assemble rhs and jac for hopf (arclength), extracted from TOM 
+% * <matlab:doc('huassempbc') huassempbc>:  assemble rhs and jac for hopf with pBC, pad y accordingly 
+% * <matlab:doc('hunorm') hunorm>:  l2-norm, dim-independent 
+% * <matlab:doc('lframeplot') lframeplot>:  x-t-plot of rel. Hopf orbit with period T in lab frame  
+% * <matlab:doc('lssfloq') lssfloq>:  AMG interface for it. soln of LSS for Floq-comp (eperimental!)  
+% * <matlab:doc('pobifpred') pobifpred>:  predictor at bif FROM hopf orbit via monodromy M  
+% * <matlab:doc('poiniguess') poiniguess>:  do iniguess for periodic orbit (indep. of branch-switching) 
+% * <matlab:doc('poswibra') poswibra>:  branch-switching from periodic orbits (pitch/trans or period-doubling),  
+% * <matlab:doc('sety0dot') sety0dot>:  set y0dot for the phase condiion (in t) for Hopf orbits 
+% * <matlab:doc('twswibra') twswibra>:  branch switching from Hopf points to TWs in O(2) symmetry 
+% * <matlab:doc('uhopftref') uhopftref>:  uniform mesh refinement in t for hopf ;  
+% * <matlab:doc('ulamcheckho') ulamcheckho>:  called by ulamcheck, if hopf setting  
+
+##### SOURCE END #####
+--></body></html>

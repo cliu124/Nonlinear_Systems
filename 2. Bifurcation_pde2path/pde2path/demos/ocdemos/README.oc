@@ -1,0 +1,16 @@
+demos on Optimal Control with pde2path
+
+sloc     : Shallow Lake Optimal Control; scalar state PDE, hence 2-compo 
+  canonical system (CS), 1D and 2D
+vegoc    : Vegetation OC: 2-compo state PDE, 4-compo CS, 1D and 2D, shows 
+   OPTIMAL patterned canonical steady states 
+lvoc     : Lottka-Voltera Optimal Control; 2 states PDE, with boundary control 
+toy      : A 4-compo ODE toy model (not derived from an OC problem), which 
+  can be treated almost completely analytically. 
+pollODE  : 2 states PDE, 4-compo CS, with Hopf bifurcations to periodic canonical 
+  steady states (PCSS) that can be reached by suitable controls; here the ODE case, 
+  i.e., 1 spatial point! Essentially used during development, but also useful 
+  as template. 
+pollution: The "PDE" case of pollODE (with ca 20 spatial points!). 
+
+ocdemos_legacy: probably obsolete ...

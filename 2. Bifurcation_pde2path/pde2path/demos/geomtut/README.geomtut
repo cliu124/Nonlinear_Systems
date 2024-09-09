@@ -1,0 +1,26 @@
+Demos dealing with **geometric bifurcation problems** as described in 
+[1] "Numerical continuation and for differential geometric PDEs"
+and the associated tutorial 
+[2] "Differential geometric bifurcation problems in pde2path" 
+
+spcap1:  Spherical caps via surface meshes, introductory demo.
+enneper: Bifurcation from Enneper's surface, closely related to bdcurve. 
+
+nodDBC: Nodoids with Dirichlet BCs, including so called liquid bridges.
+nodpBC: Nodoids with periodic BCs. 
+TPS   : Triply Periodic Surfaces, here Schwarz P. 
+vesicles: closed X as sol of the shape equations derived from Helfrich's  
+  spontaneous curvature c0 energy  (SC model) 
+biocaps: Disk type solutions as a variant of vesicles.
+
+------------- 
+
+bdcurve: Experiments on minimal surfaces with different boundary curves.
+spheres: Continuation of spheres, convergence tests for the discretization, and 
+   test for volume-preserving mean curvature flow (VPMCF). 
+hemispheres: Continuation of hemispheres on a supporting plane, and VPMCF. 
+hemisphconv: checking of conv.rates for hemispheres 
+parabol: Toy model to explain meshing, and some more conv.rates 
+biocyl: Helfrich cylinders with clamped BCs as an example of a 4th order problem. 
+
+spcap2:  Spherical caps via 2D FEM in the preimage,

@@ -1,0 +1,116 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>fem index</title><meta name="generator" content="MATLAB 9.13"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2024-04-29"><meta name="DC.source" content="fem_index.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; }
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+span.typesection { color:#A0522D }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><h1>fem index</h1><div><ul><li><a href="matlab:doc('LBSd')">LBSd</a>:  Laplace-Beltrami (and mass M) for spheroid with semi-axis a,c</li><li><a href="matlab:doc('LBcone')">LBcone</a>:  LB for cone of height 1 and 'circular' base of radius a</li><li><a href="matlab:doc('LBcone2')">LBcone2</a>:  LB for cone of height a and elliptic (e,1) plane base</li><li><a href="matlab:doc('LBcone3')">LBcone3</a>:  LB cone, height h and ellipticity a, parametr. over unit disk</li><li><a href="matlab:doc('LBcyl')">LBcyl</a>:  Laplace-Beltrami for cylinder of radius R, coord (phi,z)</li><li><a href="matlab:doc('LBell')">LBell</a>:  1D Laplace-Beltrami (and mass M) for ellipse, semiaxis a,b</li><li><a href="matlab:doc('LBtor')">LBtor</a>:  Laplace-Beltrami (and mass M) for torus, radii R and rho</li><li><a href="matlab:doc('assemadv')">assemadv</a>:  assemble K for advective terms.</li><li><a href="matlab:doc('assemadv1')">assemadv1</a>:  assemble advection matrix for scalar problem.</li><li><a href="matlab:doc('assemtest')">assemtest</a>:  SCRIPT for testing assema, dummy, convenience, freely modify!</li><li><a href="matlab:doc('bgradu2f')">bgradu2f</a>:  include "b grad u" into f for error-est and mesh-adapt.</li><li><a href="matlab:doc('boundarymatrix')">boundarymatrix</a>:  returns a 1D boundary matrix</li><li><a href="matlab:doc('box2per')">box2per</a>:  change settings and solution from Neumann bc to periodic BC</li><li><a href="matlab:doc('getM')">getM</a>:  extract mass matrix M from p</li><li><a href="matlab:doc('getPerOp')">getPerOp</a>:  generate matrices for changing from Neumann to periodic bc.</li><li><a href="matlab:doc('getPerOp1dir')">getPerOp1dir</a>:  generate matrices for changing from Neumann to cylinder bc.</li><li><a href="matlab:doc('getPerOp1dirorg')">getPerOp1dirorg</a>:  generate matrices for changing from Neumann to cylinder bc.</li><li><a href="matlab:doc('getPerOporg')">getPerOporg</a>:  generate matrices for changing from Neumann to periodic bc.</li><li><a href="matlab:doc('getpte')">getpte</a>:  get points, triangles (elements), edges from p</li><li><a href="matlab:doc('gnbc')">gnbc</a>:  returns a boundary matrix for generalized Neumann BC</li><li><a href="matlab:doc('gnbcs')">gnbcs</a>:  string format version of gnbc.</li><li><a href="matlab:doc('makeDtm')">makeDtm</a>:  dt-matrix</li><li><a href="matlab:doc('makeDtm2')">makeDtm2</a>:  dt-matrix</li><li><a href="matlab:doc('makeDx')">makeDx</a>:  create 1D finite-difference differentiation matrix</li><li><a href="matlab:doc('makeDxF')">makeDxF</a>:  FD approximation of \pa_x, based on fdcoeffF, here O(h^3)</li><li><a href="matlab:doc('makeDxpbc')">makeDxpbc</a>:  FD differentiation matrix for \pa_x with periodic BCs</li><li><a href="matlab:doc('makeDxxF')">makeDxxF</a>:  FD approximation of \pa_x^2, based on fdcoeffF, here O(h^3)</li><li><a href="matlab:doc('meshcheck')">meshcheck</a>:  compare FEM- and refined FEM-solution for PDE-solution check</li><li><a href="matlab:doc('n2triamat')">n2triamat</a>:  compute transf.-matrix from nodal values to triangle centers values</li><li><a href="matlab:doc('newmesh')">newmesh</a>:  inquires to build new mesh and interpolate (u,tau) to it</li><li><a href="matlab:doc('polygong')">polygong</a>:  returns a decomposed geometry matrix for a polygon object</li><li><a href="matlab:doc('rec')">rec</a>:  provide rectangle-geometry in pdetoolbox-form</li><li><a href="matlab:doc('recdbc1')">recdbc1</a>:  geometry and BC's for rectangle with Dirichlet BC, 1 component</li><li><a href="matlab:doc('recnbc1')">recnbc1</a>:  geometry and b.c.'s for rectangle with Neumann BC, 1 component</li><li><a href="matlab:doc('recnbc2')">recnbc2</a>:  geometry and b.c.'s for rectangle with Neumann BC, 2 components</li><li><a href="matlab:doc('rmbdtri')">rmbdtri</a>:  remove boundary triangles from refinement-list</li><li><a href="matlab:doc('savemesh')">savemesh</a>:  save mesh (needed if p.file.msave=0, i.e., mesh not saved w. points)</li><li><a href="matlab:doc('setbmesh')">setbmesh</a>:  (re)set basemesh for meshadac to current mesh.</li><li><a href="matlab:doc('setfemops')">setfemops</a>:  generate and store FEM operators</li><li><a href="matlab:doc('tradapt')">tradapt</a>:  minor mod of trullekrul adapt_mesh with switch sw=options.sw</li></ul></div><p class="footer"><br><a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2022b</a><br></p></div><!--
+##### SOURCE BEGIN #####
+%% fem index
+%
+% * <matlab:doc('LBSd') LBSd>:  Laplace-Beltrami (and mass M) for spheroid with semi-axis a,c 
+% * <matlab:doc('LBcone') LBcone>:  LB for cone of height 1 and 'circular' base of radius a  
+% * <matlab:doc('LBcone2') LBcone2>:  LB for cone of height a and elliptic (e,1) plane base   
+% * <matlab:doc('LBcone3') LBcone3>:  LB cone, height h and ellipticity a, parametr. over unit disk 
+% * <matlab:doc('LBcyl') LBcyl>:  Laplace-Beltrami for cylinder of radius R, coord (phi,z) 
+% * <matlab:doc('LBell') LBell>:  1D Laplace-Beltrami (and mass M) for ellipse, semiaxis a,b  
+% * <matlab:doc('LBtor') LBtor>:  Laplace-Beltrami (and mass M) for torus, radii R and rho  
+% * <matlab:doc('assemadv') assemadv>:  assemble K for advective terms.  
+% * <matlab:doc('assemadv1') assemadv1>:  assemble advection matrix for scalar problem. 
+% * <matlab:doc('assemtest') assemtest>:  SCRIPT for testing assema, dummy, convenience, freely modify! 
+% * <matlab:doc('bgradu2f') bgradu2f>:  include "b grad u" into f for error-est and mesh-adapt. 
+% * <matlab:doc('boundarymatrix') boundarymatrix>:  returns a 1D boundary matrix  
+% * <matlab:doc('box2per') box2per>:  change settings and solution from Neumann bc to periodic BC 
+% * <matlab:doc('getM') getM>:  extract mass matrix M from p 
+% * <matlab:doc('getPerOp') getPerOp>:  generate matrices for changing from Neumann to periodic bc. 
+% * <matlab:doc('getPerOp1dir') getPerOp1dir>:  generate matrices for changing from Neumann to cylinder bc. 
+% * <matlab:doc('getPerOp1dirorg') getPerOp1dirorg>:  generate matrices for changing from Neumann to cylinder bc. 
+% * <matlab:doc('getPerOporg') getPerOporg>:  generate matrices for changing from Neumann to periodic bc. 
+% * <matlab:doc('getpte') getpte>:  get points, triangles (elements), edges from p 
+% * <matlab:doc('gnbc') gnbc>:  returns a boundary matrix for generalized Neumann BC  
+% * <matlab:doc('gnbcs') gnbcs>:  string format version of gnbc. 
+% * <matlab:doc('makeDtm') makeDtm>:  dt-matrix  
+% * <matlab:doc('makeDtm2') makeDtm2>:  dt-matrix  
+% * <matlab:doc('makeDx') makeDx>:  create 1D finite-difference differentiation matrix 
+% * <matlab:doc('makeDxF') makeDxF>:  FD approximation of \pa_x, based on fdcoeffF, here O(h^3)   
+% * <matlab:doc('makeDxpbc') makeDxpbc>:  FD differentiation matrix for \pa_x with periodic BCs  
+% * <matlab:doc('makeDxxF') makeDxxF>:  FD approximation of \pa_x^2, based on fdcoeffF, here O(h^3)   
+% * <matlab:doc('meshcheck') meshcheck>:  compare FEM- and refined FEM-solution for PDE-solution check 
+% * <matlab:doc('n2triamat') n2triamat>:  compute transf.-matrix from nodal values to triangle centers values   
+% * <matlab:doc('newmesh') newmesh>:  inquires to build new mesh and interpolate (u,tau) to it  
+% * <matlab:doc('polygong') polygong>:  returns a decomposed geometry matrix for a polygon object 
+% * <matlab:doc('rec') rec>:  provide rectangle-geometry in pdetoolbox-form    
+% * <matlab:doc('recdbc1') recdbc1>:  geometry and BC's for rectangle with Dirichlet BC, 1 component 
+% * <matlab:doc('recnbc1') recnbc1>:  geometry and b.c.'s for rectangle with Neumann BC, 1 component 
+% * <matlab:doc('recnbc2') recnbc2>:  geometry and b.c.'s for rectangle with Neumann BC, 2 components  
+% * <matlab:doc('rmbdtri') rmbdtri>:  remove boundary triangles from refinement-list 
+% * <matlab:doc('savemesh') savemesh>:  save mesh (needed if p.file.msave=0, i.e., mesh not saved w. points) 
+% * <matlab:doc('setbmesh') setbmesh>:  (re)set basemesh for meshadac to current mesh. 
+% * <matlab:doc('setfemops') setfemops>:  generate and store FEM operators  
+% * <matlab:doc('tradapt') tradapt>:  minor mod of trullekrul adapt_mesh with switch sw=options.sw 
+
+##### SOURCE END #####
+--></body></html>

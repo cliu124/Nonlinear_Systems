@@ -1,0 +1,147 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>hostanparam</title><meta name="generator" content="MATLAB 9.13"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2024-04-29"><meta name="DC.source" content="hostanparam.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; }
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+span.typesection { color:#A0522D }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><pre class="codeinput"><span class="keyword">function</span> p=hostanparam(p,aux)
+<span class="comment">% HOSTANPARAM: settings of p.hopf parameters to 'standard' values</span>
+<span class="comment">%</span>
+<span class="comment">%  p=hostanparam(p)</span>
+p.hopf.aux=[]; <span class="comment">% for plotting</span>
+p.hopf.flcheck=1; <span class="comment">% 1 to turn on multipl.-comp during cont</span>
+p.hopf.indini=0; <span class="comment">% index not yet initialized</span>
+p.hopf.nfloq=20; <span class="comment">% # of fl-multipl. to compute</span>
+p.hopf.ind=-1;   <span class="comment">% # of unstab.Fl multipl. (-1 means not yet computed)</span>
+p.hopf.tl=21;    <span class="comment">% # of t-slices</span>
+p.hopf.fltol=1e-6; <span class="comment">% tolerance for mu_1 (give warning if abs(mu1-1)&gt;fltol</span>
+p.hopf.pcheck=1;   <span class="comment">% check predictor in hoswibra</span>
+p.hopf.nqh=0; <span class="comment">% number of aux eqns in hopf</span>
+p.hopf.xif=10; <span class="comment">% default weight for u is p.hopf.xi=xif/(nu*tl);</span>
+p.hopf.qfac=1; <span class="comment">% multiply aux eqns by qfac (may give more weight)</span>
+p.hopf.tw=0.5; <span class="comment">% weight for T in arclength</span>
+p.hopf.scf=1;  <span class="comment">% scaling factor for the PDE-rhs</span>
+p.hopf.sec=0;  <span class="comment">% if 1, then use secant instead of tangent</span>
+p.hopf.pcfac=1; <span class="comment">% factor to scale the phase-cond (in t); sometimes usefull to improve convergence</span>
+p.hopf.qw=0.1; <span class="comment">% aux vars weight in hoarclength</span>
+p.hopf.y0dsw=2; <span class="comment">% how to compute y0d for PC, see sety0dot</span>
+p.hopf.bisec=5; <span class="comment">% # of bisection used for BP localizations</span>
+p.fuha.ufu=@hostanufu; p.fuha.headfu=@hostanheadfu;
+p.hopf.jac=1;
+<span class="keyword">if</span> nargin&gt;1
+  <span class="keyword">if</span> isfield(aux,<span class="string">'hoaux'</span>); p.hopf.aux=aux.hoaux; <span class="keyword">end</span>;
+  <span class="keyword">if</span> isfield(aux,<span class="string">'tl'</span>); p.hopf.tl=aux.tl; <span class="keyword">end</span>;
+  <span class="keyword">if</span> isfield(aux,<span class="string">'tw'</span>); p.hopf.tw=aux.tw; <span class="keyword">end</span>;
+  <span class="keyword">if</span> isfield(aux,<span class="string">'nqh'</span>); p.hopf.nqh=aux.nqh; <span class="keyword">end</span>;
+  <span class="keyword">if</span> isfield(aux,<span class="string">'qw'</span>); p.hopf.qw=aux.qw; <span class="keyword">end</span>
+  <span class="keyword">if</span> isfield(aux,<span class="string">'qfac'</span>); p.hopf.qfac=aux.qfac; <span class="keyword">end</span>
+  <span class="keyword">if</span> isfield(aux,<span class="string">'xif'</span>); p.hopf.xif=aux.xif; <span class="keyword">end</span>;
+  <span class="keyword">if</span> isfield(aux,<span class="string">'pcfac'</span>); p.hopf.pcfac=aux.pcfac; <span class="keyword">end</span>;
+  <span class="keyword">if</span> isfield(aux,<span class="string">'y0dsw'</span>); p.hopf.y0dsw=aux.y0dsw; <span class="keyword">end</span>;
+  <span class="keyword">if</span> isfield(aux,<span class="string">'qfh'</span>); p.hopf.qfh=aux.qfh; <span class="keyword">end</span>  <span class="comment">% aux eqns</span>
+  <span class="keyword">if</span> isfield(aux,<span class="string">'qfhder'</span>); p.hopf.qfhder=aux.qfhder; <span class="keyword">end</span>
+<span class="keyword">end</span>
+</pre><p class="footer"><br><a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2022b</a><br></p></div><!--
+##### SOURCE BEGIN #####
+function p=hostanparam(p,aux)
+% HOSTANPARAM: settings of p.hopf parameters to 'standard' values
+%
+%  p=hostanparam(p)
+p.hopf.aux=[]; % for plotting
+p.hopf.flcheck=1; % 1 to turn on multipl.-comp during cont
+p.hopf.indini=0; % index not yet initialized
+p.hopf.nfloq=20; % # of fl-multipl. to compute
+p.hopf.ind=-1;   % # of unstab.Fl multipl. (-1 means not yet computed) 
+p.hopf.tl=21;    % # of t-slices 
+p.hopf.fltol=1e-6; % tolerance for mu_1 (give warning if abs(mu1-1)>fltol
+p.hopf.pcheck=1;   % check predictor in hoswibra
+p.hopf.nqh=0; % number of aux eqns in hopf 
+p.hopf.xif=10; % default weight for u is p.hopf.xi=xif/(nu*tl); 
+p.hopf.qfac=1; % multiply aux eqns by qfac (may give more weight) 
+p.hopf.tw=0.5; % weight for T in arclength 
+p.hopf.scf=1;  % scaling factor for the PDE-rhs 
+p.hopf.sec=0;  % if 1, then use secant instead of tangent 
+p.hopf.pcfac=1; % factor to scale the phase-cond (in t); sometimes usefull to improve convergence
+p.hopf.qw=0.1; % aux vars weight in hoarclength
+p.hopf.y0dsw=2; % how to compute y0d for PC, see sety0dot
+p.hopf.bisec=5; % # of bisection used for BP localizations
+p.fuha.ufu=@hostanufu; p.fuha.headfu=@hostanheadfu; 
+p.hopf.jac=1; 
+if nargin>1
+  if isfield(aux,'hoaux'); p.hopf.aux=aux.hoaux; end;   
+  if isfield(aux,'tl'); p.hopf.tl=aux.tl; end; 
+  if isfield(aux,'tw'); p.hopf.tw=aux.tw; end; 
+  if isfield(aux,'nqh'); p.hopf.nqh=aux.nqh; end;
+  if isfield(aux,'qw'); p.hopf.qw=aux.qw; end 
+  if isfield(aux,'qfac'); p.hopf.qfac=aux.qfac; end
+  if isfield(aux,'xif'); p.hopf.xif=aux.xif; end; 
+  if isfield(aux,'pcfac'); p.hopf.pcfac=aux.pcfac; end; 
+  if isfield(aux,'y0dsw'); p.hopf.y0dsw=aux.y0dsw; end; 
+  if isfield(aux,'qfh'); p.hopf.qfh=aux.qfh; end  % aux eqns 
+  if isfield(aux,'qfhder'); p.hopf.qfhder=aux.qfhder; end 
+end
+##### SOURCE END #####
+--></body></html>

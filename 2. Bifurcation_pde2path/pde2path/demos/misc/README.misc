@@ -1,0 +1,29 @@
+Various demos, mostly older, i.e., related to the original pde2path-paper 
+(NMTMA 2014), but updated to the current pde2path syntax. Most notably: 
+
+gp1D: 1D Gross-Pitaevsky (GP) equation with double well potential; also with DNS
+gp2Dazi: 2D GP equation, harmonic trap potential, solitons and vector solitons 
+
+achex: AC equation on domain with 6 corners (but not hexagon); sample for using 
+       "gnbcs"   (different BCs on different edges, generated from string) 
+
+lss:   linear-system-solver tutorial, see subdir ac3D for various ilupack tests 
+
+nlb:   non-linear-Bloch waves (Dohnal-Uecker, J.Nonlin.Sci 2016), 
+  sfem=1, and still based on pdetoolbox 
+nlbc:  some non-linear BCs on a disk, sfem=0, and BCs coded via string in nlbc
+
+plotsol: OLD plotsol tutorial
+
+rbconv: stream-function formulation of Rayleigh-Benard, pdetoolbox-setting 
+
+two_fluid: Two-fluid problem, pdetoolbox-setting, sfem=0. 
+
+vkplate: von-Karman plate, pdetoolbox-setting, sfem=1, gives 10-compo system, 
+      somewhat obsolete 
+
+
+
+
+
+  
