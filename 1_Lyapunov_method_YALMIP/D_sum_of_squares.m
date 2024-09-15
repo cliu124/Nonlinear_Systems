@@ -16,7 +16,7 @@ sdp_option=sdpsettings('solver','sedumi'); %This solver can be modified as mosek
 %-----------------------formulate linear matrix inequalities
 %define variables to be optimized
 
-degree=8; %polynomial degree
+degree=16; %polynomial degree
 
 x=sdpvar(2,1);
 m = monolist(x,degree/2); %monomials
@@ -24,8 +24,8 @@ m = monolist(x,degree/2); %monomials
 P = sdpvar(length(m)-1);
 V_poly=m(2:end)'*P*m(2:end);
 
-R = sdpvar(length(m)-1);
-R_poly=m(2:end)'*R*m(2:end);
+R = sdpvar(length(m));
+R_poly=m'*R*m;
 
 I = eye(length(m)-1);
 
