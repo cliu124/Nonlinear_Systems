@@ -13,7 +13,7 @@ addpath([pphome,'/incl3rdpartylibs/ameshcoars']);
 addpath([pphome,'/incl3rdpartylibs/FSElib']);
 addpath([pphome,'/incl3rdpartylibs/distmesh']);
 addpath([pphome,'/incl3rdpartylibs/gptoollight']);
-extra=1; % set extra=1 and adapt paths for ilupack and other stuff
+extra=0; % set extra=1 and adapt paths for ilupack and other stuff
 if extra; cd ..; ppup=pwd;  
   %extralibs={[ppup,'/ilupack4m/matlab/ilupack'],[ppup,'/myp2plib']}; % HU
   %extralibs={[ppup,'/ilupackV2.4_GNU64_long_MUMPS/mex']};   % org ILUPACK 
@@ -33,4 +33,4 @@ else fprintf('*** No additional libs put into path ***\n');
 end
 format shortG; format compact; 
 rng(0,"twister"); 
-p2pilutest; % check if ilupack is up 
+%p2pilutest; % check if ilupack is up 
