@@ -1,4 +1,4 @@
-function p=acinit(p,par)  % init routine for AC on interval with pBC 
+function p=init(p,par)  % init routine for AC on interval with pBC 
 p.np=2; %dimension of ODE systems. 
 
 p=stanparam(p); screenlayout(p); p.sw.sfem=-1; 
