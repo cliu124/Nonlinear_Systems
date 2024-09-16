@@ -16,7 +16,7 @@ sdp_option=sdpsettings('solver','sedumi'); %This solver can be modified as mosek
 %-----------------------formulate linear matrix inequalities
 %define variables to be optimized
 
-degree=6; %polynomial degree of V function
+degree=4; %polynomial degree of V function
 
 x=sdpvar(2,1);
 m = monolist(x,degree/2); %define monomials

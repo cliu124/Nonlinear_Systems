@@ -131,7 +131,8 @@ while is<msteps;    % ********************** continuation loop *****************
   if(p.file.count>0 && mod(p.file.count,p.file.smod)==0) % save to file 
       p.fuha.savefu(p); end
    if(mod(p.file.count,p.plot.pmod)==0); 
-       plotsol(p,p.plot.pfig,p.plot.pcmp,p.plot.pstyle);end % plot sol       
+       plotsol(p,p.plot.pfig,p.plot.pcmp,p.plot.pstyle);
+   end % plot sol       
    p.file.count=p.file.count+1; is=is+1; 
    if p.file.count>p.nc.ntot; cstop=1; end; 
    if isfield(p.mat,'prec')
