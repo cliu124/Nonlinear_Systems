@@ -1,5 +1,7 @@
 function Gu=sGjac(p,u)  % PDE Jacobian for AC with pBC 
 par=u(p.nu+1:end); up=u(1:p.nu); % params, and u on periodic domain 
+
+%get parameter mu and state variable x1 and x2. 
 mu=par(1);
 x1=up(1);
 x2=up(2);
