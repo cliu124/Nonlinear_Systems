@@ -13,7 +13,7 @@ p.u=zeros(p.np,1);
 p.u=[p.u; par']; % initial guess (here 0, explicitly known) 
 
 p.sw.foldcheck=1; 
-p.plot.auxdict={'lambda'}; %for plotting to show lambda
+p.plot.auxdict={'mu'}; %for plotting to show lambda
 p.plot.pstyle=1; %defaulty
 p.nc.nsteps=200; %default continuation step
 p.sw.bifcheck=2; %bifcheck=2: check the bifurcation points. 
