@@ -26,9 +26,9 @@ end
 %-----------------
 %compute upper bound of transient growth using Lyapunov method
 %we solve: 
-% min gamma,
-% such that I<=P, for any t
-% and P*A+A'*P+ dP/dt<=2*lambda*P, for any t. 
+% min lambda,
+% such that I<=P
+% and P*A+A'*P+ dP/dt<=2*lambda*P. 
 
 lambda=sdpvar(1,1); %upper bound of growth rate to be optimized
 I=eye(2,2); %identity matrix

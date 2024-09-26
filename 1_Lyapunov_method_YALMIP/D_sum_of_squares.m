@@ -8,7 +8,7 @@ close all;
 
 %We try to find Lyapunov function V as different order of polynomials,
 %and let \dot{V}\leq 0 within a
-%local region |x|^2\leq \delta^2 using s-procedure, such that 
+%local region |x|^2\leq \delta^2 using s-procedure. 
 %As normal, we require V is positive definite, and without loss of
 %generality, we can require P>=I. 
 sdp_option=sdpsettings('solver','sedumi'); %This solver can be modified as mosek (https://www.mosek.com/), and using edu email, you can get a free license. 

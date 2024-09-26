@@ -25,7 +25,7 @@ A=[0,-1;
 B=[0;1]; % write nonlinear system as dx=A*x+B*u;
 
 %-----------------------bound of forcing term
-K1=[0,1]; % bound this forcing term such that u^2\leq \delta^4* (K*x)^T*(K*x)
+K=[0,1]; % bound this forcing term such that u^2\leq \delta^4* (K*x)^T*(K*x)
 
 I=eye(2,2); %identify matrix
 
@@ -35,7 +35,7 @@ P=sdpvar(2,2); %weighting matrix for Lyapunov function
 s=sdpvar(1,1); %s is a non-negative value to enforce that dV is negative semidefinite in a local region
 delta4=sdpvar(1,1); %delta^4 going to be optimized
 
-dV_constraint=[A'*P+P*A+s*delta4*K1'*K1, P*B;
+dV_constraint=[A'*P+P*A+s*delta4*K'*K, P*B;
     B'*P, -s];
 constraint=[P>=I, dV_constraint<=0, s>=0];
 
