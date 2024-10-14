@@ -12,4 +12,10 @@ For YALMIP, this repository already has SeDuMi (https://sedumi.ie.lehigh.edu/?pa
 
 The Mosek (https://www.mosek.com/) solver is required for A_growth_rate.m, C_region_of_attraction.m, D_sum_of_squares.m, E_growth_rate_time_varying.m. This is NOT contained here and it needs to install Mosek following the instructions in the link (https://docs.mosek.com/10.2/install/installation.html). 
 
-Using edu email can get a free academic license of Mosek. 
+Using edu email can get a free academic license of Mosek. The license should be placed in EXACTLY the path suggested in the license email.
+
+The Mosek also need to be installed by set path in MATLAB. Please 'add with subfolders' and select the path Mosek is installed (e.g., C:\Program File\Mosek)
+ 
+For installation of pde2path, just run the code install.m and it is fine. Do NOT set path in MATLAB as it will mess up the searching space of sG.m and sGjac.m
+
+
